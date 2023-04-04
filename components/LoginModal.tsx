@@ -10,14 +10,14 @@ const LoginModal = (props: Props) => {
   const visible = useModalStore((state) => state.visible);
   const closeModal = useModalStore((state) => state.closeModal);
 
+  const customTitle = (
+    <div className={styles.customTitle}>Log in to Summarist</div>
+  );
+
   const handleSubmit = (values: { email: string; password: string }) => {
     console.log("Login values:", values);
     closeModal();
   };
-
-  const customTitle = (
-    <div className={styles.customTitle}>Log in to Summarist</div>
-  );
 
   return (
     <div className={styles.modal__background}>

@@ -8,12 +8,15 @@
 
 .login__btn:hover {
   background-color: #20ba68 !important;
+  transition: all 300ms ease-all !important;
 }
 
 .input__field:hover {
   border-color: #20ba68 !important;
+  transition: all 300ms ease-all !important;
 }
 
 .inputField__password:hover {
   border-color: #20ba68 !important;
+  transition: all 300ms ease-all !important;
 }

@@ -1,9 +1,12 @@
 import Image from "next/image";
 import React from "react";
+import { useModalStore } from "../pages/store";
 
 type Props = {};
 
 function Header({}: Props) {
+  const showModal = useModalStore((state) => state.showModal);
+
   return (
     <nav className="nav">
       <div className="nav__wrapper">
@@ -17,7 +20,9 @@ function Header({}: Props) {
           />
         </figure>
         <ul className="nav__list--wrapper">
-          <li className="nav__list nav__list--login">Login</li>
+          <li className="nav__list nav__list--login" onClick={showModal}>
+            Login
+          </li>
           <li className="nav__list nav__list--mobile">About</li>
           <li className="nav__list nav__list--mobile">Contact</li>
           <li className="nav__list nav__list--mobile">Help</li>

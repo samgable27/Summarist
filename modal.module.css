@@ -1,0 +1,19 @@
+.customTitle {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  text-align: center;
+  color: #032b41 !important;
+  margin-bottom: 24px !important;
+}
+
+.login__btn:hover {
+  background-color: #20ba68 !important;
+}
+
+.input__field:hover {
+  border-color: #20ba68 !important;
+}
+
+.inputField__password:hover {
+  border-color: #20ba68 !important;
+}

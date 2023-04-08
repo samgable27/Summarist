@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Form } from "antd";
-import { useModalStore } from "../../pages/store";
+import { useModalStore } from "../../src/api/store";
 import styles from "..//../modal.module.css";
 import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";

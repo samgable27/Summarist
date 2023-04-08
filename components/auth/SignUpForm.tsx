@@ -10,7 +10,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../../firebase";
-import { useModalStore } from "../../pages/store";
+import { useModalStore } from "../../src/api/store";
 
 interface SignUpFormProps {
   children?: React.ReactNode;

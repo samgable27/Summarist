@@ -1,4 +1,13 @@
-.customTitle {
+.loginTitle {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  text-align: center;
+  color: #032b41 !important;
+  margin-bottom: 24px !important;
+  margin-top: 12px !important;
+}
+
+.signupTitle {
   font-size: 24px !important;
   font-weight: 700 !important;
   text-align: center;
@@ -87,4 +96,19 @@
   width: fit-content;
   margin: 0 auto 16px;
   cursor: pointer;
+}
+
+.createAccount {
+  background-color: #f1f6f4 !important;
+  color: #116be9 !important;
+  border-radius: 0 0 4px 4px !important;
+  font-size: 16px !important;
+  font-weight: 300 !important;
+  height: 40px;
+  width: 100% !important;
+}
+
+.createAccount:hover {
+  background-color: #e1e9e8 !important;
+  transition: all 300ms ease-in-out !important;
 }

@@ -1,44 +1,73 @@
 import React from "react";
-import { Button, Modal, Form, Input, ConfigProvider } from "antd";
-import { MailOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useModalStore } from "../pages/store";
-import styles from "../modal.module.css";
+import { Form, Input, Button } from "antd";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Image from "next/image";
-type Props = {};
+import styles from "..//../modal.module.css";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 
-const LoginModal = (props: Props) => {
+import { auth } from "../../firebase";
+import { useModalStore } from "../../pages/store";
+
+interface LoginFormProps {
+  children?: React.ReactNode;
+  onFinish: (values?: any) => void;
+  onSuccess: () => void;
+  onFailure: (error?: any) => void;
+  toggleSignUp: () => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({
+  onSuccess,
+  onFailure,
+  toggleSignUp,
+}) => {
   const [form] = Form.useForm();
-  const visible = useModalStore((state) => state.visible);
+
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const customTitle = (
-    <div className={styles.customTitle}>Log in to Summarist</div>
-  );
-
-  const handleSubmit = (values: { email: string; password: string }) => {
-    closeModal();
+  const handleSubmit = async (values: { email: string; password: string }) => {
+    try {
+      // Perform async request for login
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const user = userCredential.user;
+      onSuccess();
+      return user;
+    } catch (error) {
+      onFailure(error);
+    }
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleGoogleSignIn = async () => {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
 
-    const values = form.getFieldsValue();
-    handleSubmit(values);
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Google sign-in successful:", user);
+
+      onSuccess();
+      closeModal();
+    } catch (error) {
+      console.log("Error during Google sign-in:", error);
+    }
   };
 
   return (
-    <Modal
-      title={customTitle}
-      open={visible}
-      onCancel={closeModal}
-      footer={null}
-      destroyOnClose={true}
-      wrapClassName={styles.modalContainer}
-    >
+    <>
       <Form
         className={styles.formContainer}
         form={form}
-        onFinish={handleFormSubmit}
+        onFinish={handleSubmit}
         layout="vertical"
       >
         <Form.Item
@@ -46,7 +75,10 @@ const LoginModal = (props: Props) => {
           label="Email"
           rules={[
             { required: true, message: "Please input your email!" },
-            { type: "email", message: "Please enter a valid email address!" },
+            {
+              type: "email",
+              message: "Please enter a valid email address!",
+            },
           ]}
         >
           <Input
@@ -106,6 +138,7 @@ const LoginModal = (props: Props) => {
         <Button
           type="primary"
           htmlType="submit"
+          onClick={handleGoogleSignIn}
           style={{
             width: "100%",
             height: "100%",
@@ -133,11 +166,13 @@ const LoginModal = (props: Props) => {
         </Button>
         <div className={styles.forgot__pwdContainer}>
           <span>Forgot your password?</span>
-          <span>Don't have an account?</span>
+          <button className={styles.createAccount} onClick={toggleSignUp}>
+            Don't have an account?
+          </button>
         </div>
       </Form.Item>
-    </Modal>
+    </>
   );
 };
 
-export default LoginModal;
+export default LoginForm;

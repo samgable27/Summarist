@@ -57,7 +57,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     } catch (error) {
       setError(error.message);
       onFailure(error);
-      console.log("Error:", error.message);
     }
   };
 
@@ -112,7 +111,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
                   top: "1px",
                 }}
               />
-              <h3>Sign up with Google</h3>
+              <span>Sign up with Google</span>
             </div>
           </Button>
         </Form.Item>

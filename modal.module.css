@@ -20,6 +20,11 @@
   padding: 4px !important;
 }
 
+.login__btn span {
+  font-size: 16px !important;
+  color: #242424 !important;
+}
+
 .login__btn:hover {
   background-color: #20ba68 !important;
   transition: all 300ms ease-all !important;
@@ -69,8 +74,16 @@
   max-width: 220px;
 }
 
+.guest__btnContainer span {
+  font-size: 16px;
+}
+
 .google__btn {
   background-color: #4285f4 !important;
+}
+
+.google__btn span {
+  font-size: 16px;
 }
 
 .google__btn:hover {

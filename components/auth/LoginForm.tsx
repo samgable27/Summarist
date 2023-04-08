@@ -51,7 +51,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
     } catch (error) {
       setError(error.message);
       onFailure(error);
-      console.log("Error:", error.message);
     }
   };
 
@@ -115,7 +114,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             style={{ width: "100%", backgroundColor: "#2bd97c" }}
             className={styles.login__btn}
           >
-            Log in
+            <span>Log in</span>
           </Button>
         </Form.Item>
       </Form>
@@ -138,7 +137,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 left: -10,
               }}
             />
-            <h3>Log in as a Guest</h3>
+            <span>Log in as a Guest</span>
           </div>
         </Button>
       </Form.Item>
@@ -172,7 +171,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 top: "0px",
               }}
             />
-            <h3>Log in with Google</h3>
+            <span>Log in with Google</span>
           </div>
         </Button>
         <div className={styles.forgot__pwdContainer}>

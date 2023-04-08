@@ -66,7 +66,7 @@
 .guest__btnContainer {
   display: flex;
   justify-content: space-between;
-  max-width: 285px;
+  max-width: 220px;
 }
 
 .google__btn {
@@ -86,22 +86,27 @@
 .forgot__pwdContainer {
   display: flex;
   flex-direction: column;
-  margin-top: 36px;
+  margin-top: 30px;
 }
 
 .forgot__pwdContainer span {
   text-align: center;
   color: #116be9 !important;
   font-size: 14px;
+  font-weight: 300;
   width: fit-content;
   margin: 0 auto 16px;
   cursor: pointer;
 }
 
+.forgot__pwdContainer span:hover {
+  text-decoration: underline;
+}
+
 .createAccount {
   background-color: #f1f6f4 !important;
   color: #116be9 !important;
-  border-radius: 0 0 4px 4px !important;
+  border-radius: 4px 4px 4px 4px !important;
   font-size: 16px !important;
   font-weight: 300 !important;
   height: 40px;
@@ -111,4 +116,27 @@
 .createAccount:hover {
   background-color: #e1e9e8 !important;
   transition: all 300ms ease-in-out !important;
+}
+
+.already__haveAccount {
+  background-color: #f1f6f4 !important;
+  color: #116be9 !important;
+  border-radius: 4px 4px 4px 4px !important;
+  font-size: 16px !important;
+  font-weight: 300 !important;
+  height: 40px;
+  width: 100% !important;
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.already__haveAccount:hover {
+  background-color: #e1e9e8 !important;
+  transition: all 300ms ease-in-out !important;
+}
+
+.errorMessage {
+  color: red !important;
+  font-size: 14px;
 }

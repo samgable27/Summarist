@@ -39,7 +39,7 @@ const LoginModal: React.FC<LoginModalProps> = () => {
   };
 
   const onLoginSuccess = () => {
-    router.push("https://summarist.vercel.app/for-you");
+    router.push("/for-you");
 
     closeModal();
   };
@@ -51,7 +51,7 @@ const LoginModal: React.FC<LoginModalProps> = () => {
   );
 
   const onSignUpSuccess = () => {
-    router.push("https://summarist.vercel.app/for-you");
+    router.push("/for-you");
 
     closeModal();
   };
@@ -61,30 +61,33 @@ const LoginModal: React.FC<LoginModalProps> = () => {
   );
 
   return (
-    <Modal
-      title={isSignedUp ? signUpTitle : logInTitle}
-      open={visible}
-      onCancel={closeModal}
-      footer={null}
-      destroyOnClose={true}
-      wrapClassName={styles.modalContainer}
-    >
-      {isSignedUp ? (
-        <SignUpForm
-          onSuccess={onSignUpSuccess}
-          onFailure={signUpFailure}
-          onFinish={handleFormSubmit}
-          toggleLogin={toggleLogin}
-        />
-      ) : (
-        <LoginForm
-          onSuccess={onLoginSuccess}
-          onFailure={onLoginFailure}
-          onFinish={handleFormSubmit}
-          toggleSignUp={toggleSignUp}
-        />
-      )}
-    </Modal>
+    <div>
+      <Modal
+        title={isSignedUp ? signUpTitle : logInTitle}
+        open={visible}
+        onCancel={closeModal}
+        footer={null}
+        destroyOnClose={true}
+        wrapClassName={styles.modalContainer}
+        width={400}
+      >
+        {isSignedUp ? (
+          <SignUpForm
+            onSuccess={onSignUpSuccess}
+            onFailure={signUpFailure}
+            onFinish={handleFormSubmit}
+            toggleLogin={toggleLogin}
+          />
+        ) : (
+          <LoginForm
+            onSuccess={onLoginSuccess}
+            onFailure={onLoginFailure}
+            onFinish={handleFormSubmit}
+            toggleSignUp={toggleSignUp}
+          />
+        )}
+      </Modal>
+    </div>
   );
 };
 

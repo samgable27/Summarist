@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import Image from "next/image";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
@@ -24,8 +24,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
   onSuccess,
   onFailure,
   toggleLogin,
+  onFinish,
 }) => {
   const [form] = Form.useForm();
+
+  const [error, setError] = useState<string | null>(null);
   const closeModal = useModalStore((state) => state.closeModal);
 
   const handleSubmit = async (values: {
@@ -45,11 +48,16 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
 
       const user = userCredential.user;
       onSuccess();
+      onFinish();
+      setError(null);
+
       return user;
 
       // if error
     } catch (error) {
+      setError(error.message);
       onFailure(error);
+      console.log("Error:", error.message);
     }
   };
 
@@ -111,7 +119,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
         <div className={styles.textContainer}>
           <span className={styles.customText}>or</span>
         </div>
+        {error && <p className={styles.errorMessage}>{error}</p>}
         <Form.Item
+          name="email"
+          label="Email"
           rules={[
             { required: true, message: "Please input your email!" },
             {
@@ -127,6 +138,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
           />
         </Form.Item>
         <Form.Item
+          name="password"
+          label="Password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
           <Input.Password
@@ -135,6 +148,18 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
             placeholder="Password"
           />
         </Form.Item>
+        <Form.Item
+          name="confirmPassword"
+          label="Confirm Password"
+          rules={[{ required: true, message: "Please confirm your password!" }]}
+        >
+          <Input.Password
+            prefix={<LockOutlined />}
+            className={styles.inputField__password}
+            placeholder="Password"
+          />
+        </Form.Item>
+
         <Form.Item>
           <Button
             type="primary"
@@ -147,8 +172,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
         </Form.Item>
       </Form>
 
-      <div className={styles.forgot__pwdContainer}>
-        <span onClick={toggleLogin}>Already have an account?</span>
+      <div className={styles.already__haveAccount}>
+        <button className={styles.createAccount} onClick={toggleLogin}>
+          Already have an account?
+        </button>
       </div>
     </>
   );

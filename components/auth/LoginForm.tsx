@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Image from "next/image";
@@ -25,8 +25,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
   onSuccess,
   onFailure,
   toggleSignUp,
+  onFinish,
 }) => {
   const [form] = Form.useForm();
+
+  const [error, setError] = useState<string | null>(null);
 
   const closeModal = useModalStore((state) => state.closeModal);
 
@@ -39,10 +42,16 @@ const LoginForm: React.FC<LoginFormProps> = ({
         values.password
       );
       const user = userCredential.user;
+
       onSuccess();
+      onFinish();
+      setError(null);
+
       return user;
     } catch (error) {
+      setError(error.message);
       onFailure(error);
+      console.log("Error:", error.message);
     }
   };
 
@@ -64,6 +73,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <>
+      {error && <p className={styles.errorMessage}>{error}</p>}
       <Form
         className={styles.formContainer}
         form={form}
@@ -112,6 +122,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       <div className={styles.textContainer}>
         <span className={styles.customText}>or</span>
       </div>
+
       <Form.Item>
         <Button
           type="primary"
@@ -124,7 +135,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               style={{
                 fontSize: "22px",
                 position: "relative",
-                right: "10px",
+                left: -10,
               }}
             />
             <h3>Log in as a Guest</h3>
@@ -158,7 +169,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 marginRight: "10px",
                 position: "absolute",
                 left: "1px",
-                top: "1px",
+                top: "0px",
               }}
             />
             <h3>Log in with Google</h3>

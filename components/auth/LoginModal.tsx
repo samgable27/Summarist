@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Form } from "antd";
-import styles from "..//../modal.module.css";
+import styles from "..//../styles/modal.module.css";
 import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
 import { useRouter } from "next/router";

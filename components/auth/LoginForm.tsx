@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import styles from "..//../modal.module.css";
+import styles from "..//../styles/modal.module.css";
 import {
   GoogleAuthProvider,
   getAuth,

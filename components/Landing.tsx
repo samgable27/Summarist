@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import { useModalStore } from "../src/api/store";
 import LoginModal from "./auth/LoginModal";
+import { useModalStore } from "../src/store/store-client";
 
 type Props = {};
 

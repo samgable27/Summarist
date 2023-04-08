@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Modal, Form } from "antd";
-import { useModalStore } from "../../src/api/store";
 import styles from "..//../modal.module.css";
 import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
 import { useRouter } from "next/router";
+import { useModalStore } from "../../src/store/store-client";
 
 interface LoginModalProps {
   children?: React.ReactNode;
@@ -39,7 +39,7 @@ const LoginModal: React.FC<LoginModalProps> = () => {
   };
 
   const onLoginSuccess = () => {
-    router.push("/for-you");
+    router.push("https://summarist.vercel.app/for-you");
 
     closeModal();
   };
@@ -51,7 +51,7 @@ const LoginModal: React.FC<LoginModalProps> = () => {
   );
 
   const onSignUpSuccess = () => {
-    router.push("/for-you");
+    router.push("https://summarist.vercel.app/for-you");
 
     closeModal();
   };

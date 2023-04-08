@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { useModalStore } from "../src/api/store";
+import { useModalStore } from "../src/store/store-client";
 
 type Props = {};
 

@@ -1,6 +1,14 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { ModalContextProvider } from "../src/store/modal/modalContext";
+import { useModalStore } from "../src/store/store-client";
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <ModalContextProvider store={useModalStore}>
+      <Component {...pageProps} />
+    </ModalContextProvider>
+  );
 }
+
+export default MyApp;

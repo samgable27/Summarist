@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../../firebase";
-import { useModalStore } from "../../src/api/store";
+import { useModalStore } from "../../src/store/store-client";
 
 interface LoginFormProps {
   children?: React.ReactNode;

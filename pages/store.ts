@@ -11,3 +11,5 @@ export const useModalStore = create<ModalState>((set) => ({
   showModal: () => set({ visible: true }),
   closeModal: () => set({ visible: false }),
 }));
+
+export default useModalStore;

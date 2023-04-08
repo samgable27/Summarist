@@ -1,0 +1,66 @@
+.sbContainer {
+  background-color: #f7faf9;
+  width: 200px;
+  min-width: 200px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.sbLogo {
+  margin: 20px 0 0 20px;
+}
+
+.sb__linksContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+.sb__topContainer {
+  margin-top: 50px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.sb__topContainer a,
+.sb__btmContainer a {
+  padding: 20px 0px;
+}
+
+.sb__topContainer a:hover,
+.sb__btmContainer a:hover {
+  background-color: #f0efef;
+}
+
+.sb__btmContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.sb__topContainer a,
+.sb__btmContainer a {
+  color: #032b41 !important;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.sb__linkActive {
+  background-color: #2bd97c;
+  width: 5px;
+  height: 100%;
+  margin-right: 16px;
+}
+
+.sbIcon {
+  margin-left: 16px;
+}

@@ -1,12 +1,20 @@
 import React from "react";
+import Nav from "../components/for-you/Nav";
+import styles from "../styles/for-you.module.css";
+import Sidebar from "../components/for-you/Sidebar";
 
-type Props = {};
+interface ForYouProps {
+  children?: React.ReactNode;
+}
 
-const ForYou = (props: Props) => {
+const ForYou: React.FC<ForYouProps> = () => {
   return (
-    <div>
-      <h1>Welcome to the For You page!</h1>
-    </div>
+    <section>
+      <header className={styles.navContainer}>
+        <Nav />
+      </header>
+      <Sidebar />
+    </section>
   );
 };
 

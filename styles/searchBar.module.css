@@ -1,0 +1,12 @@
+.searchBar {
+  transition: border-color 0.3s !important;
+}
+
+.searchBar input:hover,
+.searchBar button:hover {
+  border-color: #20ba68 !important;
+}
+
+.searchBar .anticon.anticon-search:hover {
+  background-color: #20ba68 !important;
+}

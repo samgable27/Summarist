@@ -54,7 +54,7 @@
   font-size: 14px;
   color: #394547;
   margin-bottom: 16px;
-  padding: 2px 0 0 6px;
+  padding: 2px 0 0 2px;
 }
 
 .authorInfo {
@@ -68,8 +68,21 @@
 }
 
 .sbImage {
- width: 140px;
- height: 140px;
+  width: 140px;
+  height: 140px;
+}
+
+.sbAudio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sbAudio div {
+  font-size: 14px;
+  font-weight: 500;
+  color: #032b41;
+  padding-left: 6px;
 }
 
 @media (max-width: 1600px) {

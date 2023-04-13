@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "..//../styles/for-you.module.css";
 import axios from "axios";
 import Image from "next/image";
+import { PlayCircleOutlined } from "@ant-design/icons";
 
 interface SelectedBook {
   id: string;
@@ -57,6 +58,17 @@ const SelectedBooks: React.FC<SelectedBook> = () => {
           <div className={styles.authorInfo}>
             <h3>{book.title}</h3>
             <p>{book.author}</p>
+            <div className={styles.sbAudio}>
+              <PlayCircleOutlined
+                style={{
+                  fontSize: "40px",
+                  color: "#000",
+                  opacity: "0.8",
+                }}
+                className={styles.playCircle}
+              />
+              <div>3 mins 23 secs</div>
+            </div>
           </div>
         </div>
       ))}

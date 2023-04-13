@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "..//../styles/for-you.module.css";
 import axios from "axios";
+import Image from "next/image";
 
 interface SelectedBook {
   id: string;
@@ -23,12 +24,14 @@ interface SelectedBook {
 }
 
 const SelectedBooks: React.FC<SelectedBook> = () => {
-  const [selectedBook, setSelectedBook] = useState<SelectedBook[]>([]);
+  const [selectedBooks, setSelectedBooks] = useState<SelectedBook[]>([]);
 
   const selectedBookQuery = async () => {
     const { data } = await axios.get(
       "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=selected"
     );
+
+    setSelectedBooks(data);
   };
 
   useEffect(() => {
@@ -40,7 +43,23 @@ const SelectedBooks: React.FC<SelectedBook> = () => {
       <div>
         <h1 className={styles.sbHeader}>Selected just for you</h1>
       </div>
-      <div className={styles.sbInfo}></div>
+      {selectedBooks.map((book, id) => (
+        <div key={id} className={styles.sbInfo}>
+          <div className={styles.sbSubtitle}>{book.subTitle}</div>
+          <div className={styles.sbLine}></div>
+          <Image
+            className={styles.sbImage}
+            src={book.imageLink}
+            alt={""}
+            width={100}
+            height={100}
+          />
+          <div className={styles.authorInfo}>
+            <h3>{book.title}</h3>
+            <p>{book.author}</p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

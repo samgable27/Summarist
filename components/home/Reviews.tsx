@@ -1,9 +1,12 @@
 import React from "react";
 import { BsStarFill } from "react-icons/bs";
+import { useModalStore } from "../../src/store/store-client";
 
 type Props = {};
 
 function Reviews({}: Props) {
+  const showModal = useModalStore((state) => state.showModal);
+
   return (
     <section id="reviews">
       <div className="row">
@@ -82,7 +85,9 @@ function Reviews({}: Props) {
             </div>
           </div>
           <div className="reviews__btn--wrapper">
-            <button className="btn home__cta--btn">Login</button>
+            <button className="btn home__cta--btn" onClick={showModal}>
+              Login
+            </button>
           </div>
         </div>
       </div>

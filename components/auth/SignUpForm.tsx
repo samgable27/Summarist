@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import Image from "next/image";
-import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import styles from "..//../styles/modal.module.css";
 import {
   GoogleAuthProvider,
@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useModalStore } from "../../src/store/store-client";
+import SpinIcon from "../UI/SpinIcon";
 
 interface SignUpFormProps {
   children?: React.ReactNode;
@@ -29,7 +30,12 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
   const [form] = Form.useForm();
 
   const [error, setError] = useState<string | null>(null);
+
   const closeModal = useModalStore((state) => state.closeModal);
+
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const [formLoading, setFormLoading] = useState(false);
 
   const handleSubmit = async (values: {
     email: string;
@@ -37,6 +43,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     confirmPassword: string;
   }) => {
     try {
+      setFormLoading(true);
       if (values.password !== values.confirmPassword) {
         throw new Error("Passwords do not match");
       }
@@ -50,6 +57,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       onSuccess();
       onFinish();
       setError(null);
+      setFormLoading(false);
 
       return user;
 
@@ -65,12 +73,14 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     const provider = new GoogleAuthProvider();
 
     try {
+      setGoogleLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("Google sign-in successful:", user);
 
       onSuccess();
       closeModal();
+      setGoogleLoading(false);
     } catch (error) {
       console.log("Error during Google sign-in:", error);
     }
@@ -111,7 +121,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
                   top: "1px",
                 }}
               />
-              <span>Sign up with Google</span>
+              <span>
+                {googleLoading ? <SpinIcon /> : "Sign up with Google"}
+              </span>
             </div>
           </Button>
         </Form.Item>
@@ -166,7 +178,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
             style={{ width: "100%", backgroundColor: "#2bd97c" }}
             className={styles.login__btn}
           >
-            Sign up
+            <span>{formLoading ? <SpinIcon /> : "Sign up"}</span>
           </Button>
         </Form.Item>
       </Form>

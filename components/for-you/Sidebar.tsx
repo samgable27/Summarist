@@ -1,6 +1,7 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import styles from "..//../styles/sidebar.module.css";
+import activeStyles from "..//../styles/linkActive.module.css";
 import Link from "next/link";
 import {
   ApiOutlined,
@@ -12,9 +13,18 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 
-type Props = {};
+interface SidebarProps {
+  onClick: () => void;
+  isActive: boolean;
+}
 
-const Sidebar = (props: Props) => {
+const Sidebar: React.FC<SidebarProps> = ({ onClick }) => {
+  const [isActive, setIsActive] = useState(null);
+
+  const handleClick = (linkId) => {
+    setIsActive(!isActive);
+  };
+
   return (
     <div className={styles.sbContainer}>
       <div className={styles.sbLogo}>
@@ -23,8 +33,11 @@ const Sidebar = (props: Props) => {
       <div className={styles.sb__linksContainer}>
         <div className={styles.sb__topContainer}>
           <Link href="/for-you" legacyBehavior>
-            <a>
-              {/* <div className={styles.sb__linkActive}></div> */}
+            <a
+              onClick={handleClick}
+              className={isActive ? activeStyles.active : ""}
+            >
+              {/* {isActive && <div className={activeStyles.greenBar} />} */}
               <div className={styles.sbIcon}>
                 <HomeOutlined
                   style={{ paddingRight: "10px", fontSize: "20px" }}
@@ -34,7 +47,11 @@ const Sidebar = (props: Props) => {
             </a>
           </Link>
           <Link href="/for-you" legacyBehavior>
-            <a>
+            <a
+              onClick={handleClick}
+              className={isActive ? activeStyles.active : ""}
+            >
+              {/* {isActive && <div className={activeStyles.greenBar} />} */}
               <div className={styles.sbIcon}>
                 <BookOutlined
                   style={{ paddingRight: "10px", fontSize: "20px" }}

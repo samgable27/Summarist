@@ -12,6 +12,7 @@ import {
 
 import { auth } from "../../firebase";
 import { useModalStore } from "../../src/store/store-client";
+import SpinIcon from "../UI/SpinIcon";
 
 interface LoginFormProps {
   children?: React.ReactNode;
@@ -33,9 +34,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const closeModal = useModalStore((state) => state.closeModal);
 
+  const [formLoading, setFormLoading] = useState(false);
+
+  const [googleLoading, setGoogleLoading] = useState(false);
+
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
-      // Perform async request for login
+      setFormLoading(true);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         values.email,
@@ -46,6 +51,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       onSuccess();
       onFinish();
       setError(null);
+      setFormLoading(false);
 
       return user;
     } catch (error) {
@@ -59,14 +65,19 @@ const LoginForm: React.FC<LoginFormProps> = ({
     const provider = new GoogleAuthProvider();
 
     try {
+      setGoogleLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("Google sign-in successful:", user);
 
       onSuccess();
+      onFinish();
+      setError(null);
+      setGoogleLoading(false);
       closeModal();
     } catch (error) {
-      console.log("Error during Google sign-in:", error);
+      setError(error.message);
+      onFailure(error);
     }
   };
 
@@ -114,7 +125,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             style={{ width: "100%", backgroundColor: "#2bd97c" }}
             className={styles.login__btn}
           >
-            <span>Log in</span>
+            <span>{formLoading ? <SpinIcon /> : "Log in"}</span>
           </Button>
         </Form.Item>
       </Form>
@@ -171,13 +182,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 top: "0px",
               }}
             />
-            <span>Log in with Google</span>
+            <span>{googleLoading ? <SpinIcon /> : "Log in with Google"}</span>
           </div>
         </Button>
         <div className={styles.forgot__pwdContainer}>
           <span>Forgot your password?</span>
           <button className={styles.createAccount} onClick={toggleSignUp}>
-            Don't have an account?
+            <span>Don't have an account?</span>
           </button>
         </div>
       </Form.Item>

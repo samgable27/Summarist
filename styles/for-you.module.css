@@ -1,7 +1,7 @@
 .navContainer {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   padding: 0 64px;
   max-height: 1070px;
   margin: 0 auto;
@@ -9,4 +9,31 @@
   border-bottom: 1px solid #e1e7ea;
   height: 80px;
   z-index: 1;
+}
+
+/* Suggested Book */
+
+.sbContainer h1 {
+  font-size: 22px;
+  color: #032b41;
+  padding-bottom: 16px;
+  transform: translateX(-120%);
+}
+
+.sbContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sbInfo {
+  display: flex;
+  justify-content: space-between;
+  width: calc((100% / 3) * 2);
+  background-color: #fbefd6;
+  border-radius: 4px;
+  padding: 24px;
+  margin-bottom: 24px;
+  margin-left: 4px;
+  gap: 24px;
 }

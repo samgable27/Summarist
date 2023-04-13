@@ -13,17 +13,32 @@
 
 /* Suggested Book */
 
-.sbContainer h1 {
-  font-size: 22px;
-  color: #032b41;
-  padding-bottom: 16px;
-  transform: translateX(-120%);
-}
-
 .sbContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.sbHeader {
+  font-size: 20px;
+  color: #032b41;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1600px) {
+  .sbContainer {
+    max-width: 700px;
+    margin-left: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sbContianer,
+  .sbContainer h1 {
+    max-width: 100%;
+    margin-left: 0;
+  }
 }
 
 .sbInfo {

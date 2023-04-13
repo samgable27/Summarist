@@ -445,6 +445,8 @@ button:disabled {
   font-weight: 500;
 }
 
+/*  */
+
 @media (max-width: 768px) {
   .landing__content {
     display: flex;

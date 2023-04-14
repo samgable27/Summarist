@@ -11,7 +11,7 @@
   z-index: 1;
 }
 
-/* Suggested Book */
+/* Selected Book */
 .sbContainer {
   display: flex;
   flex-direction: column;
@@ -93,6 +93,7 @@
   width: 100%;
   scroll-snap-type: none;
   scrollbar-width: none;
+  margin: 28px 0;
 }
 
 .rbContainer::-webkit-scrollbar {
@@ -169,6 +170,21 @@
   font-size: 14px;
   font-weight: 300;
   color: #6b757b;
+}
+
+.subPill {
+  background-color: #032b41;
+  width: fit-content;
+  height: 18px;
+  padding: 0 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
 }
 
 @media (max-width: 1600px) {

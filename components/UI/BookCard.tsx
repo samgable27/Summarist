@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "..//../styles/for-you.module.css";
 import ClockCircleOutlined from "@ant-design/icons/lib/icons/ClockCircleOutlined";
 import StarOutlined from "@ant-design/icons/lib/icons/StarOutlined";
+import SubscriptionPill from "./SubscriptionPill";
 
 interface BookCardProps {
   id: string;
@@ -18,6 +19,7 @@ interface BookCardProps {
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   return (
     <div className={styles.bookCardContainer}>
+      {book.subscriptionRequired && <SubscriptionPill />}
       <figure>
         <Image
           className={styles.rbImageLink}

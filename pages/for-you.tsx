@@ -4,6 +4,7 @@ import styles from "../styles/for-you.module.css";
 import Sidebar from "../components/for-you/Sidebar";
 import SelectedBooks from "../components/for-you/SelectedBooks";
 import RecommendedBooks from "../components/for-you/RecommendedBooks";
+import SuggestedBooks from "../components/for-you/SuggestedBooks";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -11,18 +12,18 @@ interface ForYouProps {
 
 const ForYou: React.FC<ForYouProps> = () => {
   return (
-    <section className={styles.forYouContainer}>
+    <section>
       <header className={styles.navContainer}>
         <Nav />
+        <Sidebar
+          onClick={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+          isActive={false}
+        />
       </header>
-      <Sidebar
-        onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        isActive={false}
-      />
       <div className="row">
-        <div className="container">
+        <div className="fy--container">
           <SelectedBooks
             id={""}
             author={""}
@@ -62,6 +63,30 @@ const ForYou: React.FC<ForYouProps> = () => {
             bookDescription={""}
             authorDescription={""}
             recommendedBookQuery={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+          <SuggestedBooks
+            id={""}
+            subscriptionRequired={false}
+            imageLink={""}
+            title={""}
+            author={""}
+            subTitle={""}
+            averageRating={0}
+            audioLink={""}
+            totalRating={0}
+            keyIdeas={0}
+            type={""}
+            status={""}
+            summary={""}
+            tags={[]}
+            bookDescription={""}
+            authorDescription={""}
+            recommendedBookQuery={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            suggestedBookQuery={function (): void {
               throw new Error("Function not implemented.");
             }}
           />

@@ -49,6 +49,11 @@ button:disabled {
   width: 100%;
 }
 
+.fy--container {
+  padding: 40px 0;
+  width: 100%;
+}
+
 .btn {
   background-color: #2bd97c;
   color: #032b41;

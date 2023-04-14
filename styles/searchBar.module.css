@@ -1,5 +1,8 @@
 .searchBar {
   transition: border-color 0.3s !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .searchBar input:hover,

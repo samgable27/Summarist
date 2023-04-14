@@ -33,8 +33,6 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   useEffect(() => {}, [isAuthenticated]);
 
-  console.log("showModal", showModal);
-
   return (
     <div className={styles.sbContainer}>
       <div className={styles.sbLogo}>
@@ -77,19 +75,19 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
             <div>My Library</div>
           </a>
-          <a>
+          <a className={styles.sbLink__notAllowed}>
             <div className={styles.sbIcon}>
               <ApiOutlined style={{ paddingRight: "10px", fontSize: "20px" }} />
             </div>
-            <span>Highlights</span>
+            <div>Highlights</div>
           </a>
-          <a>
+          <a className={styles.sbLink__notAllowed}>
             <div className={styles.sbIcon}>
               <SearchOutlined
                 style={{ paddingRight: "10px", fontSize: "20px" }}
               />
             </div>
-            <span>Search</span>
+            <div>Search</div>
           </a>
         </div>
 
@@ -110,13 +108,13 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
             <div>Settings</div>
           </a>
-          <a>
+          <a className={styles.sbLink__notAllowed}>
             <div className={styles.sbIcon}>
               <QuestionCircleOutlined
                 style={{ paddingRight: "10px", fontSize: "20px" }}
               />
             </div>
-            <span>Help & Support</span>
+            <div>Help & Support</div>
           </a>
           <a
             onClick={() => {

@@ -23,7 +23,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
         placeholder="Search for books"
         // enterButton={<CustomSearchIcon />}
         onSearch={onSearch}
-        style={{ width: 340, margin: "40px" }}
+        style={{
+          margin: "40px",
+        }}
         size="middle"
       />
     </Space>

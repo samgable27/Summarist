@@ -39,9 +39,12 @@
   background-color: #f0efef;
 }
 
-.sb__topContainer a > span,
-.sb__btmContainer a > span {
+.sbLink__notAllowed {
   cursor: not-allowed;
+}
+
+.sbLink__notAllowed:hover {
+  background-color: #f7faf9 !important;
 }
 
 .sb__btmContainer {

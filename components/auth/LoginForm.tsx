@@ -38,6 +38,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const [googleLoading, setGoogleLoading] = useState(false);
 
+  const { login } = useModalStore();
+
+  const { isAuthenticated } = useModalStore();
+
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
       setFormLoading(true);
@@ -51,6 +55,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       onSuccess();
       onFinish();
       setError(null);
+      login();
       setFormLoading(false);
 
       return user;
@@ -68,13 +73,14 @@ const LoginForm: React.FC<LoginFormProps> = ({
       setGoogleLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.log("Google sign-in successful:", user);
 
       onSuccess();
       onFinish();
       setError(null);
+      login();
       setGoogleLoading(false);
-      closeModal();
+
+      return user;
     } catch (error) {
       setError(error.message);
       onFailure(error);

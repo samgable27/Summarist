@@ -5,6 +5,7 @@ import styles from "..//../styles/for-you.module.css";
 import ClockCircleOutlined from "@ant-design/icons/lib/icons/ClockCircleOutlined";
 import StarOutlined from "@ant-design/icons/lib/icons/StarOutlined";
 import SubscriptionPill from "./SubscriptionPill";
+import SuggestedBooks from "../for-you/SuggestedBooks";
 
 interface BookCardProps {
   id: string;
@@ -14,7 +15,7 @@ interface BookCardProps {
   author: string;
   subTitle: string;
   averageRating: number;
-  book: RecommendedBooks;
+  book: RecommendedBooks | SuggestedBooks;
 }
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   return (

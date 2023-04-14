@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import BookCard from "../UI/BookCard";
 import axios from "axios";
 import styles from "..//../styles/for-you.module.css";
+import Skeleton from "react-loading-skeleton";
 interface SuggestedBooks {
   id: string;
   subscriptionRequired: boolean;
@@ -19,15 +20,20 @@ interface SuggestedBooks {
   tags: string[];
   bookDescription: string;
   authorDescription: string;
-  recommendedBookQuery: () => void;
   suggestedBookQuery: () => void;
 }
 
 const SuggestedBooks: React.FC<SuggestedBooks> = () => {
+  useEffect(() => {
+    suggestedBookQuery();
+  }, []);
+
+  // loading states
   const [suggestedBooks, setSuggestedBooks] = useState<SuggestedBooks[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
+  // giving user ability to scroll through books
   const containerRef = useRef<HTMLDivElement>(null);
-
   const handleKeyDown = (e: KeyboardEvent) => {
     if (!containerRef.current) return;
 
@@ -38,6 +44,7 @@ const SuggestedBooks: React.FC<SuggestedBooks> = () => {
     }
   };
 
+  // adding and removing event listeners on mount and unmount
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
 
@@ -46,17 +53,13 @@ const SuggestedBooks: React.FC<SuggestedBooks> = () => {
     };
   }, []);
 
-  useEffect(() => {
-    suggestedBookQuery();
-  }, []);
-
   const suggestedBookQuery = async () => {
+    setLoading(true);
     const { data } = await axios.get(
       "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=suggested"
     );
     setSuggestedBooks(data);
-
-    console.log(data);
+    setLoading(false);
   };
 
   return (
@@ -66,19 +69,23 @@ const SuggestedBooks: React.FC<SuggestedBooks> = () => {
         <p>We think you'll like these</p>
       </div>
       <div className={styles.rbContainer}>
-        {suggestedBooks.map((book, id) => (
-          <BookCard
-            key={id}
-            id={""}
-            subscriptionRequired={false}
-            imageLink={""}
-            title={""}
-            author={""}
-            subTitle={""}
-            averageRating={0}
-            book={book}
-          />
-        ))}
+        {loading
+          ? new Array(8)
+              .fill(0)
+              .map((_, i) => <Skeleton key={i} width={195} height={375} />)
+          : suggestedBooks.map((book, id) => (
+              <BookCard
+                key={id}
+                id={""}
+                subscriptionRequired={false}
+                imageLink={""}
+                title={""}
+                author={""}
+                subTitle={""}
+                averageRating={0}
+                book={book}
+              />
+            ))}
       </div>
     </div>
   );

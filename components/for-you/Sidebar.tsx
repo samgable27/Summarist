@@ -1,32 +1,39 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styles from "..//../styles/sidebar.module.css";
 import activeStyles from "..//../styles/linkActive.module.css";
-import Link from "next/link";
 import {
   ApiOutlined,
   BookOutlined,
   HomeOutlined,
-  LoginOutlined,
+  LogoutOutlined,
   QuestionCircleOutlined,
   SearchOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import { useModalStore } from "../../src/store/store-client";
+import LoginModal from "../auth/LoginModal";
 
 interface SidebarProps {
   activeSection: string;
   setActiveSection: (section: string) => void;
   onClick: () => void;
+  showModal: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   activeSection,
   setActiveSection,
 }) => {
-  const showModal = useModalStore((state) => state.showModal);
+  const { isAuthenticated, logout, showModal } = useModalStore();
 
-  console.log(activeSection);
+  const handleLogout = () => {
+    logout();
+  };
+
+  useEffect(() => {}, [isAuthenticated]);
+
+  console.log("showModal", showModal);
 
   return (
     <div className={styles.sbContainer}>
@@ -74,7 +81,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <div className={styles.sbIcon}>
               <ApiOutlined style={{ paddingRight: "10px", fontSize: "20px" }} />
             </div>
-            <div>Highlights</div>
+            <span>Highlights</span>
           </a>
           <a>
             <div className={styles.sbIcon}>
@@ -82,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 style={{ paddingRight: "10px", fontSize: "20px" }}
               />
             </div>
-            <div>Search</div>
+            <span>Search</span>
           </a>
         </div>
 
@@ -109,16 +116,21 @@ const Sidebar: React.FC<SidebarProps> = ({
                 style={{ paddingRight: "10px", fontSize: "20px" }}
               />
             </div>
-            <div>Help & Support</div>
+            <span>Help & Support</span>
           </a>
-          <a onClick={() => showModal}>
+          <a
+            onClick={() => {
+              isAuthenticated ? handleLogout() : showModal();
+            }}
+          >
             <div className={styles.sbIcon}>
-              <LoginOutlined
+              <LogoutOutlined
                 style={{ paddingRight: "10px", fontSize: "20px" }}
               />
             </div>
-            <div>Login</div>
+            <div>{isAuthenticated ? "Logout" : "Login"}</div>
           </a>
+          <LoginModal />
         </div>
       </div>
     </div>

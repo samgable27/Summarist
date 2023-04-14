@@ -45,22 +45,8 @@ const SelectedBooks: React.FC<SelectedBook> = () => {
 
   return (
     <div className={styles.sbContainer}>
-      <div
-        style={
-          loading
-            ? {
-                width: "200px",
-                whiteSpace: "nowrap",
-                paddingBottom: "16px",
-              }
-            : {}
-        }
-      >
-        {loading ? (
-          <Skeleton width="100%" height={20} />
-        ) : (
-          <h1 className={styles.sbHeader}>Selected just for you</h1>
-        )}
+      <div>
+        <h1 className={styles.sbHeader}>Selected just for you</h1>
       </div>
       {loading ? (
         <Skeleton width={680} height={195} />

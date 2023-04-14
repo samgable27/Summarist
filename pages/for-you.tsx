@@ -6,8 +6,8 @@ import SelectedBooks from "../components/for-you/SelectedBooks";
 import RecommendedBooks from "../components/for-you/RecommendedBooks";
 import SuggestedBooks from "../components/for-you/SuggestedBooks";
 import { useRouter } from "next/router";
-import Library from "./Library";
-import Settings from "./Settings";
+import Library from "./library";
+import Settings from "./settings";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -26,6 +26,9 @@ const ForYou: React.FC<ForYouProps> = () => {
           }}
           setActiveSection={(section: string) => setActiveSection(section)}
           activeSection={activeSection}
+          showModal={function (): void {
+            throw new Error("Function not implemented.");
+          }}
         />
       </header>
       <div className="row">
@@ -95,9 +98,6 @@ const ForYou: React.FC<ForYouProps> = () => {
                 tags={[]}
                 bookDescription={""}
                 authorDescription={""}
-                recommendedBookQuery={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
                 suggestedBookQuery={function (): void {
                   throw new Error("Function not implemented.");
                 }}

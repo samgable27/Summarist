@@ -39,10 +39,16 @@
   background-color: #f0efef;
 }
 
+.sb__topContainer a > span,
+.sb__btmContainer a > span {
+  cursor: not-allowed;
+}
+
 .sb__btmContainer {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .sb__topContainer a,

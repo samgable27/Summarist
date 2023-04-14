@@ -85,6 +85,88 @@
   padding-left: 6px;
 }
 
+/* Recommended Books */
+
+.bookCardContainer {
+  cursor: pointer;
+  position: relative;
+  scroll-snap-align: start;
+  padding: 32px 12px 12px;
+  border-radius: 4px;
+  max-width: 200px;
+  width: 100%;
+}
+
+.bookCardContainer:hover {
+  background-color: #e1e9e8;
+  border-radius: 4px 4px 4px 4px;
+}
+
+.recBooksHeader p {
+  font-weight: 300;
+  color: #394547;
+  margin-bottom: 16px;
+}
+
+.rbContainer {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  overflow-x: scroll;
+  height: 400px;
+  width: 100%;
+}
+
+.bookCardContainer figure {
+  width: 172px;
+  height: 172px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageLink {
+  width: 100%;
+  height: 100%;
+}
+
+.bookInfoContainer p {
+  font-size: 14px;
+  color: #394547;
+  margin: 8px 0;
+  text-align: left;
+}
+
+.bookCardMisc {
+  display: flex;
+  gap: 8px;
+}
+
+.bookDetails {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #6b757b;
+}
+
+.rbTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #032b41;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  margin-bottom: 8px;
+}
+
+.rbAuthor {
+  font-size: 14px;
+  color: #6b757b;
+  font-weight: 300;
+}
+
 @media (max-width: 1600px) {
   .sbContainer {
     width: 100%;

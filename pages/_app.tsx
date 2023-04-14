@@ -1,7 +1,7 @@
 import { ModalContextProvider } from "../src/store/modal/modalContext";
 import { useModalStore } from "../src/store/store-client";
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

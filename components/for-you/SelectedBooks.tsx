@@ -27,17 +27,16 @@ interface SelectedBook {
 const SelectedBooks: React.FC<SelectedBook> = () => {
   const [selectedBooks, setSelectedBooks] = useState<SelectedBook[]>([]);
 
+  useEffect(() => {
+    selectedBookQuery();
+  }, []);
+
   const selectedBookQuery = async () => {
     const { data } = await axios.get(
       "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=selected"
     );
-
     setSelectedBooks(data);
   };
-
-  useEffect(() => {
-    selectedBookQuery();
-  }, []);
 
   return (
     <div className={styles.sbContainer}>

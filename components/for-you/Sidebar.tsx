@@ -21,7 +21,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ onClick }) => {
   const [isActive, setIsActive] = useState(null);
 
-  const handleClick = (linkId) => {
+  const handleClick = () => {
     setIsActive(!isActive);
   };
 

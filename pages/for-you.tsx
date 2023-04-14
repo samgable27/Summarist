@@ -3,6 +3,7 @@ import Nav from "../components/for-you/Nav";
 import styles from "../styles/for-you.module.css";
 import Sidebar from "../components/for-you/Sidebar";
 import SelectedBooks from "../components/for-you/SelectedBooks";
+import RecommendedBooks from "../components/for-you/RecommendedBooks";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -10,7 +11,7 @@ interface ForYouProps {
 
 const ForYou: React.FC<ForYouProps> = () => {
   return (
-    <section>
+    <section className={styles.forYouContainer}>
       <header className={styles.navContainer}>
         <Nav />
       </header>
@@ -40,6 +41,27 @@ const ForYou: React.FC<ForYouProps> = () => {
             bookDescription={""}
             authorDescription={""}
             selectedBookQuery={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+          <RecommendedBooks
+            id={""}
+            author={""}
+            title={""}
+            subTitle={""}
+            imageLink={""}
+            audioLink={""}
+            totalRating={0}
+            averageRating={0}
+            keyIdeas={0}
+            type={""}
+            status={""}
+            subscriptionRequired={false}
+            summary={""}
+            tags={[]}
+            bookDescription={""}
+            authorDescription={""}
+            recommendedBookQuery={function (): void {
               throw new Error("Function not implemented.");
             }}
           />

@@ -4,7 +4,6 @@ import { ModalContextProps, ModalState } from "./modalState";
 const ModalContext = React.createContext<ModalState>({
   visible: false,
   showModal: () => {},
-  openModal: () => {},
   closeModal: () => {},
 });
 

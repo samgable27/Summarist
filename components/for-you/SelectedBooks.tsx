@@ -3,6 +3,8 @@ import styles from "..//../styles/for-you.module.css";
 import axios from "axios";
 import Image from "next/image";
 import { PlayCircleOutlined } from "@ant-design/icons";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton";
 
 interface SelectedBook {
   id: string;
@@ -26,51 +28,72 @@ interface SelectedBook {
 
 const SelectedBooks: React.FC<SelectedBook> = () => {
   const [selectedBooks, setSelectedBooks] = useState<SelectedBook[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     selectedBookQuery();
   }, []);
 
   const selectedBookQuery = async () => {
+    setLoading(true);
     const { data } = await axios.get(
       "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=selected"
     );
     setSelectedBooks(data);
+    setLoading(false);
   };
 
   return (
     <div className={styles.sbContainer}>
-      <div>
-        <h1 className={styles.sbHeader}>Selected just for you</h1>
+      <div
+        style={
+          loading
+            ? {
+                width: "200px",
+                whiteSpace: "nowrap",
+                paddingBottom: "16px",
+              }
+            : {}
+        }
+      >
+        {loading ? (
+          <Skeleton width="100%" height={20} />
+        ) : (
+          <h1 className={styles.sbHeader}>Selected just for you</h1>
+        )}
       </div>
-      {selectedBooks.map((book, id) => (
-        <div key={id} className={styles.sbInfo}>
-          <div className={styles.sbSubtitle}>{book.subTitle}</div>
-          <div className={styles.sbLine}></div>
-          <Image
-            className={styles.sbImage}
-            src={book.imageLink}
-            alt={""}
-            width={100}
-            height={100}
-          />
-          <div className={styles.authorInfo}>
-            <h3>{book.title}</h3>
-            <p>{book.author}</p>
-            <div className={styles.sbAudio}>
-              <PlayCircleOutlined
-                style={{
-                  fontSize: "40px",
-                  color: "#000",
-                  opacity: "0.8",
-                }}
-                className={styles.playCircle}
-              />
-              <div>3 mins 23 secs</div>
+      {loading ? (
+        <Skeleton width={680} height={195} />
+      ) : (
+        selectedBooks.map((book, id) => (
+          <div key={id} className={styles.sbInfo}>
+            <div className={styles.sbSubtitle}>{book.subTitle}</div>
+            <div className={styles.sbLine}></div>
+            <Image
+              className={styles.sbImage}
+              src={book.imageLink}
+              alt={""}
+              width={100}
+              height={100}
+            />
+            <div className={styles.authorInfo}>
+              <h3>{book.title}</h3>
+              <p>{book.author}</p>
+              <div className={styles.sbAudio}>
+                <PlayCircleOutlined
+                  style={{
+                    fontSize: "40px",
+                    color: "#000",
+                    opacity: "0.8",
+                  }}
+                  className={styles.playCircle}
+                />
+                <div>3 mins 23 secs</div>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

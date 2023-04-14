@@ -12,7 +12,6 @@
 }
 
 /* Suggested Book */
-
 .sbContainer {
   display: flex;
   flex-direction: column;
@@ -86,7 +85,43 @@
 }
 
 /* Recommended Books */
+.rbContainer {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  overflow-x: scroll;
+  width: 100%;
+  scroll-snap-type: none;
+  scrollbar-width: none;
+}
 
+.rbContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.recBooksHeader p {
+  font-weight: 300;
+  color: #394547;
+  margin-bottom: 16px;
+}
+
+.rbTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #032b41;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  margin-bottom: 8px;
+}
+
+.rbAuthor {
+  font-size: 14px;
+  color: #6b757b;
+  font-weight: 300;
+}
+
+/* Book Card */
 .bookCardContainer {
   cursor: pointer;
   position: relative;
@@ -98,23 +133,8 @@
 }
 
 .bookCardContainer:hover {
-  background-color: #e1e9e8;
+  background-color: #f1f6f4;
   border-radius: 4px 4px 4px 4px;
-}
-
-.recBooksHeader p {
-  font-weight: 300;
-  color: #394547;
-  margin-bottom: 16px;
-}
-
-.rbContainer {
-  display: flex;
-  gap: 24px;
-  justify-content: space-between;
-  overflow-x: scroll;
-  height: 400px;
-  width: 100%;
 }
 
 .bookCardContainer figure {
@@ -151,24 +171,9 @@
   color: #6b757b;
 }
 
-.rbTitle {
-  font-size: 16px;
-  font-weight: 700;
-  color: #032b41;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  margin-bottom: 8px;
-}
-
-.rbAuthor {
-  font-size: 14px;
-  color: #6b757b;
-  font-weight: 300;
-}
-
 @media (max-width: 1600px) {
-  .sbContainer {
+  .sbContainer,
+  .recommendedContainer {
     width: 100%;
     margin-left: 200px;
   }

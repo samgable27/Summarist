@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import styles from "..//../styles/for-you.module.css";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import BookCard from "../UI/BookCard";
+import axios from "axios";
+import styles from "..//../styles/for-you.module.css";
 interface RecommendedBooks {
   id: string;
   subscriptionRequired: boolean;
@@ -27,6 +27,26 @@ const RecommendedBooks: React.FC<RecommendedBooks> = () => {
     []
   );
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (!containerRef.current) return;
+
+    if (e.key === "ArrowRight") {
+      containerRef.current.scrollBy({ left: 50, behavior: "smooth" });
+    } else if (e.key === "ArrowLeft") {
+      containerRef.current.scrollBy({ left: -50, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   useEffect(() => {
     recommendedBookQuery();
   }, []);
@@ -39,8 +59,9 @@ const RecommendedBooks: React.FC<RecommendedBooks> = () => {
 
     console.log(data);
   };
+
   return (
-    <div>
+    <div className={styles.recommendedContainer}>
       <div className={styles.recBooksHeader}>
         <h1 className={styles.sbHeader}>Recommended For You</h1>
         <p>We think you'll like these</p>

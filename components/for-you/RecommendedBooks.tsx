@@ -23,6 +23,7 @@ interface RecommendedBooks {
   bookDescription: string;
   authorDescription: string;
   recommendedBookQuery: () => void;
+  handleBookClick: (id: string) => void;
 }
 
 const RecommendedBooks: React.FC<RecommendedBooks> = () => {

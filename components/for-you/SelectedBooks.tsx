@@ -25,9 +25,10 @@ interface SelectedBook {
   authorDescription: string;
   selectedBookQuery: () => void;
   onClick: () => void;
+  handleBookClick: (id: string) => void;
 }
 
-const SelectedBooks: React.FC<SelectedBook> = () => {
+const SelectedBooks: React.FC<SelectedBook> = ({ handleBookClick }) => {
   const [selectedBooks, setSelectedBooks] = useState<SelectedBook[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -53,7 +54,11 @@ const SelectedBooks: React.FC<SelectedBook> = () => {
         <Skeleton width={680} height={195} />
       ) : (
         selectedBooks.map((book, id) => (
-          <div key={id} className={styles.sbInfo}>
+          <div
+            onClick={() => handleBookClick(book.id.toString())}
+            key={id}
+            className={styles.sbInfo}
+          >
             <div className={styles.sbSubtitle}>{book.subTitle}</div>
             <div className={styles.sbLine}></div>
             <Image

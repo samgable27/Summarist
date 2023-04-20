@@ -8,7 +8,8 @@ import SuggestedBooks from "../components/for-you/SuggestedBooks";
 import { useRouter } from "next/router";
 import Library from "./library";
 import Settings from "./settings";
-import BookDetails from "./book/[id]";
+import BookPage, { BookDetails } from "./book/[id]";
+import axios from "axios";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -35,15 +36,20 @@ interface ForYouProps {
 
 const ForYou: React.FC<ForYouProps> = () => {
   const [activeSection, setActiveSection] = useState("for-you");
-  const [activeBook, setActiveBook] = useState<any>(null);
-  const [selectedBook, setSelectedBook] = useState<null | ForYouProps>(null);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   const router = useRouter();
 
-  const handleBookClick = (book: any) => {
-    setActiveBook(book);
-    setActiveSection(book.status);
-    router.push(`/book/${book.id}`, undefined, { shallow: true });
+  const handleBookClick = async (id: string) => {
+    try {
+      const response = await axios.get(
+        `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
+      );
+
+      setSelectedBook(response.data);
+    } catch (error) {
+      console.error(`Failed to fetch book with id: ${id}`, error);
+    }
   };
 
   const handleCloseBookDetails = () => {
@@ -70,34 +76,19 @@ const ForYou: React.FC<ForYouProps> = () => {
       </header>
       <div className="row">
         <div className="fy--container">
-          {activeBook ? (
-            <BookDetails
-              title={selectedBook.title}
-              content={selectedBook.content}
-              close={handleCloseBookDetails}
-              author={""}
-              subTitle={""}
-              imageLink={""}
-              audioLink={""}
-              totalRating={0}
-              averageRating={0}
-              keyIdeas={0}
-              type={""}
-              status={""}
-              subscriptionRequired={false}
-              summary={""}
-              tags={[]}
-              bookDescription={""}
-              authorDescription={""}
-            />
-          ) : activeSection === "My Library" ? (
+          {activeSection === "My Library" ? (
             <Library />
           ) : activeSection === "settings" ? (
             <Settings />
+          ) : selectedBook ? (
+            <BookDetails
+              {...selectedBook}
+              close={() => setSelectedBook(null)}
+            />
           ) : (
             <>
               <SelectedBooks
-                onClick={() => handleBookClick(selectedBook)}
+                handleBookClick={handleBookClick}
                 id={""}
                 author={""}
                 title={""}
@@ -117,20 +108,24 @@ const ForYou: React.FC<ForYouProps> = () => {
                 selectedBookQuery={function (): void {
                   throw new Error("Function not implemented.");
                 }}
+                onClick={function (): void {
+                  throw new Error("Function not implemented.");
+                }}
               />
               <RecommendedBooks
+                handleBookClick={handleBookClick}
                 id={""}
-                author={""}
-                title={""}
-                subTitle={""}
+                subscriptionRequired={false}
                 imageLink={""}
+                title={""}
+                author={""}
+                subTitle={""}
+                averageRating={0}
                 audioLink={""}
                 totalRating={0}
-                averageRating={0}
                 keyIdeas={0}
                 type={""}
                 status={""}
-                subscriptionRequired={false}
                 summary={""}
                 tags={[]}
                 bookDescription={""}
@@ -140,6 +135,7 @@ const ForYou: React.FC<ForYouProps> = () => {
                 }}
               />
               <SuggestedBooks
+                handleBookClick={handleBookClick}
                 id={""}
                 subscriptionRequired={false}
                 imageLink={""}

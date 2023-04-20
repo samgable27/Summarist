@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface BookProps {
   author: string;
@@ -21,8 +22,27 @@ interface BookProps {
   authorDescription: string;
   close: () => void;
 }
+interface BookPageProps {
+  author: string;
+  title: string;
+  subTitle: string;
+  content: string;
+  imageLink: string;
+  audioLink: string;
+  totalRating: number;
+  averageRating: number;
+  keyIdeas: number;
+  type: string;
+  status: string;
+  subscriptionRequired: boolean;
+  summary: string;
+  tags: string[];
+  bookDescription: string;
+  authorDescription: string;
+  close: () => void;
+}
 
-const BookDetails: React.FC<BookProps> = ({
+export const BookDetails: React.FC<BookProps> = ({
   title,
   author,
   subTitle,
@@ -50,74 +70,34 @@ const BookDetails: React.FC<BookProps> = ({
   );
 };
 
-export default BookDetails;
+const BookPage: React.FC<BookPageProps> = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [bookData, setBookData] = useState<BookProps | null>(null);
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  // Fetch book data from all three endpoints
-  const [recommendedRes, selectedRes, suggestedRes] = await Promise.all([
-    axios.get(
-      "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=selected"
-    ),
-    axios.get(
-      "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=suggested"
-    ),
-    axios.get(
-      "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=recommended"
-    ),
-  ]);
+  useEffect(() => {
+    if (id) {
+      // fetching data for static generation of books
+      const fetchBookData = async () => {
+        try {
+          const response = await axios.get(
+            `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
+          );
+          setBookData(response.data);
+        } catch (error) {
+          console.log(`Failed to fetch book with id: ${id}`, error);
+        }
+      };
 
-  console.log("Recommended books:", recommendedRes.data);
-
-  // Combine the book data from all three endpoints
-  const allBooks = [
-    ...recommendedRes.data,
-    ...selectedRes.data,
-    ...suggestedRes.data,
-  ];
-
-  // Create an array of paths with the book IDs as the 'id' parameter
-  const paths = allBooks.map((book: { id: string }) => ({
-    params: { id: book.id },
-  }));
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const id = params?.id as string;
-
-  try {
-    // Fetch the specific book from your API using the provided id
-    const response = await axios.get(
-      `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
-    );
-
-    const bookData = response.data;
-
-    // Extract the required fields from the bookData
-    const title = bookData.title || "Untitled";
-    const content = bookData.content || "No content available";
-
-    // Check if either title or content is undefined
-    if (title === undefined || content === undefined) {
-      throw new Error("Missing title or content in the book data");
+      fetchBookData();
     }
+  }, [id]);
 
-    return {
-      props: {
-        title,
-        content,
-      },
-    };
-  } catch (error) {
-    console.log(`Failed to fetch book with id: ${id}`, error);
-
-    // If the book is not found, return a 404 status
-    return {
-      notFound: true,
-    };
-  }
+  return (
+    <div>
+      {bookData ? <BookDetails {...bookData} /> : <div>Loading...</div>}
+    </div>
+  );
 };
+
+export default BookPage;

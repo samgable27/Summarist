@@ -5,32 +5,35 @@ import Image from "next/image";
 import { PlayCircleOutlined } from "@ant-design/icons";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
+import { useRouter } from "next/router";
 
 interface SelectedBook {
-  id: string;
-  author: string;
-  title: string;
-  subTitle: string;
-  imageLink: string;
-  audioLink: string;
-  totalRating: number;
-  averageRating: number;
-  keyIdeas: number;
-  type: string;
-  status: string;
-  subscriptionRequired: boolean;
-  summary: string;
-  tags: string[];
-  bookDescription: string;
-  authorDescription: string;
-  selectedBookQuery: () => void;
-  onClick: () => void;
+  id?: string;
+  author?: string;
+  title?: string;
+  subTitle?: string;
+  imageLink?: string;
+  audioLink?: string;
+  totalRating?: number;
+  averageRating?: number;
+  keyIdeas?: number;
+  type?: string;
+  status?: string;
+  subscriptionRequired?: boolean;
+  summary?: string;
+  tags?: string[];
+  bookDescription?: string;
+  authorDescription?: string;
+  selectedBookQuery?: () => void;
+  onClick?: () => void;
   handleBookClick: (id: string) => void;
 }
 
 const SelectedBooks: React.FC<SelectedBook> = ({ handleBookClick }) => {
   const [selectedBooks, setSelectedBooks] = useState<SelectedBook[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     selectedBookQuery();

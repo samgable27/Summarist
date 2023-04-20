@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "../components/for-you/Nav";
 import styles from "../styles/for-you.module.css";
 import Sidebar from "../components/for-you/Sidebar";
@@ -8,8 +8,7 @@ import SuggestedBooks from "../components/for-you/SuggestedBooks";
 import { useRouter } from "next/router";
 import Library from "./library";
 import Settings from "./settings";
-import BookPage, { BookDetails } from "./book/[id]";
-import axios from "axios";
+import BookDetails from "../components/for-you/BookDetails";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -37,19 +36,22 @@ interface ForYouProps {
 const ForYou: React.FC<ForYouProps> = () => {
   const [activeSection, setActiveSection] = useState("for-you");
   const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
   const router = useRouter();
+  const { id } = router.query;
 
-  const handleBookClick = async (id: string) => {
-    try {
-      const response = await axios.get(
-        `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
-      );
+  // useEffect(() => {
+  //   if (router.asPath.includes("/book/")) {
+  //     const bookId = router.asPath.split("/book/")[1];
+  //     handleBookClick(bookId);
+  //   } else {
+  //     setSelectedBook(null);
+  //   }
+  // }, [router.asPath]);
 
-      setSelectedBook(response.data);
-    } catch (error) {
-      console.error(`Failed to fetch book with id: ${id}`, error);
-    }
+  const handleBookClick = (id: string) => {
+    router.push(`/book/${id}`, undefined, { shallow: true });
   };
 
   const handleCloseBookDetails = () => {
@@ -80,82 +82,13 @@ const ForYou: React.FC<ForYouProps> = () => {
             <Library />
           ) : activeSection === "settings" ? (
             <Settings />
-          ) : selectedBook ? (
-            <BookDetails
-              {...selectedBook}
-              close={() => setSelectedBook(null)}
-            />
+          ) : id ? (
+            <BookDetails id={id} />
           ) : (
             <>
-              <SelectedBooks
-                handleBookClick={handleBookClick}
-                id={""}
-                author={""}
-                title={""}
-                subTitle={""}
-                imageLink={""}
-                audioLink={""}
-                totalRating={0}
-                averageRating={0}
-                keyIdeas={0}
-                type={""}
-                status={""}
-                subscriptionRequired={false}
-                summary={""}
-                tags={[]}
-                bookDescription={""}
-                authorDescription={""}
-                selectedBookQuery={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onClick={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
-              />
-              <RecommendedBooks
-                handleBookClick={handleBookClick}
-                id={""}
-                subscriptionRequired={false}
-                imageLink={""}
-                title={""}
-                author={""}
-                subTitle={""}
-                averageRating={0}
-                audioLink={""}
-                totalRating={0}
-                keyIdeas={0}
-                type={""}
-                status={""}
-                summary={""}
-                tags={[]}
-                bookDescription={""}
-                authorDescription={""}
-                recommendedBookQuery={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
-              />
-              <SuggestedBooks
-                handleBookClick={handleBookClick}
-                id={""}
-                subscriptionRequired={false}
-                imageLink={""}
-                title={""}
-                author={""}
-                subTitle={""}
-                averageRating={0}
-                audioLink={""}
-                totalRating={0}
-                keyIdeas={0}
-                type={""}
-                status={""}
-                summary={""}
-                tags={[]}
-                bookDescription={""}
-                authorDescription={""}
-                suggestedBookQuery={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
-              />
+              <SelectedBooks handleBookClick={handleBookClick} />
+              <RecommendedBooks handleBookClick={handleBookClick} />
+              <SuggestedBooks handleBookClick={handleBookClick} />
             </>
           )}
         </div>

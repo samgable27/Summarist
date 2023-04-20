@@ -20,6 +20,7 @@ interface SidebarProps {
   setActiveSection: (section: string) => void;
   onClick: () => void;
   showModal: () => void;
+  close: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({

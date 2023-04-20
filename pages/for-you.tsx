@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Library from "./library";
 import Settings from "./settings";
 import BookDetails from "../components/for-you/BookDetails";
+import axios from "axios";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -35,27 +36,41 @@ interface ForYouProps {
 
 const ForYou: React.FC<ForYouProps> = () => {
   const [activeSection, setActiveSection] = useState("for-you");
-  const [selectedBook, setSelectedBook] = useState(null);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
   const router = useRouter();
   const { id } = router.query;
 
-  // useEffect(() => {
-  //   if (router.asPath.includes("/book/")) {
-  //     const bookId = router.asPath.split("/book/")[1];
-  //     handleBookClick(bookId);
-  //   } else {
-  //     setSelectedBook(null);
-  //   }
-  // }, [router.asPath]);
+  useEffect(() => {
+    if (id) {
+      setSelectedBookId(typeof id === "string" ? id : null);
+    } else {
+      setSelectedBookId(null);
+    }
+  }, [id]);
 
-  const handleBookClick = (id: string) => {
-    router.push(`/book/${id}`, undefined, { shallow: true });
+  const [book, setBook] = useState(null);
+
+  const fetchBookData = async (bookId: string | string[]) => {
+    try {
+      const response = await axios.get(
+        `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${bookId}`
+      );
+      setBook(response.data);
+    } catch (error) {
+      console.error(`Failed to fetch book with id: ${bookId}`, error);
+    }
   };
 
-  const handleCloseBookDetails = () => {
-    setSelectedBook(null);
+  // if (!book) {
+  //   return <div>Loading...</div>;
+  // }
+
+  const handleBookClick = (id: string) => {
+    fetchBookData(id);
+
+    console.log(id);
+    router.push(`/book/${id}`, undefined, { shallow: true });
   };
 
   return (
@@ -82,11 +97,14 @@ const ForYou: React.FC<ForYouProps> = () => {
             <Library />
           ) : activeSection === "settings" ? (
             <Settings />
-          ) : id ? (
-            <BookDetails id={id} />
+          ) : selectedBookId ? (
+            <BookDetails id={selectedBookId} book={book} />
           ) : (
             <>
-              <SelectedBooks handleBookClick={handleBookClick} />
+              <SelectedBooks
+                onClick={() => fetchBookData(id)}
+                handleBookClick={handleBookClick}
+              />
               <RecommendedBooks handleBookClick={handleBookClick} />
               <SuggestedBooks handleBookClick={handleBookClick} />
             </>

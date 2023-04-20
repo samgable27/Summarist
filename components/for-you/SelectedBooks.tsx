@@ -33,8 +33,6 @@ const SelectedBooks: React.FC<SelectedBook> = ({ handleBookClick }) => {
   const [selectedBooks, setSelectedBooks] = useState<SelectedBook[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const router = useRouter();
-
   useEffect(() => {
     selectedBookQuery();
   }, []);

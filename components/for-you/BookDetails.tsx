@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 interface BookProps {
@@ -21,52 +19,14 @@ interface BookProps {
   authorDescription?: string;
   id: string | string[] | undefined;
   close?: () => void;
+  book: any;
 }
 
-const BookDetails: React.FC<BookProps> = ({
-  title,
-  author,
-  subTitle,
-  averageRating,
-  totalRating,
-  keyIdeas,
-  type,
-  tags,
-  bookDescription,
-  authorDescription,
-  content,
-  imageLink,
-  id,
-}) => {
-  const [book, setBook] = useState(null);
-
-  useEffect(() => {
-    if (id) {
-      fetchBookData(id);
-    }
-  }, [id]);
-
-  const fetchBookData = async (bookId: string | string[]) => {
-    try {
-      const response = await axios.get(
-        `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${bookId}`
-      );
-      setBook(response.data);
-
-      console.log(book);
-    } catch (error) {
-      console.error(`Failed to fetch book with id: ${bookId}`, error);
-    }
-  };
-
-  if (!book) {
-    return <div>Loading...</div>;
-  }
-
+const BookDetails: React.FC<BookProps> = ({ id, book }) => {
   return (
     <div>
-      <h1>{title}</h1>
-      <p>{content}</p>
+      <h1>{book.title}</h1>
+      <p>{book.content}</p>
     </div>
   );
 };

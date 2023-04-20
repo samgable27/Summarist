@@ -4,6 +4,7 @@ import axios from "axios";
 import styles from "..//../styles/for-you.module.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Link from "next/link";
 interface RecommendedBooks {
   id: string;
   subscriptionRequired: boolean;
@@ -77,17 +78,19 @@ const RecommendedBooks: React.FC<RecommendedBooks> = () => {
               .fill(0)
               .map((_, i) => <Skeleton key={i} width={195} height={375} />)
           : recommendedBooks.map((book, id) => (
-              <BookCard
-                key={id}
-                id={""}
-                subscriptionRequired={false}
-                imageLink={""}
-                title={""}
-                author={""}
-                subTitle={""}
-                averageRating={0}
-                book={book}
-              />
+              <Link href={`/book/${book.id}`}>
+                <BookCard
+                  key={id}
+                  id={""}
+                  subscriptionRequired={false}
+                  imageLink={""}
+                  title={""}
+                  author={""}
+                  subTitle={""}
+                  averageRating={0}
+                  book={book}
+                />
+              </Link>
             ))}
       </div>
     </div>

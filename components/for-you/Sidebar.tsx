@@ -13,6 +13,7 @@ import {
 } from "@ant-design/icons";
 import { useModalStore } from "../../src/store/store-client";
 import LoginModal from "../auth/LoginModal";
+import { useRouter } from "next/router";
 
 interface SidebarProps {
   activeSection: string;
@@ -26,9 +27,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   setActiveSection,
 }) => {
   const { isAuthenticated, logout, showModal } = useModalStore();
+  const router = useRouter();
 
   const handleLogout = () => {
     logout();
+
+    router.push("/");
   };
 
   useEffect(() => {}, [isAuthenticated]);

@@ -138,7 +138,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
       <div className={styles.textContainer}>
         <span className={styles.customText}>or</span>
       </div>
-
       <Form.Item>
         <Button
           type="primary"

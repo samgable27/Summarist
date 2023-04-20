@@ -24,6 +24,7 @@ interface SelectedBook {
   bookDescription: string;
   authorDescription: string;
   selectedBookQuery: () => void;
+  onClick: () => void;
 }
 
 const SelectedBooks: React.FC<SelectedBook> = () => {

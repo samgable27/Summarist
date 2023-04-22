@@ -8,8 +8,8 @@ import SuggestedBooks from "../components/for-you/SuggestedBooks";
 import { useRouter } from "next/router";
 import Library from "./library";
 import Settings from "./settings";
-import BookDetails from "../components/for-you/BookDetails";
 import axios from "axios";
+import BookDetails from "./book/[id]";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -36,26 +36,12 @@ interface ForYouProps {
 const ForYou: React.FC<ForYouProps> = () => {
   const [activeSection, setActiveSection] = useState("for-you");
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
-  const [book, setBook] = useState([]);
 
   const router = useRouter();
-  const { id } = router.query;
-
-  const fetchBookData = async (bookId: string | string[]) => {
-    try {
-      const { data } = await axios.get(
-        `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${bookId}`
-      );
-      setBook(data);
-    } catch (error) {
-      console.error(`Failed to fetch book with id: ${bookId}`, error);
-    }
-  };
 
   const handleBookClick = (id: string) => {
-    fetchBookData(id);
     setSelectedBookId(id);
-    // router.push(`/book/${id}`, undefined, { shallow: true });
+    router.push(`/book/${id}`, undefined, { shallow: true });
   };
 
   return (
@@ -83,7 +69,7 @@ const ForYou: React.FC<ForYouProps> = () => {
           ) : activeSection === "settings" ? (
             <Settings />
           ) : selectedBookId ? (
-            <BookDetails id={selectedBookId} book={book} />
+            <BookDetails book={undefined} />
           ) : (
             <>
               <SelectedBooks handleBookClick={handleBookClick} />

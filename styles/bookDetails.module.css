@@ -49,6 +49,13 @@
   margin-bottom: 16px;
 }
 
+.content h3 {
+  font-size: 18px;
+  color: #032b41;
+  margin: 24px 0 14px 0;
+  font-weight: 600;
+}
+
 .subTitle {
   font-size: 20px;
   color: #032b41;
@@ -75,4 +82,56 @@
   cursor: pointer;
   gap: 8px;
   transition: opacity 0.2 ease-in-out;
+}
+
+.addToLibrary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0365f2;
+}
+
+.addToLibrary h2 {
+  color: #0365f2;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 4px;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+
+.addToLibrary figure {
+  display: flex;
+  width: 20px;
+  height: 20px;
+}
+
+.tagsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tagsWrapper span {
+  background-color: #f1f6f4;
+  padding: 0 16px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  cursor: not-allowed;
+  color: #032b41;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.description,
+.author {
+  color: #032b41;
+  line-height: 1.5;
+}
+
+.description {
+  margin-bottom: 16px;
 }

@@ -33,7 +33,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   const handleLogout = () => {
     logout();
 
-    router.push("/");
+    setTimeout(() => {
+      router.push("/");
+    }, 600);
   };
 
   useEffect(() => {}, [isAuthenticated]);

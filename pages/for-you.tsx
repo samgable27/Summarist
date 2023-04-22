@@ -13,7 +13,6 @@ import axios from "axios";
 
 interface ForYouProps {
   children?: React.ReactNode;
-  id: string;
   content: string;
   author: string;
   title: string;
@@ -37,40 +36,26 @@ interface ForYouProps {
 const ForYou: React.FC<ForYouProps> = () => {
   const [activeSection, setActiveSection] = useState("for-you");
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
+  const [book, setBook] = useState([]);
 
   const router = useRouter();
   const { id } = router.query;
 
-  useEffect(() => {
-    if (id) {
-      setSelectedBookId(typeof id === "string" ? id : null);
-    } else {
-      setSelectedBookId(null);
-    }
-  }, [id]);
-
-  const [book, setBook] = useState(null);
-
   const fetchBookData = async (bookId: string | string[]) => {
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${bookId}`
       );
-      setBook(response.data);
+      setBook(data);
     } catch (error) {
       console.error(`Failed to fetch book with id: ${bookId}`, error);
     }
   };
 
-  // if (!book) {
-  //   return <div>Loading...</div>;
-  // }
-
   const handleBookClick = (id: string) => {
     fetchBookData(id);
-
-    console.log(id);
-    router.push(`/book/${id}`, undefined, { shallow: true });
+    setSelectedBookId(id);
+    // router.push(`/book/${id}`, undefined, { shallow: true });
   };
 
   return (
@@ -101,10 +86,7 @@ const ForYou: React.FC<ForYouProps> = () => {
             <BookDetails id={selectedBookId} book={book} />
           ) : (
             <>
-              <SelectedBooks
-                onClick={() => fetchBookData(id)}
-                handleBookClick={handleBookClick}
-              />
+              <SelectedBooks handleBookClick={handleBookClick} />
               <RecommendedBooks handleBookClick={handleBookClick} />
               <SuggestedBooks handleBookClick={handleBookClick} />
             </>

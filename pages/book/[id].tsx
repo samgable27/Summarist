@@ -7,10 +7,6 @@ import styles from "..//..//styles/for-you.module.css";
 import { useState } from "react";
 import Library from "../library";
 import Settings from "../settings";
-import SelectedBooks from "../../components/for-you/SelectedBooks";
-import RecommendedBooks from "../../components/for-you/RecommendedBooks";
-import SuggestedBooks from "../../components/for-you/SuggestedBooks";
-import { useRouter } from "next/router";
 
 interface BookProps {
   author?: string;
@@ -36,11 +32,6 @@ interface BookProps {
 
 const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
   const [activeSection, setActiveSection] = useState("for-you");
-  const router = useRouter();
-
-  const handleBookClick = (id: string) => {
-    router.push(`/book/${id}`, undefined, { shallow: true });
-  };
 
   return (
     <section>
@@ -75,8 +66,6 @@ const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
   );
 };
 
-export default BookDetailsWrapper;
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;
 
@@ -98,3 +87,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 };
+
+export default BookDetailsWrapper;

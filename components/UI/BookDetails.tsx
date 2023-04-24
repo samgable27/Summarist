@@ -6,8 +6,10 @@ import {
   BookOutlined,
   BulbOutlined,
   ClockCircleOutlined,
+  LeftOutlined,
   StarOutlined,
 } from "@ant-design/icons";
+import { useRouter } from "next/router";
 
 interface BookDetailProps {
   author?: string;
@@ -32,9 +34,34 @@ interface BookDetailProps {
 }
 
 const BookDetails: React.FC<{ book: BookDetailProps }> = ({ book }) => {
+  const router = useRouter();
+
+  const handleBackClick = () => {
+    router.push("/for-you");
+  };
+
   return (
     <div className={bookStyles.wrapper}>
       <div className={bookStyles.content}>
+        <div
+          style={{
+            position: "relative",
+          }}
+          onClick={() => handleBackClick()}
+        >
+          <LeftOutlined
+            style={{
+              fontSize: "16px",
+              cursor: "pointer",
+              color: "grey",
+              paddingBottom: "4px",
+              position: "relative",
+              top: "0",
+              right: "30px",
+            }}
+          />
+        </div>
+
         <h1>{book?.title}</h1>
         <p>{book?.author}</p>
         <div className={bookStyles.subTitle}>{book?.subTitle}</div>

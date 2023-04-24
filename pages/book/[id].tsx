@@ -5,6 +5,12 @@ import Nav from "../../components/for-you/Nav";
 import Sidebar from "../../components/for-you/Sidebar";
 import styles from "..//..//styles/for-you.module.css";
 import { useState } from "react";
+import Library from "../library";
+import Settings from "../settings";
+import SelectedBooks from "../../components/for-you/SelectedBooks";
+import RecommendedBooks from "../../components/for-you/RecommendedBooks";
+import SuggestedBooks from "../../components/for-you/SuggestedBooks";
+import { useRouter } from "next/router";
 
 interface BookProps {
   author?: string;
@@ -30,6 +36,12 @@ interface BookProps {
 
 const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
   const [activeSection, setActiveSection] = useState("for-you");
+  const router = useRouter();
+
+  const handleBookClick = (id: string) => {
+    router.push(`/book/${id}`, undefined, { shallow: true });
+  };
+
   return (
     <section>
       <header className={styles.navContainer}>
@@ -50,7 +62,13 @@ const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
       </header>
       <div className="row">
         <div className="fy--container">
-          <BookDetails book={book} />
+          {activeSection === "My Library" ? (
+            <Library />
+          ) : activeSection === "settings" ? (
+            <Settings />
+          ) : (
+            <BookDetails book={book} />
+          )}
         </div>
       </div>
     </section>

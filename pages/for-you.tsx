@@ -35,13 +35,9 @@ interface ForYouProps {
 
 const ForYou: React.FC<ForYouProps> = () => {
   const [activeSection, setActiveSection] = useState("for-you");
-  const [showDynamicComponent, setShowDynamicComponent] = useState(false);
   const router = useRouter();
 
-  const DynamicComponent = dynamic(() => import("../pages/book/[id]"));
-
   const handleBookClick = (id: string) => {
-    setShowDynamicComponent(true);
     router.push(`/book/${id}`, undefined, { shallow: true });
   };
 
@@ -71,15 +67,11 @@ const ForYou: React.FC<ForYouProps> = () => {
             <Settings />
           ) : (
             <>
-              <SelectedBooks
-                onClick={() => setShowDynamicComponent(!showDynamicComponent)}
-                handleBookClick={handleBookClick}
-              />
+              <SelectedBooks handleBookClick={handleBookClick} />
               <RecommendedBooks handleBookClick={handleBookClick} />
               <SuggestedBooks handleBookClick={handleBookClick} />
             </>
           )}
-          {showDynamicComponent && <DynamicComponent book={undefined} />}
         </div>
       </div>
     </section>

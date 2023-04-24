@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import bookStyles from "..//..//styles/bookDetails.module.css";
 import Image from "next/image";
 import {
@@ -10,6 +10,10 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import "react-loading-skeleton/dist/skeleton.css";
+import axios from "axios";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface BookDetailProps {
   author?: string;
@@ -30,11 +34,28 @@ interface BookDetailProps {
   authorDescription?: string;
   id: string | string[] | undefined;
   close?: () => void;
-  book: any;
 }
 
-const BookDetails: React.FC<{ book: BookDetailProps }> = ({ book }) => {
+const BookDetails: React.FC<BookDetailProps> = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [book, setBook] = useState<BookDetailProps | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    fetchBookData();
+  }, []);
+
+  const fetchBookData = async () => {
+    const { id } = router.query;
+
+    setLoading(true);
+    const { data } = await axios.get(
+      `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
+    );
+
+    setBook(data);
+    setLoading(false);
+  };
 
   const handleBackClick = () => {
     router.push("/for-you");
@@ -61,83 +82,142 @@ const BookDetails: React.FC<{ book: BookDetailProps }> = ({ book }) => {
             }}
           />
         </div>
-
-        <h1>{book?.title}</h1>
-        <p>{book?.author}</p>
-        <div className={bookStyles.subTitle}>{book?.subTitle}</div>
+        <h1>
+          {loading ? (
+            <Skeleton width={250} height={30} />
+          ) : book?.subscriptionRequired ? (
+            `${book?.title} (Premium)`
+          ) : (
+            book?.title
+          )}
+        </h1>
+        <p>{loading ? <Skeleton width={80} height={20} /> : book?.author}</p>
+        <div className={bookStyles.subTitle}>
+          {loading ? <Skeleton width={550} height={30} /> : book?.subTitle}
+        </div>
         <div className={bookStyles.miscWrapper}>
-          <div className={bookStyles.miscDescription}>
-            <div>
-              <figure>
-                <StarOutlined />
-              </figure>
-              <span>
-                {book?.averageRating} ({book?.totalRating} ratings)
-              </span>
+          {loading ? (
+            <Skeleton height={50} width={300} />
+          ) : (
+            <div className={bookStyles.miscDescription}>
+              <div>
+                <figure>
+                  <StarOutlined />
+                </figure>
+                <span>
+                  {book?.averageRating} ({book?.totalRating} ratings)
+                </span>
+              </div>
+              <div>
+                <figure>
+                  <ClockCircleOutlined />
+                </figure>
+                <span> 03:23</span>
+              </div>
+              <div>
+                <figure>
+                  <AudioOutlined />
+                </figure>
+                <span>{book?.type}</span>
+              </div>
+              <div>
+                <figure>
+                  <BulbOutlined />
+                </figure>
+                <span>{book?.keyIdeas} key ideas</span>
+              </div>
             </div>
-            <div>
-              <figure>
-                <ClockCircleOutlined />
-              </figure>
-              <span> 03:23</span>
-            </div>
-            <div>
-              <figure>
-                <AudioOutlined />
-              </figure>
-              <span>{book?.type}</span>
-            </div>
-            <div>
-              <figure>
-                <BulbOutlined />
-              </figure>
-              <span>{book?.keyIdeas} key ideas</span>
-            </div>
-          </div>
+          )}
         </div>
         <div className={bookStyles.readBtnWrapper}>
-          <div>
-            <button>
+          {loading ? (
+            <Skeleton width={330} height={30} />
+          ) : (
+            <>
               <div>
-                <BookOutlined />
+                <button>
+                  <div>
+                    <BookOutlined />
+                  </div>
+                  <span>Read</span>
+                </button>
               </div>
-              <span>Read</span>
-            </button>
-          </div>
-          <div>
-            <button>
               <div>
-                <AudioOutlined />
+                <button>
+                  <div>
+                    <AudioOutlined />
+                  </div>
+                  <span>Listen</span>
+                </button>
               </div>
-              <span>Listen</span>
-            </button>
-          </div>
+            </>
+          )}
         </div>
         <div className={bookStyles.addToLibrary}>
-          <figure>
-            <BookOutlined />
-          </figure>
-          <h2>Add title to My Library</h2>
+          {loading ? (
+            <Skeleton width={200} height={30} />
+          ) : (
+            <>
+              <figure>
+                <BookOutlined />
+              </figure>
+              <h2>Add title to My Library</h2>
+            </>
+          )}
         </div>
-        <div>
-          <h3>What's it about?</h3>
-        </div>
-        <div className={bookStyles.tagsWrapper}>
-          <span>Productivity</span>
-          <span>Personal Development</span>
-        </div>
+        {loading ? (
+          <Skeleton
+            style={{
+              margin: "16px 0px 16px 0px",
+            }}
+            width={300}
+            height={50}
+          />
+        ) : (
+          <>
+            <div>
+              <h3>What's it about?</h3>
+            </div>
+            <div className={bookStyles.tagsWrapper}>
+              <span>Productivity</span>
+              <span>Personal Development</span>
+            </div>
+          </>
+        )}
         <div className={bookStyles.descWrapper}>
-          <div className={bookStyles.description}>{book?.bookDescription}</div>
-          <div>
-            <h3>About the author</h3>
-          </div>
-          <div className={bookStyles.author}>{book?.authorDescription}</div>
+          {loading ? (
+            <Skeleton
+              style={{
+                margin: "16px 0px 16px 0px",
+              }}
+              width={725}
+              height={200}
+            />
+          ) : (
+            <div className={bookStyles.description}>
+              {book?.bookDescription}
+            </div>
+          )}
+          {loading ? (
+            <Skeleton width={725} height={300} />
+          ) : (
+            <>
+              <div>
+                <h3>About the author</h3>
+              </div>
+              <div className={bookStyles.author}>{book?.authorDescription}</div>
+            </>
+          )}
         </div>
       </div>
       <div className={bookStyles.bookImage}>
-        <figure className={bookStyles.figure}>
-          <Image src={book?.imageLink} width={300} height={300} alt={""} />
-        </figure>
+        {loading ? (
+          <Skeleton width={300} height={300} />
+        ) : (
+          <figure className={bookStyles.figure}>
+            <Image src={book?.imageLink} width={300} height={300} alt={""} />
+          </figure>
+        )}
       </div>
     </div>
   );

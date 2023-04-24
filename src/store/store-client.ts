@@ -9,3 +9,8 @@ export const useModalStore = create<ModalState>((set) => ({
   logout: () => set({ isAuthenticated: false }),
   login: () => set({ isAuthenticated: true }),
 }));
+
+export const useStore = create((set) => ({
+  loading: false,
+  setLoading: (loading: boolean) => set({ loading }),
+}));

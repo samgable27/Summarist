@@ -8,8 +8,6 @@ import SuggestedBooks from "../components/for-you/SuggestedBooks";
 import { useRouter } from "next/router";
 import Library from "./library";
 import Settings from "./settings";
-import BookDetails from "./book/[id]";
-import dynamic from "next/dynamic";
 
 interface ForYouProps {
   children?: React.ReactNode;

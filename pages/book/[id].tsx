@@ -4,9 +4,10 @@ import BookDetails from "../../components/UI/BookDetails";
 import Nav from "../../components/for-you/Nav";
 import Sidebar from "../../components/for-you/Sidebar";
 import styles from "..//..//styles/for-you.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Library from "../library";
 import Settings from "../settings";
+import { useRouter } from "next/router";
 
 interface BookProps {
   author?: string;
@@ -58,34 +59,12 @@ const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
           ) : activeSection === "settings" ? (
             <Settings />
           ) : (
-            <BookDetails book={book} />
+            <BookDetails id={""} />
           )}
         </div>
       </div>
     </section>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context.params?.id;
-
-  try {
-    const { data } = await axios.get(
-      `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
-    );
-
-    return {
-      props: {
-        book: data,
-      },
-    };
-  } catch (error) {
-    console.error(`Failed to fetch book with id: ${id}`, error);
-
-    return {
-      notFound: true,
-    };
-  }
 };
 
 export default BookDetailsWrapper;

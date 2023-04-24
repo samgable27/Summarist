@@ -28,12 +28,12 @@ interface RecommendedBooks {
   recommendedBookQuery?: () => void;
 }
 
-const RecommendedBooks: React.FC<RecommendedBooks> = () => {
+const RecommendedBooks: React.FC<RecommendedBooks> = ({ handleBookClick }) => {
   useEffect(() => {
     recommendedBookQuery();
   }, []);
 
-  // loading states
+  // loading states & data object
   const [recommendedBooks, setRecommendedBooks] = useState<RecommendedBooks[]>(
     []
   );
@@ -81,7 +81,7 @@ const RecommendedBooks: React.FC<RecommendedBooks> = () => {
               .fill(0)
               .map((_, i) => <Skeleton key={i} width={195} height={375} />)
           : recommendedBooks.map((book, id) => (
-              <Link href={`/book/${book.id}`}>
+              <div onClick={() => handleBookClick(book.id.toString())}>
                 <BookCard
                   key={id}
                   id={""}
@@ -93,7 +93,7 @@ const RecommendedBooks: React.FC<RecommendedBooks> = () => {
                   averageRating={0}
                   book={book}
                 />
-              </Link>
+              </div>
             ))}
       </div>
     </div>

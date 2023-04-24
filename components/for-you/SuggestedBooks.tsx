@@ -26,7 +26,7 @@ interface SuggestedBooks {
   handleBookClick: (id: string) => void;
 }
 
-const SuggestedBooks: React.FC<SuggestedBooks> = () => {
+const SuggestedBooks: React.FC<SuggestedBooks> = ({ handleBookClick }) => {
   useEffect(() => {
     suggestedBookQuery();
   }, []);
@@ -77,17 +77,19 @@ const SuggestedBooks: React.FC<SuggestedBooks> = () => {
               .fill(0)
               .map((_, i) => <Skeleton key={i} width={195} height={375} />)
           : suggestedBooks.map((book, id) => (
-              <BookCard
-                key={id}
-                id={""}
-                subscriptionRequired={false}
-                imageLink={""}
-                title={""}
-                author={""}
-                subTitle={""}
-                averageRating={0}
-                book={book}
-              />
+              <div onClick={() => handleBookClick(book.id.toString())}>
+                <BookCard
+                  key={id}
+                  id={""}
+                  subscriptionRequired={false}
+                  imageLink={""}
+                  title={""}
+                  author={""}
+                  subTitle={""}
+                  averageRating={0}
+                  book={book}
+                />
+              </div>
             ))}
       </div>
     </div>

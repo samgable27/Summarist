@@ -8,8 +8,8 @@ import SuggestedBooks from "../components/for-you/SuggestedBooks";
 import { useRouter } from "next/router";
 import Library from "./library";
 import Settings from "./settings";
-import axios from "axios";
 import BookDetails from "./book/[id]";
+import dynamic from "next/dynamic";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -35,12 +35,13 @@ interface ForYouProps {
 
 const ForYou: React.FC<ForYouProps> = () => {
   const [activeSection, setActiveSection] = useState("for-you");
-  const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
-
+  const [showDynamicComponent, setShowDynamicComponent] = useState(false);
   const router = useRouter();
 
+  const DynamicComponent = dynamic(() => import("../pages/book/[id]"));
+
   const handleBookClick = (id: string) => {
-    setSelectedBookId(id);
+    setShowDynamicComponent(true);
     router.push(`/book/${id}`, undefined, { shallow: true });
   };
 
@@ -68,15 +69,17 @@ const ForYou: React.FC<ForYouProps> = () => {
             <Library />
           ) : activeSection === "settings" ? (
             <Settings />
-          ) : selectedBookId ? (
-            <BookDetails book={undefined} />
           ) : (
             <>
-              <SelectedBooks handleBookClick={handleBookClick} />
+              <SelectedBooks
+                onClick={() => setShowDynamicComponent(!showDynamicComponent)}
+                handleBookClick={handleBookClick}
+              />
               <RecommendedBooks handleBookClick={handleBookClick} />
               <SuggestedBooks handleBookClick={handleBookClick} />
             </>
           )}
+          {showDynamicComponent && <DynamicComponent book={undefined} />}
         </div>
       </div>
     </section>

@@ -15,6 +15,7 @@ export const ModalContextProvider: React.FC<ModalContextProps> = ({
   children,
 }) => {
   const modalState = store();
+
   return (
     <ModalContext.Provider value={modalState}>{children}</ModalContext.Provider>
   );

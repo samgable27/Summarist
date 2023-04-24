@@ -135,7 +135,7 @@ const BookDetails: React.FC<BookDetailProps> = () => {
           ) : (
             <>
               <div>
-                <button>
+                <button onClick={() => router.push(`/player/${book.id}`)}>
                   <div>
                     <BookOutlined />
                   </div>

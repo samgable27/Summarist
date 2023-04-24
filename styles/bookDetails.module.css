@@ -135,3 +135,19 @@
 .description {
   margin-bottom: 16px;
 }
+
+.summaryWrapper {
+  white-space: pre-line;
+  line-height: 1.4;
+  color: #032b41;
+}
+
+.playerTitle {
+  color: #032b41;
+  font-size: 24px;
+  border-bottom: 1px solid #e1e7ea;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  line-height: 1.5;
+  font-weight: bold;
+}

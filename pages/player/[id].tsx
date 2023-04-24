@@ -1,34 +1,21 @@
-import BookDetails from "../../components/UI/BookDetails";
 import Nav from "../../components/for-you/Nav";
 import Sidebar from "../../components/for-you/Sidebar";
 import styles from "..//..//styles/for-you.module.css";
 import { useState } from "react";
 import Library from "../library";
 import Settings from "../settings";
+import PlayerDetails from "../../components/UI/PlayerDetails";
 
-interface BookProps {
-  author?: string;
+interface BookPlayerProps {
   title?: string;
-  subTitle?: string;
-  content?: string;
-  imageLink?: string;
   audioLink?: string;
-  totalRating?: number;
-  averageRating?: number;
-  keyIdeas?: number;
-  type?: string;
-  status?: string;
   subscriptionRequired?: boolean;
   summary?: string;
-  tags?: string[];
-  bookDescription?: string;
-  authorDescription?: string;
   id: string | string[] | undefined;
   close?: () => void;
-  book: any;
 }
 
-const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
+const BookPlayer: React.FC<{ book: BookPlayerProps }> = () => {
   const [activeSection, setActiveSection] = useState("for-you");
 
   return (
@@ -56,7 +43,7 @@ const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
           ) : activeSection === "settings" ? (
             <Settings />
           ) : (
-            <BookDetails id={""} />
+            <PlayerDetails id={""} title={""} summary={""} />
           )}
         </div>
       </div>
@@ -64,4 +51,4 @@ const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
   );
 };
 
-export default BookDetailsWrapper;
+export default BookPlayer;

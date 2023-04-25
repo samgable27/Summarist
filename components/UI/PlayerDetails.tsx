@@ -47,8 +47,8 @@ const PlayerDetails: React.FC<PlayerDetailProps> = () => {
   };
 
   return (
-    <div className={bookStyles.wrapper}>
-      <div className={bookStyles.content}>
+    <div className={bookStyles.playerWrapper}>
+      <div className={bookStyles.playerContent}>
         <div
           style={{
             position: "relative",
@@ -79,7 +79,13 @@ const PlayerDetails: React.FC<PlayerDetailProps> = () => {
         <div className={bookStyles.summaryWrapper}>{book?.summary}</div>
       </div>
       <span>
-        <AudioPlayer title={""} author={""} imageLink={""} audioLink={""} />
+        <AudioPlayer
+          book={book}
+          title={""}
+          author={""}
+          imageLink={""}
+          audioLink={""}
+        />
       </span>
     </div>
   );

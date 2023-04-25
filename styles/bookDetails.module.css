@@ -47,6 +47,7 @@
   font-size: 16px;
   color: #032b41;
   margin-bottom: 16px;
+  font-weight: bold;
 }
 
 .content h3 {
@@ -150,4 +151,25 @@
   padding-bottom: 16px;
   line-height: 1.5;
   font-weight: bold;
+}
+
+.playerWrapper {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+}
+
+.audioWrapper {
+  width: 100%;
+  height: 80px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #042330;
+  padding: 0 40px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 9998;
 }

@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 interface BookDetailProps {
   author?: string;
@@ -179,8 +178,8 @@ const BookDetails: React.FC<BookDetailProps> = () => {
               <h3>What's it about?</h3>
             </div>
             <div className={bookStyles.tagsWrapper}>
-              <span>Productivity</span>
-              <span>Personal Development</span>
+              <span>{book?.tags?.[0]}</span>
+              {book?.tags?.[1] && <span>{book?.tags?.[1]}</span>}
             </div>
           </>
         )}

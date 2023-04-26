@@ -9,12 +9,12 @@ import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
 
 interface PlayerDetailProps {
   subscriptionRequired?: boolean;
-  title: string;
-  summary: string;
-  id: string | string[] | undefined;
-  audioLink: string;
-  author: string;
-  imageLink: string;
+  title?: string;
+  summary?: string;
+  id?: string | string[] | undefined;
+  audioLink?: string;
+  author?: string;
+  imageLink?: string;
 }
 
 const PlayerDetails: React.FC<PlayerDetailProps> = () => {

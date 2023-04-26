@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import bookStyles from "..//..//styles/bookDetails.module.css";
+import Image from "next/image";
 
 interface AudioPlayerProps {
   title: string;
@@ -9,73 +10,83 @@ interface AudioPlayerProps {
   book: any;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ book }) => {
-  const [currentAudioIndex, setCurrentAudioIndex] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [progress, setProgress] = useState<number>(0);
-
-  const audioRef = useRef<HTMLAudioElement>(null);
+const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(audioLink));
 
   useEffect(() => {
-    if (isPlaying) {
-      audioRef.current?.play();
-    } else {
-      audioRef.current?.pause();
-    }
-  }, [isPlaying]);
+    const audio = audioRef.current;
+    audio.addEventListener("timeupdate", () =>
+      setCurrentTime(audio.currentTime)
+    );
+    audio.addEventListener("loadedmetadata", () => setDuration(audio.duration));
+    audio.addEventListener("ended", () => setIsPlaying(false));
+
+    return () => {
+      audio.removeEventListener("timeupdate", () =>
+        setCurrentTime(audio.currentTime)
+      );
+      audio.removeEventListener("loadedmetadata", () =>
+        setDuration(audio.duration)
+      );
+      audio.removeEventListener("ended", () => setIsPlaying(false));
+    };
+  }, [audioLink]);
 
   const togglePlay = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
     setIsPlaying(!isPlaying);
   };
 
-  const shiftAudio = (seconds: number) => {
-    if (audioRef.current && Number.isFinite(audioRef.current.duration)) {
-      const newTime = audioRef.current.currentTime + seconds;
-      audioRef.current.currentTime = Math.max(
-        0,
-        Math.min(newTime, audioRef.current.duration)
-      );
-    }
+  const skip = (seconds: number) => {
+    audioRef.current.currentTime += seconds;
   };
 
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      setProgress(
-        (audioRef.current.currentTime / audioRef.current.duration) * 100
-      );
-    }
+  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newTime = parseFloat(event.target.value);
+    audioRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
   };
 
-  const handleScrub = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newPosition = parseFloat(event.target.value);
-    if (audioRef.current && Number.isFinite(audioRef.current.duration)) {
-      audioRef.current.currentTime =
-        (newPosition * audioRef.current.duration) / 100;
-    }
+  const formatTime = (time: number): string => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
-
   return (
     <div className={bookStyles.audioWrapper}>
-      <audio
-        src={book?.audioLinks?.[currentAudioIndex]}
-        ref={audioRef}
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)}
-      />
-      <div className={bookStyles.audioTrack__wrapper}></div>
-      <div className={bookStyles.audioCtrl__wrapper}></div>
-      <div className={bookStyles.audioPrg__wrapper}></div>
-      <button onClick={() => shiftAudio(-10)}>Back</button>
-      <button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</button>
-      <button onClick={() => shiftAudio(10)}>Forward</button>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        step="1"
-        value={progress}
-        onChange={handleScrub}
-      />
+      <audio src={book?.audioLink}></audio>
+      <div className={bookStyles.audioTrack__wrapper}>
+        <figure>
+          <Image src={book?.imageLink} width={48} height={48} alt={""} />
+        </figure>
+        <div className={bookStyles.audioTrackDetails__wrapper}>
+          <span>{book?.title}</span>
+          <div>{book?.author}</div>
+        </div>
+      </div>
+      <div className={bookStyles.audioCtrl__wrapper}>
+        <button onClick={() => skip(-10)}>&lt;&lt;</button>
+        <button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</button>
+        <button onClick={() => skip(10)}>&gt;&gt;</button>
+      </div>
+      <div className={bookStyles.audioPrg__wrapper}>
+        <input
+          type="range"
+          min={0}
+          max={duration}
+          value={currentTime}
+          onChange={handleSliderChange}
+          step="any"
+          style={{}}
+        />
+      </div>
     </div>
   );
 };

@@ -12,6 +12,9 @@ interface PlayerDetailProps {
   title: string;
   summary: string;
   id: string | string[] | undefined;
+  audioLink: string;
+  author: string;
+  imageLink: string;
 }
 
 const PlayerDetails: React.FC<PlayerDetailProps> = () => {
@@ -83,10 +86,10 @@ const PlayerDetails: React.FC<PlayerDetailProps> = () => {
       <span>
         <AudioPlayer
           book={book}
-          title={""}
-          author={""}
-          imageLink={""}
-          audioLink={""}
+          title={book?.title}
+          author={book?.author}
+          imageLink={book?.imageLink}
+          audioLink={book?.audioLink}
         />
       </span>
     </div>

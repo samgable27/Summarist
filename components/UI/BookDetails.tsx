@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
-import { useStore } from "zustand";
 import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
 
 interface BookDetailProps {
@@ -162,7 +161,7 @@ const BookDetails: React.FC<BookDetailProps> = () => {
                 </button>
               </div>
               <div onClick={handleToggleAudioPlayer}>
-                <button>
+                <button onClick={() => router.push(`/player/${book.id}`)}>
                   <div>
                     <AudioOutlined />
                   </div>

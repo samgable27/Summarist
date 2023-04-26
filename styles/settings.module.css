@@ -2,7 +2,7 @@
   text-align: left;
   border-bottom: 1px solid #e1e7ea;
   padding-bottom: 16px;
-  font-size: 22px;
+  font-size: 32px;
   color: #032b41;
   font-weight: bold;
 }
@@ -40,6 +40,22 @@
   align-items: center;
   justify-content: center;
   max-width: 180px;
+}
+
+.loginWrapper {
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.loginWrapper h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #032b41;
+  text-align: center;
+  margin-bottom: 16px;
 }
 
 @media (max-width: 1600px) {

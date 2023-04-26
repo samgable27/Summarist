@@ -159,6 +159,10 @@
   flex-direction: column;
 }
 
+.playerContent {
+  margin: 0 0 24px 0;
+}
+
 .audioWrapper {
   width: 100%;
   height: 80px;
@@ -172,4 +176,54 @@
   bottom: 0;
   left: 0;
   z-index: 9998;
+}
+
+.audioTrack__wrapper,
+.audioCtrl__wrapper,
+.audioPrg__wrapper,
+.audioTrackDetails__wrapper {
+  width: calc(100% / 3);
+}
+
+.audioTrack__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.audioTrack__wrapper figure {
+  height: 100%;
+}
+
+.audioTrackDetails__wrapper {
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+}
+
+.audioTrackDetails__wrapper div {
+  color: #bac8ce;
+}
+
+.audioTrackDetails__wrapper span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.audioPrg__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 1600px) {
+  .wrapper,
+  .playerWrapper {
+    margin-left: 250px;
+  }
 }

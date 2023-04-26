@@ -41,3 +41,10 @@
   justify-content: center;
   max-width: 180px;
 }
+
+@media (max-width: 1600px) {
+  .settingWrapper {
+    width: 100%;
+    margin-left: 200px;
+  }
+}

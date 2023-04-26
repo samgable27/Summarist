@@ -1,0 +1,31 @@
+.libContainer span {
+  font-size: 22px;
+  font-weight: 700;
+  color: #032b41;
+  margin-bottom: 16px;
+}
+
+.libContainer p {
+  font-weight: 300;
+  color: #394547;
+  margin: 16px 0;
+}
+
+.libBlockWrapper {
+  background-color: #f1f6f4;
+  max-width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px;
+  border-radius: 12px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+
+.libBlockWrapper h2 {
+  color: #042330;
+  font-weight: 600;
+  font-size: 18px;
+}

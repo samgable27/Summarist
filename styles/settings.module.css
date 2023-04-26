@@ -1,0 +1,43 @@
+.sectionTitle {
+  text-align: left;
+  border-bottom: 1px solid #e1e7ea;
+  padding-bottom: 16px;
+  font-size: 22px;
+  color: #032b41;
+  font-weight: bold;
+}
+
+.settingContentTop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 32px 0 32px 0;
+  border-bottom: 1px solid #e1e7ea;
+  padding-bottom: 24px;
+}
+
+.settingContentTop h2,
+.settingContentTop p,
+.settingContentBtm h2,
+.settingContentBtm p {
+  font-size: 18px;
+  color: #032b41;
+}
+
+.settingContentBtm p {
+  padding-top: 8px;
+}
+
+.settingContentTop button {
+  background-color: #2bd97c;
+  height: 40px;
+  width: 50%;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 180px;
+}

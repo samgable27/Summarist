@@ -5,17 +5,13 @@ import { SearchOutlined } from "@ant-design/icons";
 
 interface SearchBarProps {
   onSearch: (value: string) => void;
-  placeholder?: string;
 }
 
 const { Search } = Input;
 
 const CustomSearchIcon = () => <SearchOutlined style={{ color: "black" }} />;
 
-const SearchBar: React.FC<SearchBarProps> = ({
-  onSearch,
-  placeholder = "Search...",
-}) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   return (
     <Space direction="vertical">
       <Search

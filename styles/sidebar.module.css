@@ -30,12 +30,14 @@
 }
 
 .sb__topContainer a,
-.sb__btmContainer a {
+.sb__btmContainer a,
+.sb__btmShiftedUp a {
   padding: 20px 0px;
 }
 
 .sb__topContainer a:hover,
-.sb__btmContainer a:hover {
+.sb__btmContainer a:hover,
+.sb__btmShiftedUp a:hover {
   background-color: #f0efef;
 }
 
@@ -54,8 +56,17 @@
   cursor: pointer;
 }
 
+.sb__btmShiftedUp {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  cursor: pointer;
+  margin-bottom: 100px;
+}
+
 .sb__topContainer a,
-.sb__btmContainer a {
+.sb__btmContainer a,
+.sb__btmShiftedUp a {
   color: #032b41 !important;
   font-weight: 400;
   display: flex;

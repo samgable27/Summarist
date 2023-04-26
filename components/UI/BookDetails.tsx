@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
+import { useStore } from "zustand";
+import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
 
 interface BookDetailProps {
   author?: string;
@@ -38,7 +40,20 @@ interface BookDetailProps {
 const BookDetails: React.FC<BookDetailProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [book, setBook] = useState<BookDetailProps | null>(null);
+
   const router = useRouter();
+
+  const isAudioPlayerPresent = useAudioPlayerStore(
+    (state) => state.isAudioPlayerPresent
+  );
+
+  const setIsAudioPlayerPresent = useAudioPlayerStore(
+    (state) => state.setIsAudioPlayerPresent
+  );
+
+  const handleToggleAudioPlayer = () => {
+    setIsAudioPlayerPresent(!isAudioPlayerPresent);
+  };
 
   useEffect(() => {
     fetchBookData();
@@ -57,6 +72,11 @@ const BookDetails: React.FC<BookDetailProps> = () => {
   };
 
   const handleBackClick = () => {
+    if (isAudioPlayerPresent) {
+      return setIsAudioPlayerPresent(!isAudioPlayerPresent);
+    } else {
+      setIsAudioPlayerPresent(false);
+    }
     router.push("/for-you");
   };
 
@@ -133,7 +153,7 @@ const BookDetails: React.FC<BookDetailProps> = () => {
             <Skeleton width={330} height={30} />
           ) : (
             <>
-              <div>
+              <div onClick={handleToggleAudioPlayer}>
                 <button onClick={() => router.push(`/player/${book.id}`)}>
                   <div>
                     <BookOutlined />
@@ -141,7 +161,7 @@ const BookDetails: React.FC<BookDetailProps> = () => {
                   <span>Read</span>
                 </button>
               </div>
-              <div>
+              <div onClick={handleToggleAudioPlayer}>
                 <button>
                   <div>
                     <AudioOutlined />

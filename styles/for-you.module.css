@@ -136,6 +136,7 @@
 
 .bookCardContainer:hover {
   background-color: #f1f6f4;
+  height: 375px;
   border-radius: 4px 4px 4px 4px;
 }
 

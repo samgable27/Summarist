@@ -14,6 +14,7 @@ import {
 import { useModalStore } from "../../src/store/store-client";
 import LoginModal from "../auth/LoginModal";
 import { useRouter } from "next/router";
+import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
 
 interface SidebarProps {
   activeSection: string;
@@ -27,8 +28,25 @@ const Sidebar: React.FC<SidebarProps> = ({
   activeSection,
   setActiveSection,
 }) => {
-  const { isAuthenticated, logout, showModal } = useModalStore();
   const router = useRouter();
+
+  const { isAuthenticated, logout, showModal } = useModalStore();
+
+  const isAudioPlayerPresent = useAudioPlayerStore(
+    (state) => state.isAudioPlayerPresent
+  );
+
+  const setIsAudioPlayerPresent = useAudioPlayerStore(
+    (state) => state.setIsAudioPlayerPresent
+  );
+
+  const handleToggleAudioPlayer = () => {
+    if (isAudioPlayerPresent) {
+      return setIsAudioPlayerPresent(!isAudioPlayerPresent);
+    } else {
+      setIsAudioPlayerPresent(false);
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -37,7 +55,6 @@ const Sidebar: React.FC<SidebarProps> = ({
       router.push("/");
     }, 600);
   };
-
   useEffect(() => {}, [isAuthenticated]);
 
   return (
@@ -47,7 +64,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       <div className={styles.sb__linksContainer}>
-        <div className={styles.sb__topContainer}>
+        <div
+          onClick={handleToggleAudioPlayer}
+          className={styles.sb__topContainer}
+        >
           <a
             onClick={() => {
               setActiveSection("for-you");
@@ -98,7 +118,13 @@ const Sidebar: React.FC<SidebarProps> = ({
           </a>
         </div>
 
-        <div className={styles.sb__btmContainer}>
+        <div
+          className={
+            isAudioPlayerPresent
+              ? styles.sb__btmShiftedUp
+              : styles.sb__btmContainer
+          }
+        >
           <a
             onClick={() => {
               setActiveSection("settings");

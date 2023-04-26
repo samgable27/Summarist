@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 import bookStyles from "..//..//styles/bookDetails.module.css";
-import Image from "next/image";
-import {
-  AudioOutlined,
-  BookOutlined,
-  BulbOutlined,
-  ClockCircleOutlined,
-  LeftOutlined,
-  StarOutlined,
-} from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 import axios from "axios";
 import AudioPlayer from "./AudioPlayer";
+import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
 
 interface PlayerDetailProps {
   subscriptionRequired?: boolean;
@@ -22,17 +15,25 @@ interface PlayerDetailProps {
 }
 
 const PlayerDetails: React.FC<PlayerDetailProps> = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [book, setBook] = useState<PlayerDetailProps | null>(null);
-  const router = useRouter();
-
   useEffect(() => {
     fetchBookData();
   }, []);
 
-  const fetchBookData = async () => {
-    const { id } = router.query;
+  const [loading, setLoading] = useState<boolean>(false);
+  const [book, setBook] = useState<PlayerDetailProps | null>(null);
 
+  const isAudioPlayerPresent = useAudioPlayerStore(
+    (state) => state.isAudioPlayerPresent
+  );
+
+  const setIsAudioPlayerPresent = useAudioPlayerStore(
+    (state) => state.setIsAudioPlayerPresent
+  );
+
+  const router = useRouter();
+  const { id } = router.query;
+
+  const fetchBookData = async () => {
     setLoading(true);
     const { data } = await axios.get(
       `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
@@ -43,7 +44,8 @@ const PlayerDetails: React.FC<PlayerDetailProps> = () => {
   };
 
   const handleBackClick = () => {
-    router.push("/for-you");
+    setIsAudioPlayerPresent(!isAudioPlayerPresent);
+    router.push(`/book/${id}`);
   };
 
   return (

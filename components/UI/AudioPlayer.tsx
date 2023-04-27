@@ -7,6 +7,9 @@ import {
   RedoOutlined,
   UndoOutlined,
 } from "@ant-design/icons";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import SpinIcon from "./SpinIcon";
 
 interface AudioPlayerProps {
   title: string;
@@ -14,9 +17,14 @@ interface AudioPlayerProps {
   imageLink: string;
   audioLink: string;
   book: any;
+  loading: boolean;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({
+  book,
+  audioLink,
+  loading,
+}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -25,7 +33,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
   // runs when audioLink changes
   useEffect(() => {
     if (typeof window !== "undefined") {
-      audioRef.current = new Audio(audioLink);
+      audioRef.current = new Audio(book?.audioLink);
 
       const audio = audioRef.current;
       audio.addEventListener("timeupdate", () =>
@@ -77,13 +85,26 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
   return (
     <div className={bookStyles.audioWrapper}>
       <div className={bookStyles.audioTrack__wrapper}>
-        <figure>
-          <Image src={book?.imageLink} width={48} height={48} alt={""} />
-        </figure>
-        <div className={bookStyles.audioTrackDetails__wrapper}>
-          <span>{book?.title}</span>
-          <div>{book?.author}</div>
-        </div>
+        {loading ? (
+          <Skeleton
+            containerClassName={bookStyles.audioWrapper}
+            style={{
+              backgroundColor: "#bfc8d6",
+            }}
+            width={1200}
+            height={48}
+          />
+        ) : (
+          <>
+            <figure>
+              <Image src={book?.imageLink} width={48} height={48} alt={""} />
+            </figure>
+            <div className={bookStyles.audioTrackDetails__wrapper}>
+              <span>{book?.title}</span>
+              <div>{book?.author}</div>
+            </div>
+          </>
+        )}
       </div>
       <div className={bookStyles.audioCtrl__wrapper}>
         <div onClick={() => skip(-10)}>
@@ -111,7 +132,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
           onChange={handleSliderChange}
           step="any"
         />
-        <div>{formatTime(duration)}</div>
+        <div>{loading ? <SpinIcon /> : formatTime(duration)}</div>
       </div>
     </div>
   );

@@ -90,6 +90,7 @@ const PlayerDetails: React.FC<PlayerDetailProps> = () => {
           author={book?.author}
           imageLink={book?.imageLink}
           audioLink={book?.audioLink}
+          loading={loading}
         />
       </span>
     </div>

@@ -33,9 +33,9 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   // runs when audioLink changes
   useEffect(() => {
     if (typeof window !== "undefined") {
-      audioRef.current = new Audio(book?.audioLink);
+      const audio = new Audio(book?.audioLink);
+      audioRef.current = audio;
 
-      const audio = audioRef.current;
       audio.addEventListener("timeupdate", () =>
         setCurrentTime(audio.currentTime)
       );

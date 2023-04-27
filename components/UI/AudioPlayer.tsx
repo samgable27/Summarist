@@ -19,26 +19,55 @@ interface AudioPlayerProps {
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(book?.audioLink);
-  const audioRef = useRef<HTMLAudioElement>(new Audio(audioLink));
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(book?.audioLink));
 
   useEffect(() => {
-    const audio = audioRef.current;
-    audio.addEventListener("timeupdate", () =>
-      setCurrentTime(audio.currentTime)
-    );
-    audio.addEventListener("loadedmetadata", () => setDuration(audio.duration));
-    audio.addEventListener("ended", () => setIsPlaying(false));
-
-    return () => {
-      audio.removeEventListener("timeupdate", () =>
+    if (audioRef.current) {
+      const audio = audioRef.current;
+      audio.addEventListener("timeupdate", () =>
         setCurrentTime(audio.currentTime)
       );
-      audio.removeEventListener("loadedmetadata", () =>
+      audio.addEventListener("loadedmetadata", () =>
         setDuration(audio.duration)
       );
-      audio.removeEventListener("ended", () => setIsPlaying(false));
-    };
+      audio.addEventListener("ended", () => setIsPlaying(false));
+
+      return () => {
+        audio.removeEventListener("timeupdate", () =>
+          setCurrentTime(audio.currentTime)
+        );
+        audio.removeEventListener("loadedmetadata", () =>
+          setDuration(audio.duration)
+        );
+        audio.removeEventListener("ended", () => setIsPlaying(false));
+      };
+    }
+  }, [audioLink]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      audioRef.current = new Audio(audioLink);
+      const audio = audioRef.current;
+
+      audio.addEventListener("timeupdate", () =>
+        setCurrentTime(audio.currentTime)
+      );
+      audio.addEventListener("loadedmetadata", () =>
+        setDuration(audio.duration)
+      );
+      audio.addEventListener("ended", () => setIsPlaying(false));
+
+      return () => {
+        audio.removeEventListener("timeupdate", () =>
+          setCurrentTime(audio.currentTime)
+        );
+        audio.removeEventListener("loadedmetadata", () =>
+          setDuration(audio.duration)
+        );
+        audio.removeEventListener("ended", () => setIsPlaying(false));
+      };
+    }
   }, [audioLink]);
 
   const togglePlay = () => {
@@ -69,7 +98,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
 
   return (
     <div className={bookStyles.audioWrapper}>
-      <audio src={book?.audioLink}></audio>
       <div className={bookStyles.audioTrack__wrapper}>
         <figure>
           <Image src={book?.imageLink} width={48} height={48} alt={""} />

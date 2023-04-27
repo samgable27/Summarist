@@ -1,0 +1,142 @@
+.planWrap {
+  width: 100%;
+}
+
+.planHeader {
+  max-width: 1000px;
+  margin: 0 auto;
+  color: #fff;
+  padding: 0 24px;
+}
+
+.imgMask {
+  display: flex;
+  justify-content: center;
+  max-width: 340px;
+  margin: 0 auto;
+  border-radius: 180px 180px 0 0;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.subTitle {
+  font-size: 20px;
+  margin-bottom: 32px;
+}
+
+.planHeaderWrap {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  padding-top: 48px;
+  margin-bottom: 24px;
+}
+
+.planHeaderWrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: #032b41;
+  border-bottom-right-radius: 16rem;
+  border-bottom-left-radius: 16rem;
+}
+
+.featuresWrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  text-align: center;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto 56px;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  color: #032b41;
+  margin-bottom: 22px;
+  font-size: 48px;
+}
+
+.featuresText {
+  color: #394547;
+  line-height: 1.5;
+}
+
+.sectionTitle {
+  font-size: 32px;
+  color: #032b41;
+  text-align: center;
+  margin-bottom: 32px;
+  font-weight: 700;
+}
+
+.planCardSeparator {
+  font-size: 14px;
+  color: #6b757b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 240px;
+  margin: 24px auto;
+}
+
+.planCardSeparator::before,
+.planCardSeparator::after {
+  content: "";
+  flex-grow: 1;
+  height: 1px;
+  background: #bac8ce;
+}
+
+.planCard {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  background-color: #f1f6f4;
+  border: 4px solid #bac8ce;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.circle {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.planTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #032b41;
+  margin-bottom: 8px;
+}
+
+.planPrice {
+  font-size: 24px;
+  font-weight: 700;
+  color: #032b41;
+  margin-bottom: 8px;
+}
+
+.planText {
+  color: #6b757b;
+  font-size: 14px;
+}

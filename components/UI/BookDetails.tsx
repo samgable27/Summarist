@@ -14,6 +14,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
+import { useModalStore } from "../../src/store/store-client";
 
 interface BookDetailProps {
   author?: string;
@@ -153,7 +154,13 @@ const BookDetails: React.FC<BookDetailProps> = () => {
           ) : (
             <>
               <div onClick={handleToggleAudioPlayer}>
-                <button onClick={() => router.push(`/player/${book.id}`)}>
+                <button
+                  onClick={() =>
+                    book?.subscriptionRequired
+                      ? router.push("/choose-plan")
+                      : router.push(`/player/${book.id}`)
+                  }
+                >
                   <div>
                     <BookOutlined />
                   </div>
@@ -161,7 +168,13 @@ const BookDetails: React.FC<BookDetailProps> = () => {
                 </button>
               </div>
               <div onClick={handleToggleAudioPlayer}>
-                <button onClick={() => router.push(`/player/${book.id}`)}>
+                <button
+                  onClick={() =>
+                    book?.subscriptionRequired
+                      ? router.push("/choose-plan")
+                      : router.push(`/player/${book.id}`)
+                  }
+                >
                   <div>
                     <AudioOutlined />
                   </div>

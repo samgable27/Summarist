@@ -22,34 +22,12 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(new Audio(book?.audioLink));
 
-  useEffect(() => {
-    if (audioRef.current) {
-      const audio = audioRef.current;
-      audio.addEventListener("timeupdate", () =>
-        setCurrentTime(audio.currentTime)
-      );
-      audio.addEventListener("loadedmetadata", () =>
-        setDuration(audio.duration)
-      );
-      audio.addEventListener("ended", () => setIsPlaying(false));
-
-      return () => {
-        audio.removeEventListener("timeupdate", () =>
-          setCurrentTime(audio.currentTime)
-        );
-        audio.removeEventListener("loadedmetadata", () =>
-          setDuration(audio.duration)
-        );
-        audio.removeEventListener("ended", () => setIsPlaying(false));
-      };
-    }
-  }, [audioLink]);
-
+  // runs when audioLink changes
   useEffect(() => {
     if (typeof window !== "undefined") {
       audioRef.current = new Audio(audioLink);
-      const audio = audioRef.current;
 
+      const audio = audioRef.current;
       audio.addEventListener("timeupdate", () =>
         setCurrentTime(audio.currentTime)
       );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Nav from "../components/for-you/Nav";
 import styles from "../styles/for-you.module.css";
 import Sidebar from "../components/for-you/Sidebar";
@@ -6,8 +6,6 @@ import SelectedBooks from "../components/for-you/SelectedBooks";
 import RecommendedBooks from "../components/for-you/RecommendedBooks";
 import SuggestedBooks from "../components/for-you/SuggestedBooks";
 import { useRouter } from "next/router";
-import Library from "./library";
-import Settings from "./settings";
 
 interface ForYouProps {
   children?: React.ReactNode;
@@ -59,17 +57,9 @@ const ForYou: React.FC<ForYouProps> = () => {
       </header>
       <div className="row">
         <div className="fy--container">
-          {activeSection === "My Library" ? (
-            <Library />
-          ) : activeSection === "settings" ? (
-            <Settings />
-          ) : (
-            <>
-              <SelectedBooks handleBookClick={handleBookClick} />
-              <RecommendedBooks handleBookClick={handleBookClick} />
-              <SuggestedBooks handleBookClick={handleBookClick} />
-            </>
-          )}
+          <SelectedBooks handleBookClick={handleBookClick} />
+          <RecommendedBooks handleBookClick={handleBookClick} />
+          <SuggestedBooks handleBookClick={handleBookClick} />
         </div>
       </div>
     </section>

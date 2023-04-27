@@ -80,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 style={{ paddingRight: "10px", fontSize: "20px" }}
               />
             </div>
-            <div>For You</div>
+            <div onClick={() => router.push("/for-you")}>For You</div>
           </a>
           <a
             onClick={() => {
@@ -98,7 +98,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 style={{ paddingRight: "10px", fontSize: "20px" }}
               />
             </div>
-            <div>My Library</div>
+            <div onClick={() => router.push("/library")}>My Library</div>
           </a>
           <a className={styles.sbLink__notAllowed}>
             <div className={styles.sbIcon}>
@@ -137,7 +137,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 style={{ paddingRight: "10px", fontSize: "20px" }}
               />
             </div>
-            <div>Settings</div>
+            <div onClick={() => router.push("/settings")}>Settings</div>
           </a>
           <a className={styles.sbLink__notAllowed}>
             <div className={styles.sbIcon}>

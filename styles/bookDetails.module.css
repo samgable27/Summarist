@@ -215,10 +215,51 @@
   text-overflow: ellipsis;
 }
 
+.audioCtrl__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.skip {
+  font-size: 30px;
+  color: #fff;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.play,
+.pause {
+  font-size: 40px;
+  color: #fff;
+  transition: all 0.2s;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.audioCtrl__wrapper button {
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 .audioPrg__wrapper {
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.audioPrg__wrapper div {
+  color: #fff;
+  font-size: 16px;
+}
+.prgBar {
+  border-radius: 8px;
+  height: 4px;
+  max-width: 300px;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
 }
 
 @media (max-width: 1600px) {

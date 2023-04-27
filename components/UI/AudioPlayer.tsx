@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import bookStyles from "..//..//styles/bookDetails.module.css";
 import Image from "next/image";
+import {
+  PauseCircleOutlined,
+  PlayCircleOutlined,
+  RedoOutlined,
+  UndoOutlined,
+} from "@ant-design/icons";
 
 interface AudioPlayerProps {
   title: string;
@@ -13,7 +19,7 @@ interface AudioPlayerProps {
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(book?.audioLink);
   const audioRef = useRef<HTMLAudioElement>(new Audio(audioLink));
 
   useEffect(() => {
@@ -43,6 +49,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
     }
     setIsPlaying(!isPlaying);
   };
+  console.log(book?.audioLink);
 
   const skip = (seconds: number) => {
     audioRef.current.currentTime += seconds;
@@ -59,6 +66,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
+
   return (
     <div className={bookStyles.audioWrapper}>
       <audio src={book?.audioLink}></audio>
@@ -72,20 +80,32 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ book, audioLink }) => {
         </div>
       </div>
       <div className={bookStyles.audioCtrl__wrapper}>
-        <button onClick={() => skip(-10)}>&lt;&lt;</button>
-        <button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</button>
-        <button onClick={() => skip(10)}>&gt;&gt;</button>
+        <div onClick={() => skip(-10)}>
+          <UndoOutlined className={bookStyles.skip} />
+        </div>
+        <div onClick={togglePlay}>
+          {isPlaying ? (
+            <PauseCircleOutlined className={bookStyles.pause} />
+          ) : (
+            <PlayCircleOutlined className={bookStyles.play} />
+          )}
+        </div>
+        <div onClick={() => skip(10)}>
+          <RedoOutlined className={bookStyles.skip} />
+        </div>
       </div>
       <div className={bookStyles.audioPrg__wrapper}>
+        <div>{formatTime(currentTime)}</div>
         <input
+          className={bookStyles.prgBar}
           type="range"
           min={0}
           max={duration}
           value={currentTime}
           onChange={handleSliderChange}
           step="any"
-          style={{}}
         />
+        <div>{formatTime(duration)}</div>
       </div>
     </div>
   );

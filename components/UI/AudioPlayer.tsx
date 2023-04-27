@@ -64,7 +64,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     }
     setIsPlaying(!isPlaying);
   };
-  console.log(book?.audioLink);
 
   const skip = (seconds: number) => {
     audioRef.current.currentTime += seconds;

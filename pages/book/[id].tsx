@@ -52,7 +52,30 @@ const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
       <div className="row">
         <div className="fy--container">
           {activeSection === "My Library" ? (
-            <Library />
+            <Library
+              content={""}
+              author={""}
+              title={""}
+              subTitle={""}
+              imageLink={""}
+              audioLink={""}
+              totalRating={0}
+              averageRating={0}
+              keyIdeas={0}
+              type={""}
+              status={""}
+              subscriptionRequired={false}
+              summary={""}
+              tags={[]}
+              bookDescription={""}
+              authorDescription={""}
+              close={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              onClick={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
           ) : activeSection === "settings" ? (
             <Settings />
           ) : (

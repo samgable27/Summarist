@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import bookStyles from "..//..//styles/bookDetails.module.css";
 import Image from "next/image";
 import {
@@ -31,7 +31,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   const audioRef = useRef<HTMLAudioElement>(new Audio(book?.audioLink));
 
   // runs when audioLink changes
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       const audio = new Audio(book?.audioLink);
       audioRef.current = audio;

@@ -13,6 +13,7 @@ import {
 import { auth } from "../../firebase";
 import { useModalStore } from "../../src/store/store-client";
 import SpinIcon from "../UI/SpinIcon";
+import { useStore } from "../../src/store/userStore";
 
 interface LoginFormProps {
   children?: React.ReactNode;
@@ -39,8 +40,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const [googleLoading, setGoogleLoading] = useState(false);
 
   const { login } = useModalStore();
-
-  const { isAuthenticated } = useModalStore();
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {

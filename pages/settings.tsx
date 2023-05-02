@@ -5,9 +5,10 @@ import Image from "next/image";
 import navStyles from "../styles/for-you.module.css";
 import LoginModal from "../components/auth/LoginModal";
 import { auth } from "../firebase";
-import { useStore } from "zustand";
 import Nav from "../components/for-you/Nav";
 import Sidebar from "../components/for-you/Sidebar";
+import { useStore } from "../src/store/userStore";
+import { useRouter } from "next/router";
 
 interface SettingsProps {
   children?: React.ReactNode;
@@ -15,21 +16,11 @@ interface SettingsProps {
 }
 
 const Settings: React.FC<SettingsProps> = () => {
-  const { isAuthenticated } = useModalStore();
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
+  const userEmail = useStore((state) => state.userEmail);
   const showModal = useModalStore((state) => state.showModal);
   const [activeSection, setActiveSection] = useState("settings");
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        const userEmail = user.email;
-        console.log("user logged in");
-      } else {
-        console.log("user logged out");
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+  const router = useRouter();
 
   return (
     <>
@@ -58,11 +49,13 @@ const Settings: React.FC<SettingsProps> = () => {
             <div className={styles.settingContentTop}>
               <h2>Your Subscription Plan</h2>
               <p>Basic</p>
-              <button>Upgrade to Premium</button>
+              <button onClick={() => router.push("/choose-plan")}>
+                Upgrade to Premium
+              </button>
             </div>
             <div className={styles.settingContentBtm}>
               <h2>Email</h2>
-              <p>youremail@gmail.com</p>
+              <p>{userEmail}</p>
             </div>
           </div>
         ) : (

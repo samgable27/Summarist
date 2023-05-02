@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import bookStyles from "..//..//styles/bookDetails.module.css";
 import Image from "next/image";
 import {
@@ -10,37 +10,19 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import "react-loading-skeleton/dist/skeleton.css";
-import axios from "axios";
-import Skeleton from "react-loading-skeleton";
 import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
-import { useModalStore } from "../../src/store/store-client";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { Book } from "../../types/Book";
 
 interface BookDetailProps {
-  author?: string;
-  title?: string;
-  subTitle?: string;
-  content?: string;
-  imageLink?: string;
-  audioLink?: string;
-  totalRating?: number;
-  averageRating?: number;
-  keyIdeas?: number;
-  type?: string;
-  status?: string;
-  subscriptionRequired?: boolean;
-  summary?: string;
-  tags?: string[];
-  bookDescription?: string;
-  authorDescription?: string;
-  id: string | string[] | undefined;
+  id: string;
+  book: Book;
   close?: () => void;
+  loading: boolean;
 }
 
-const BookDetails: React.FC<BookDetailProps> = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [book, setBook] = useState<BookDetailProps | null>(null);
-
+const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
   const router = useRouter();
 
   const isAudioPlayerPresent = useAudioPlayerStore(
@@ -55,25 +37,9 @@ const BookDetails: React.FC<BookDetailProps> = () => {
     setIsAudioPlayerPresent(!isAudioPlayerPresent);
   };
 
-  useEffect(() => {
-    fetchBookData();
-  }, []);
-
-  const fetchBookData = async () => {
-    const { id } = router.query;
-
-    setLoading(true);
-    const { data } = await axios.get(
-      `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
-    );
-
-    setBook(data);
-    setLoading(false);
-  };
-
   const handleBackClick = () => {
     if (isAudioPlayerPresent) {
-      return setIsAudioPlayerPresent(!isAudioPlayerPresent);
+      setIsAudioPlayerPresent(!isAudioPlayerPresent);
     } else {
       setIsAudioPlayerPresent(false);
     }

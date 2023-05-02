@@ -1,22 +1,63 @@
 import Nav from "../../components/for-you/Nav";
 import Sidebar from "../../components/for-you/Sidebar";
 import styles from "..//..//styles/for-you.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Library from "../library";
 import Settings from "../settings";
 import PlayerDetails from "../../components/UI/PlayerDetails";
+import { useStore } from "../../src/store/store-client";
+import { Router } from "next/router";
+import { fetchBookDetails } from "../../src/utils/fetchBookDetails";
+import { Book } from "../../types/Book";
 
 interface BookPlayerProps {
-  title?: string;
-  audioLink?: string;
-  subscriptionRequired?: boolean;
-  summary?: string;
-  id: string | string[] | undefined;
-  close?: () => void;
+  author: string;
+  title: string;
+  subTitle: string;
+  content: string;
+  imageLink: string;
+  audioLink: string;
+  totalRating: number;
+  averageRating: number;
+  keyIdeas: number;
+  type: string;
+  status: string;
+  subscriptionRequired: boolean;
+  summary: string;
+  tags: string[];
+  bookDescription: string;
+  authorDescription: string;
+  id: string;
+  book: Book;
+  close: () => void;
 }
 
-const BookPlayer: React.FC<{ book: BookPlayerProps }> = () => {
+const BookPlayer: React.FC<{ book: BookPlayerProps }> = ({ book }) => {
   const [activeSection, setActiveSection] = useState("for-you");
+
+  const loading = useStore((state) => state.loading);
+  const setLoading = useStore((state) => state.setLoading);
+
+  useEffect(() => {
+    setLoading(false);
+
+    const handleStart = () => {
+      setLoading(true);
+    };
+    const handleComplete = () => {
+      setLoading(false);
+    };
+
+    Router.events.on("routeChangeStart", handleStart);
+    Router.events.on("routeChangeComplete", handleComplete);
+    Router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      Router.events.off("routeChangeStart", handleStart);
+      Router.events.off("routeChangeComplete", handleComplete);
+      Router.events.off("routeChangeError", handleComplete);
+    };
+  }, []);
 
   return (
     <section>
@@ -66,7 +107,26 @@ const BookPlayer: React.FC<{ book: BookPlayerProps }> = () => {
           ) : activeSection === "settings" ? (
             <Settings />
           ) : (
-            <PlayerDetails id={""} title={""} summary={""} />
+            <PlayerDetails
+              id={""}
+              title={""}
+              summary={""}
+              author={""}
+              subTitle={""}
+              imageLink={""}
+              audioLink={""}
+              totalRating={0}
+              averageRating={0}
+              keyIdeas={0}
+              type={""}
+              status={""}
+              subscriptionRequired={false}
+              tags={[]}
+              bookDescription={""}
+              authorDescription={""}
+              book={book}
+              loading={loading}
+            />
           )}
         </div>
       </div>
@@ -75,3 +135,5 @@ const BookPlayer: React.FC<{ book: BookPlayerProps }> = () => {
 };
 
 export default BookPlayer;
+
+export const getServerSideProps = fetchBookDetails;

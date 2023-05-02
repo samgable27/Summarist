@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { ModalState } from "./modal/modalState";
 
+interface UseStore {
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+}
+
 export const useModalStore = create<ModalState>((set) => ({
   visible: false,
   isAuthenticated: false,
@@ -10,7 +15,7 @@ export const useModalStore = create<ModalState>((set) => ({
   login: () => set({ isAuthenticated: true }),
 }));
 
-export const useStore = create((set) => ({
+export const useStore = create<UseStore>((set) => ({
   loading: false,
   setLoading: (loading: boolean) => set({ loading }),
 }));

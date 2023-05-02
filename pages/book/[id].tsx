@@ -2,34 +2,61 @@ import BookDetails from "../../components/UI/BookDetails";
 import Nav from "../../components/for-you/Nav";
 import Sidebar from "../../components/for-you/Sidebar";
 import styles from "..//..//styles/for-you.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Library from "../library";
 import Settings from "../settings";
+import { useStore } from "../../src/store/store-client";
+import Router from "next/router";
+import { Book } from "../../types/Book";
+import { fetchBookDetails } from "../../src/utils/fetchBookDetails";
 
 interface BookProps {
-  author?: string;
-  title?: string;
-  subTitle?: string;
-  content?: string;
-  imageLink?: string;
-  audioLink?: string;
-  totalRating?: number;
-  averageRating?: number;
-  keyIdeas?: number;
-  type?: string;
-  status?: string;
-  subscriptionRequired?: boolean;
-  summary?: string;
-  tags?: string[];
-  bookDescription?: string;
-  authorDescription?: string;
-  id: string | string[] | undefined;
-  close?: () => void;
-  book: any;
+  author: string;
+  title: string;
+  subTitle: string;
+  content: string;
+  imageLink: string;
+  audioLink: string;
+  totalRating: number;
+  averageRating: number;
+  keyIdeas: number;
+  type: string;
+  status: string;
+  subscriptionRequired: boolean;
+  summary: string;
+  tags: string[];
+  bookDescription: string;
+  authorDescription: string;
+  id: string;
+  book: Book;
+  close: () => void;
 }
 
 const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
   const [activeSection, setActiveSection] = useState("for-you");
+  const loading = useStore((state) => state.loading);
+  const setLoading = useStore((state) => state.setLoading);
+
+  useEffect(() => {
+    setLoading(false);
+
+    const handleStart = () => {
+      setLoading(true);
+    };
+    const handleComplete = () => {
+      setLoading(false);
+    };
+
+    Router.events.on("routeChangeStart", handleStart);
+    Router.events.on("routeChangeComplete", handleComplete);
+    Router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      Router.events.off("routeChangeStart", handleStart);
+      Router.events.off("routeChangeComplete", handleComplete);
+      Router.events.off("routeChangeError", handleComplete);
+    };
+  }, []);
 
   return (
     <section>
@@ -79,7 +106,7 @@ const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
           ) : activeSection === "settings" ? (
             <Settings />
           ) : (
-            <BookDetails id={""} />
+            <BookDetails loading={loading} book={book} id={""} />
           )}
         </div>
       </div>
@@ -88,3 +115,5 @@ const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {
 };
 
 export default BookDetailsWrapper;
+
+export const getServerSideProps = fetchBookDetails;

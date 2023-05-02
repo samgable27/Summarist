@@ -5,6 +5,8 @@ import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
 import { useRouter } from "next/router";
 import { useModalStore } from "../../src/store/store-client";
+import { useStore } from "../../src/store/userStore";
+import { auth } from "../../firebase";
 
 interface LoginModalProps {
   children?: React.ReactNode;
@@ -14,6 +16,9 @@ const LoginModal: React.FC<LoginModalProps> = () => {
   const [isSignedUp, setIsSignedUp] = useState(false);
   const visible = useModalStore((state) => state.visible);
   const closeModal = useModalStore((state) => state.closeModal);
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
+  const setUserEmail = useStore((state) => state.setUserEmail);
+
   const router = useRouter();
 
   const logInTitle = (
@@ -39,6 +44,8 @@ const LoginModal: React.FC<LoginModalProps> = () => {
   };
 
   const onLoginSuccess = () => {
+    setIsAuthenticated(true);
+    setUserEmail(auth.currentUser?.email);
     router.push("/for-you");
 
     closeModal();

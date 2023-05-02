@@ -5,7 +5,6 @@ const ModalContext = React.createContext<ModalState>({
   visible: false,
   showModal: () => {},
   closeModal: () => {},
-  isAuthenticated: false,
   logout: () => {},
   login: () => {},
 });

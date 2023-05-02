@@ -15,6 +15,7 @@ import { useModalStore } from "../../src/store/store-client";
 import LoginModal from "../auth/LoginModal";
 import { useRouter } from "next/router";
 import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
+import { useStore } from "../../src/store/userStore";
 
 interface SidebarProps {
   activeSection: string;
@@ -30,7 +31,10 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const router = useRouter();
 
-  const { isAuthenticated, logout, showModal } = useModalStore();
+  const { logout, showModal } = useModalStore();
+
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
 
   const isAudioPlayerPresent = useAudioPlayerStore(
     (state) => state.isAudioPlayerPresent
@@ -50,6 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const handleLogout = () => {
     setTimeout(() => {
+      setIsAuthenticated(false);
       logout();
     }, 200);
   };
@@ -66,40 +71,44 @@ const Sidebar: React.FC<SidebarProps> = ({
           onClick={handleToggleAudioPlayer}
           className={styles.sb__topContainer}
         >
-          <a
-            onClick={() => {
-              setActiveSection("for-you");
-            }}
-            className={activeSection === "for-you" ? activeStyles.active : ""}
-          >
-            {activeSection === "for-you" && (
-              <div className={activeStyles.greenBar} />
-            )}
-            <div className={styles.sbIcon}>
-              <HomeOutlined
-                style={{ paddingRight: "10px", fontSize: "20px" }}
-              />
-            </div>
-            <div onClick={() => router.push("/for-you")}>For You</div>
-          </a>
-          <a
-            onClick={() => {
-              setActiveSection("My Library");
-            }}
-            className={
-              activeSection === "My Library" ? activeStyles.active : ""
-            }
-          >
-            {activeSection === "My Library" && (
-              <div className={activeStyles.greenBar} />
-            )}
-            <div className={styles.sbIcon}>
-              <BookOutlined
-                style={{ paddingRight: "10px", fontSize: "20px" }}
-              />
-            </div>
-            <div onClick={() => router.push("/library")}>My Library</div>
-          </a>
+          <div onClick={() => router.push("/for-you")}>
+            <a
+              onClick={() => {
+                setActiveSection("for-you");
+              }}
+              className={activeSection === "for-you" ? activeStyles.active : ""}
+            >
+              {activeSection === "for-you" && (
+                <div className={activeStyles.greenBar} />
+              )}
+              <div className={styles.sbIcon}>
+                <HomeOutlined
+                  style={{ paddingRight: "10px", fontSize: "20px" }}
+                />
+              </div>
+              <div>For You</div>
+            </a>
+          </div>
+          <div onClick={() => router.push("/library")}>
+            <a
+              onClick={() => {
+                setActiveSection("My Library");
+              }}
+              className={
+                activeSection === "My Library" ? activeStyles.active : ""
+              }
+            >
+              {activeSection === "My Library" && (
+                <div className={activeStyles.greenBar} />
+              )}
+              <div className={styles.sbIcon}>
+                <BookOutlined
+                  style={{ paddingRight: "10px", fontSize: "20px" }}
+                />
+              </div>
+              <div>My Library</div>
+            </a>
+          </div>
           <a className={styles.sbLink__notAllowed}>
             <div className={styles.sbIcon}>
               <ApiOutlined style={{ paddingRight: "10px", fontSize: "20px" }} />
@@ -123,22 +132,24 @@ const Sidebar: React.FC<SidebarProps> = ({
               : styles.sb__btmContainer
           }
         >
-          <a
-            onClick={() => {
-              setActiveSection("settings");
-            }}
-            className={activeSection ? activeStyles.active : ""}
-          >
-            {activeSection === "settings" && (
-              <div className={activeStyles.greenBar} />
-            )}
-            <div className={styles.sbIcon}>
-              <SettingOutlined
-                style={{ paddingRight: "10px", fontSize: "20px" }}
-              />
-            </div>
-            <div onClick={() => router.push("/settings")}>Settings</div>
-          </a>
+          <div onClick={() => router.push("/settings")}>
+            <a
+              onClick={() => {
+                setActiveSection("settings");
+              }}
+              className={activeSection ? activeStyles.active : ""}
+            >
+              {activeSection === "settings" && (
+                <div className={activeStyles.greenBar} />
+              )}
+              <div className={styles.sbIcon}>
+                <SettingOutlined
+                  style={{ paddingRight: "10px", fontSize: "20px" }}
+                />
+              </div>
+              <div>Settings</div>
+            </a>
+          </div>
           <a className={styles.sbLink__notAllowed}>
             <div className={styles.sbIcon}>
               <QuestionCircleOutlined

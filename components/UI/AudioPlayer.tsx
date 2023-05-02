@@ -10,13 +10,14 @@ import {
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SpinIcon from "./SpinIcon";
+import { Book } from "../../types/Book";
 
 interface AudioPlayerProps {
   title: string;
   author: string;
   imageLink: string;
   audioLink: string;
-  book: any;
+  book: Book;
   loading: boolean;
 }
 

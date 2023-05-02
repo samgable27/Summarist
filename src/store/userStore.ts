@@ -1,11 +1,15 @@
 import { create } from "zustand";
 
 interface UserStore {
-  email: string | null;
-  setEmail: (email: string | null) => void;
+  isAuthenticated: boolean;
+  userEmail: string | null;
+  setUserEmail: (email: string | null) => void;
+  setIsAuthenticated: (auth: boolean) => void;
 }
 
 export const useStore = create<UserStore>((set) => ({
-  email: null,
-  setEmail: (email) => set({ email }),
+  isAuthenticated: false,
+  userEmail: null,
+  setUserEmail: (email) => set({ userEmail: email }),
+  setIsAuthenticated: (auth) => set({ isAuthenticated: auth }),
 }));

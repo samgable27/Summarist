@@ -6,25 +6,30 @@ import Skeleton from "react-loading-skeleton";
 import axios from "axios";
 import AudioPlayer from "./AudioPlayer";
 import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
+import { Book } from "../../types/Book";
 
 interface PlayerDetailProps {
-  subscriptionRequired?: boolean;
-  title?: string;
-  summary?: string;
-  id?: string | string[] | undefined;
-  audioLink?: string;
-  author?: string;
-  imageLink?: string;
+  id: string;
+  author: string;
+  title: string;
+  subTitle: string;
+  imageLink: string;
+  audioLink: string;
+  totalRating: number;
+  averageRating: number;
+  keyIdeas: number;
+  type: string;
+  status: string;
+  subscriptionRequired: boolean;
+  summary: string;
+  tags: string[];
+  bookDescription: string;
+  authorDescription: string;
+  loading: boolean;
+  book: Book;
 }
 
-const PlayerDetails: React.FC<PlayerDetailProps> = () => {
-  useEffect(() => {
-    fetchBookData();
-  }, []);
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [book, setBook] = useState<PlayerDetailProps | null>(null);
-
+const PlayerDetails: React.FC<PlayerDetailProps> = ({ loading, book }) => {
   const isAudioPlayerPresent = useAudioPlayerStore(
     (state) => state.isAudioPlayerPresent
   );
@@ -35,16 +40,6 @@ const PlayerDetails: React.FC<PlayerDetailProps> = () => {
 
   const router = useRouter();
   const { id } = router.query;
-
-  const fetchBookData = async () => {
-    setLoading(true);
-    const { data } = await axios.get(
-      `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${id}`
-    );
-
-    setBook(data);
-    setLoading(false);
-  };
 
   const handleBackClick = () => {
     setIsAudioPlayerPresent(!isAudioPlayerPresent);
@@ -83,7 +78,7 @@ const PlayerDetails: React.FC<PlayerDetailProps> = () => {
         </div>
         <div className={bookStyles.summaryWrapper}>{book?.summary}</div>
       </div>
-      <span>
+      <div>
         <AudioPlayer
           book={book}
           title={book?.title}
@@ -92,7 +87,7 @@ const PlayerDetails: React.FC<PlayerDetailProps> = () => {
           audioLink={book?.audioLink}
           loading={loading}
         />
-      </span>
+      </div>
     </div>
   );
 };

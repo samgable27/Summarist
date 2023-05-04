@@ -1,8 +1,7 @@
 .searchBar {
   transition: border-color 0.3s !important;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  z-index: 9999;
+  margin-right: 120px;
 }
 
 .searchBar input:hover,
@@ -12,4 +11,66 @@
 
 .searchBar .anticon.anticon-search:hover {
   background-color: #20ba68 !important;
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  max-width: 1070px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.searchContent {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 340px;
+  width: 100%;
+}
+
+.searchBookWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 440px;
+  width: 100%;
+  max-height: 640px;
+  margin-left: auto;
+  overflow-y: auto;
+  padding: 16px;
+  position: absolute;
+  top: 104px;
+  background-color: #fff;
+  border: 1px solid #e1e7ea;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
+}
+
+.searchBookLink {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 24px;
+  height: 100%;
+}
+
+.searchBookLink:hover {
+  background-color: #f1f6f4;
+  transition: all 150ms ease-in;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #032b41;
+  margin-bottom: 8px;
+}
+
+.author {
+  font-size: 14px;
+  font-weight: 300;
+  color: #6b757b;
+  margin-bottom: 8px;
 }

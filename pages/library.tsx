@@ -75,7 +75,7 @@ const Library: React.FC<LibraryProps> = () => {
         </div>
       ) : (
         <div className={libStyles.libContainer}>
-          <div>
+          <div className={libStyles.libHeader}>
             <span>Saved Books</span>
             <p>0 items</p>
           </div>
@@ -83,13 +83,13 @@ const Library: React.FC<LibraryProps> = () => {
             <h2>Save your favorite books!</h2>
             <p>When you save a book, it will appear here.</p>
           </div>
-          <div>
+          <div className={libStyles.libHeader}>
             <span>Finished</span>
             <p>0 items</p>
-            <div className={libStyles.libBlockWrapper}>
-              <h2>Done and dusted!</h2>
-              <p>When you finish a book, you can find it here later.</p>
-            </div>
+          </div>
+          <div className={libStyles.libBlockWrapper}>
+            <h2>Done and dusted!</h2>
+            <p>When you finish a book, you can find it here later.</p>
           </div>
         </div>
       )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import libStyles from "../styles/library.module.css";
 import navStyles from "../styles/for-you.module.css";
 import styles from "../styles/settings.module.css";
@@ -34,13 +34,20 @@ interface LibraryProps {
 
 const Library: React.FC<LibraryProps> = () => {
   const { isAuthenticated } = useModalStore();
-  const router = useRouter();
-  const [activeSection, setActiveSection] = useState("My Library");
   const showModal = useModalStore((state) => state.showModal);
+  const [activeSection, setActiveSection] = useState("My Library");
+  const [isMounted, setIsMounted] = useState(false);
+
+  const router = useRouter();
 
   const handleBookClick = (id: string) => {
     router.push(`/book/${id}`, undefined, { shallow: true });
   };
+
+  // state variable indicating whether component is mounted on client-side
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <>
@@ -62,7 +69,7 @@ const Library: React.FC<LibraryProps> = () => {
           />
         </header>
       </section>
-      {!isAuthenticated ? (
+      {isMounted && !isAuthenticated ? (
         <div className={styles.loginWrapper}>
           <figure>
             <Image src={"/images/login.png"} alt="" width={460} height={320} />

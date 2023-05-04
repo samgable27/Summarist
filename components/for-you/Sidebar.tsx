@@ -36,6 +36,16 @@ const Sidebar: React.FC<SidebarProps> = ({
   const isAuthenticated = useStore((state) => state.isAuthenticated);
   const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
 
+  useEffect(() => {
+    const authStorage = localStorage.getItem("auth-storage");
+    if (authStorage) {
+      const storedAuthState = JSON.parse(authStorage);
+      if (storedAuthState.isAuthenticated) {
+        setIsAuthenticated(true);
+      }
+    }
+  }, []);
+
   const isAudioPlayerPresent = useAudioPlayerStore(
     (state) => state.isAudioPlayerPresent
   );

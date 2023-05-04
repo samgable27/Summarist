@@ -1,11 +1,10 @@
 export interface ModalState {
-  children?: any;
   visible: boolean;
-  logout: () => void;
-  login: () => void;
+  isAuthenticated: boolean;
   showModal: () => void;
   closeModal: () => void;
-  isAuthenticated: boolean;
+  logout: () => void;
+  login: () => void;
 }
 
 export interface ModalContextProps {

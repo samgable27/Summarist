@@ -5,10 +5,10 @@ import styles from "..//..//styles/for-you.module.css";
 import { useEffect, useState } from "react";
 import Library from "../library";
 import Settings from "../settings";
-import { useStore } from "../../src/store/store-client";
 import Router from "next/router";
 import { Book } from "../../types/Book";
 import { fetchBookDetails } from "../../src/utils/fetchBookDetails";
+import { useStore } from "../../src/store/store-client";
 
 interface BookProps {
   author: string;

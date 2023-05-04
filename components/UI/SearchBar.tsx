@@ -43,7 +43,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     setLoading(false);
   };
 
-  const debouncedBookSearchQuery = debounce(bookSearchQuery, 300);
+  const debouncedBookSearchQuery = debounce(bookSearchQuery, 150);
 
   return (
     <div className={styles.searchWrapper}>

@@ -3,12 +3,12 @@ import libStyles from "../styles/library.module.css";
 import navStyles from "../styles/for-you.module.css";
 import styles from "../styles/settings.module.css";
 
-import { useModalStore } from "../src/store/store-client";
 import LoginModal from "../components/auth/LoginModal";
 import Image from "next/image";
 import Nav from "../components/for-you/Nav";
 import Sidebar from "../components/for-you/Sidebar";
 import { useRouter } from "next/router";
+import { useModalStore } from "../src/store/store-client";
 
 interface LibraryProps {
   children?: React.ReactNode;
@@ -74,22 +74,26 @@ const Library: React.FC<LibraryProps> = () => {
           <LoginModal />
         </div>
       ) : (
-        <div className={libStyles.libContainer}>
-          <div className={libStyles.libHeader}>
-            <span>Saved Books</span>
-            <p>0 items</p>
-          </div>
-          <div className={libStyles.libBlockWrapper}>
-            <h2>Save your favorite books!</h2>
-            <p>When you save a book, it will appear here.</p>
-          </div>
-          <div className={libStyles.libHeader}>
-            <span>Finished</span>
-            <p>0 items</p>
-          </div>
-          <div className={libStyles.libBlockWrapper}>
-            <h2>Done and dusted!</h2>
-            <p>When you finish a book, you can find it here later.</p>
+        <div className="row">
+          <div className="container">
+            <div className={libStyles.libWrapper}>
+              <div className={libStyles.libHeader}>
+                <span>Saved Books</span>
+                <p>0 items</p>
+              </div>
+              <div className={libStyles.libBlockWrapper}>
+                <h2>Save your favorite books!</h2>
+                <p>When you save a book, it will appear here.</p>
+              </div>
+              <div className={libStyles.libHeader}>
+                <span>Finished</span>
+                <p>0 items</p>
+              </div>
+              <div className={libStyles.libBlockWrapper}>
+                <h2>Done and dusted!</h2>
+                <p>When you finish a book, you can find it here later.</p>
+              </div>
+            </div>
           </div>
         </div>
       )}

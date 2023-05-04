@@ -1,11 +1,11 @@
-.libContainer span {
+.libHeader span {
   font-size: 22px;
   font-weight: 700;
   color: #032b41;
-  margin-bottom: 16px;
+  margin-bottom: 4px;
 }
 
-.libContainer p {
+.libHeader p {
   font-weight: 300;
   color: #394547;
   margin: 16px 0;
@@ -30,10 +30,25 @@
   font-size: 18px;
 }
 
-/* 
-@media (max-width: 1600px) {
-  .libContainer {
-    width: 100%;
+.libContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 1200px;
+}
+
+.libHeader {
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  margin-top: 40px;
+  text-align: left;
+  max-width: 50%;
+}
+
+@media (max-width: 1500px) {
+  .libWrapper {
     margin-left: 200px;
   }
-} */
+}

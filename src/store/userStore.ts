@@ -10,6 +10,15 @@ interface UserStore {
 export const useStore = create<UserStore>((set) => ({
   isAuthenticated: false,
   userEmail: null,
-  setUserEmail: (email) => set({ userEmail: email }),
+  setUserEmail: (email) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "user-storage",
+        JSON.stringify({ userEmail: email })
+      );
+    }
+    set({ userEmail: email });
+  },
+
   setIsAuthenticated: (auth) => set({ isAuthenticated: auth }),
 }));

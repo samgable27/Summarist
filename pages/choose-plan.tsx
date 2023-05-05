@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../styles/pricing.module.css";
 import Image from "next/image";
 import {
@@ -9,6 +9,8 @@ import {
 
 interface ChoosePlanProps {}
 const ChoosePlan: React.FC<ChoosePlanProps> = () => {
+  const [activeSection, setActiveSection] = useState("Premium Plus Yearly");
+
   return (
     <div className={styles.planWrap}>
       <div className={styles.planHeaderWrap}>
@@ -60,23 +62,82 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
           <div className={styles.sectionTitle}>
             Choose the plan that fits for you
           </div>
-          <div className={styles.planCard}>
-            <div className={styles.circle}></div>
+
+          <div
+            className={
+              activeSection === "Premium Plus Yearly"
+                ? styles.planCard__active
+                : styles.planCard
+            }
+            onClick={() => setActiveSection("Premium Plus Yearly")}
+          >
+            {activeSection === "Premium Plus Yearly" ? (
+              <div className={styles.circle}>
+                <div className={styles.planCardDot}></div>
+              </div>
+            ) : (
+              <div className={styles.circle}></div>
+            )}
             <div className={styles.planContent}>
               <div className={styles.planTitle}>Premium Plus Yearly</div>
               <div className={styles.planPrice}>$99.99/year</div>
               <div className={styles.planText}>7-day free trial included</div>
             </div>
           </div>
+
           <div className={styles.planCardSeparator}>or</div>
-          <div className={styles.planCard}>
-            <div className={styles.circle}></div>
+
+          <div
+            className={
+              activeSection === "Premium Plus Monthly"
+                ? styles.planCard__active
+                : styles.planCard
+            }
+            onClick={() => setActiveSection("Premium Plus Monthly")}
+          >
+            {activeSection === "Premium Plus Monthly" ? (
+              <div className={styles.circle}>
+                <div className={styles.planCardDot}></div>
+              </div>
+            ) : (
+              <div className={styles.circle}></div>
+            )}
             <div className={styles.planContent}>
               <div className={styles.planTitle}>Premium Plus Monthly</div>
               <div className={styles.planPrice}>$9.99/month</div>
               <div className={styles.planText}>No trial included</div>
             </div>
           </div>
+          {activeSection === "Premium Plus Yearly" ? (
+            <div className={styles.planCard__cta}>
+              <span className={styles.btnWrapper}>
+                <button
+                  style={{
+                    width: "300px",
+                  }}
+                >
+                  Start your 7- day free trial
+                </button>
+              </span>
+              <div>
+                Cancel your trial at any time before it ends, and you won't be
+                charged.{" "}
+              </div>
+            </div>
+          ) : (
+            <div className={styles.planCard__cta}>
+              <span className={styles.btnWrapper}>
+                <button
+                  style={{
+                    width: "300px",
+                  }}
+                >
+                  Start your first month
+                </button>
+              </span>
+              <div>30-day money back guarantee, no questions asked.</div>
+            </div>
+          )}
         </div>
       </div>
       <section id="footer"></section>

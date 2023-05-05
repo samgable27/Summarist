@@ -111,6 +111,18 @@
   margin: 0 auto;
 }
 
+.planCard__active {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  background-color: #f1f6f4;
+  border: 4px solid #2be080;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
 .circle {
   position: relative;
   width: 24px;
@@ -139,4 +151,54 @@
 .planText {
   color: #6b757b;
   font-size: 14px;
+}
+
+.planCard__cta {
+  background: #fff;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  padding: 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.planCard__cta div {
+  font-size: 12px;
+  color: #6b757b;
+  text-align: center;
+}
+
+.btnWrapper button {
+  background-color: #2bd97c;
+  color: #032b41;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  font-weight: 500;
+}
+
+.circle {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.planCardDot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #000;
+  border-radius: 50%;
 }

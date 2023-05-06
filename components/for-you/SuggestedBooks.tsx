@@ -3,6 +3,7 @@ import BookCard from "../UI/BookCard";
 import axios from "axios";
 import styles from "..//../styles/for-you.module.css";
 import Skeleton from "react-loading-skeleton";
+import { Book } from "../../types/Book";
 interface SuggestedBooks {
   id?: string;
   author?: string;
@@ -24,6 +25,7 @@ interface SuggestedBooks {
   onClick?: () => void;
   suggestedBookQuery?: () => void;
   handleBookClick: (id: string) => void;
+  books: Book[];
 }
 
 const SuggestedBooks: React.FC<SuggestedBooks> = ({ handleBookClick }) => {

@@ -9,6 +9,10 @@ import Nav from "../components/for-you/Nav";
 import Sidebar from "../components/for-you/Sidebar";
 import { useRouter } from "next/router";
 import { useModalStore } from "../src/store/store-client";
+import { useLibraryStore } from "../src/store/libraryStore";
+import BookCard from "../components/UI/BookCard";
+import Link from "next/link";
+import { DeleteOutlined } from "@ant-design/icons";
 
 interface LibraryProps {
   children?: React.ReactNode;
@@ -37,12 +41,23 @@ const Library: React.FC<LibraryProps> = () => {
   const showModal = useModalStore((state) => state.showModal);
   const [activeSection, setActiveSection] = useState("My Library");
   const [isMounted, setIsMounted] = useState(false);
+  const hydrate = useLibraryStore((state) => state.hydrate);
 
+  const books = useLibraryStore((state) => state.books);
+
+  const { removeBook } = useLibraryStore();
+
+  const { isBookInLibrary } = useLibraryStore();
   const router = useRouter();
 
   const handleBookClick = (id: string) => {
     router.push(`/book/${id}`, undefined, { shallow: true });
   };
+
+  // hydrate library state with books from zustand store
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
 
   // state variable indicating whether component is mounted on client-side
   useEffect(() => {
@@ -88,10 +103,40 @@ const Library: React.FC<LibraryProps> = () => {
                 <span>Saved Books</span>
                 <p>0 items</p>
               </div>
-              <div className={libStyles.libBlockWrapper}>
-                <h2>Save your favorite books!</h2>
-                <p>When you save a book, it will appear here.</p>
-              </div>
+              {books.length === 0 ? (
+                <div className={libStyles.libBlockWrapper}>
+                  <h2>Save your favorite books!</h2>
+                  <p>When you save a book, it will appear here.</p>
+                </div>
+              ) : (
+                <div className={libStyles.bookSaved}>
+                  {books?.map((book, index) => (
+                    <Link href={`/book/${book.id}`} key={index}>
+                      <>
+                        {isBookInLibrary && (
+                          <DeleteOutlined
+                            onMouseDown={(event) => {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              removeBook(book.id);
+                            }}
+                          />
+                        )}
+                        <BookCard
+                          id={book.id}
+                          subscriptionRequired={false}
+                          imageLink={""}
+                          title={""}
+                          author={""}
+                          subTitle={""}
+                          averageRating={0}
+                          book={book}
+                        />
+                      </>
+                    </Link>
+                  ))}
+                </div>
+              )}
               <div className={libStyles.libHeader}>
                 <span>Finished</span>
                 <p>0 items</p>

@@ -15,4 +15,5 @@ export interface Book {
   tags: string[];
   bookDescription: string;
   authorDescription: string;
+  handleBookClick?: (id: string) => void;
 }

@@ -3,6 +3,7 @@ import bookStyles from "..//..//styles/bookDetails.module.css";
 import Image from "next/image";
 import {
   AudioOutlined,
+  BookFilled,
   BookOutlined,
   BulbOutlined,
   ClockCircleOutlined,
@@ -14,6 +15,7 @@ import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Book } from "../../types/Book";
+import { useLibraryStore } from "../../src/store/libraryStore";
 
 interface BookDetailProps {
   id: string;
@@ -24,6 +26,10 @@ interface BookDetailProps {
 
 const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
   const router = useRouter();
+
+  const addBook = useLibraryStore((state) => state.addBook);
+
+  const { isBookInLibrary, removeBook } = useLibraryStore();
 
   const isAudioPlayerPresent = useAudioPlayerStore(
     (state) => state.isAudioPlayerPresent
@@ -44,6 +50,14 @@ const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
       setIsAudioPlayerPresent(false);
     }
     router.push("/for-you");
+  };
+
+  const handleAddToLibrary = () => {
+    addBook(book);
+  };
+
+  const removeFromLibrary = () => {
+    removeBook(book.id);
   };
 
   return (
@@ -154,12 +168,23 @@ const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
           {loading ? (
             <Skeleton width={200} height={30} />
           ) : (
-            <>
-              <figure>
-                <BookOutlined />
-              </figure>
-              <h2>Add title to My Library</h2>
-            </>
+            <div className={bookStyles.addToLib}>
+              {isBookInLibrary(book.id) ? (
+                <div onClick={removeFromLibrary}>
+                  <figure>
+                    <BookFilled />
+                  </figure>
+                  <a>Book added to My Library</a>
+                </div>
+              ) : (
+                <div onClick={handleAddToLibrary}>
+                  <figure>
+                    <BookOutlined />
+                  </figure>
+                  <a>Add Book to My Library</a>
+                </div>
+              )}
+            </div>
           )}
         </div>
         {loading ? (

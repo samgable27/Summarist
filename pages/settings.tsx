@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../styles/settings.module.css";
 import { useModalStore } from "../src/store/store-client";
 import Image from "next/image";
 import navStyles from "../styles/for-you.module.css";
 import LoginModal from "../components/auth/LoginModal";
-import { auth } from "../firebase";
 import Nav from "../components/for-you/Nav";
 import Sidebar from "../components/for-you/Sidebar";
 import { useStore } from "../src/store/userStore";

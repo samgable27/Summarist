@@ -77,9 +77,8 @@ const SuggestedBooks: React.FC<SuggestedBooks> = ({ handleBookClick }) => {
               .fill(0)
               .map((_, i) => <Skeleton key={i} width={195} height={375} />)
           : suggestedBooks.map((book, id) => (
-              <div onClick={() => handleBookClick(book.id.toString())}>
+              <div key={id} onClick={() => handleBookClick(book.id.toString())}>
                 <BookCard
-                  key={id}
                   id={""}
                   subscriptionRequired={false}
                   imageLink={""}

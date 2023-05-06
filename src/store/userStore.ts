@@ -7,9 +7,19 @@ interface UserStore {
   setIsAuthenticated: (auth: boolean) => void;
 }
 
+const persistedEmailState = () => {
+  if (typeof window !== "undefined") {
+    const persistedEmailState = localStorage.getItem("user-storage");
+    return persistedEmailState
+      ? JSON.parse(persistedEmailState).userEmail
+      : false;
+  }
+  return false;
+};
+
 export const useStore = create<UserStore>((set) => ({
   isAuthenticated: false,
-  userEmail: null,
+  userEmail: persistedEmailState(),
   setUserEmail: (email) => {
     if (typeof window !== "undefined") {
       localStorage.setItem(
@@ -19,6 +29,5 @@ export const useStore = create<UserStore>((set) => ({
     }
     set({ userEmail: email });
   },
-
   setIsAuthenticated: (auth) => set({ isAuthenticated: auth }),
 }));

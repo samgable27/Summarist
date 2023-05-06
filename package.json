@@ -27,8 +27,7 @@
     "react-loading-skeleton": "^3.2.0",
     "stripe": "^12.4.0",
     "yarn": "^1.22.19",
-    "zustand": "^4.3.7",
-    "zustand-persist": "^0.4.0"
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

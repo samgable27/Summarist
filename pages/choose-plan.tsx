@@ -9,7 +9,6 @@ import {
 import Accordian from "../components/UI/Accordian";
 
 import { loadStripe } from "@stripe/stripe-js";
-import SpinIcon from "../components/UI/SpinIcon";
 import { Button, Space } from "antd";
 
 interface ChoosePlanProps {}
@@ -177,7 +176,7 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
           ) : (
             <div className={styles.planCard__cta}>
               <div className={styles.btnWrapper}>
-                <div onClick={() => redirectToCheckout("premium_plus")}>
+                <div onClick={() => redirectToCheckout("premium")}>
                   <Space wrap>
                     <Button
                       type="primary"

@@ -72,6 +72,24 @@
   margin-bottom: 16px;
 }
 
+.premBtnWrapper button:hover {
+  background-color: #032b41 !important;
+  transition: all 150ms ease-in-out;
+}
+
+.premBtnWrapper button {
+  background-color: #2bd97c;
+  color: #032b41;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  /* font-weight: 500; */
+}
+
 @media (max-width: 1560px) {
   .settingWrapper {
     margin-left: 236px;

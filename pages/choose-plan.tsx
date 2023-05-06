@@ -7,15 +7,32 @@ import {
   TeamOutlined,
 } from "@ant-design/icons";
 import Accordian from "../components/UI/Accordian";
-import { useRouter } from "next/router";
 
-import { Stripe, loadStripe } from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import SpinIcon from "../components/UI/SpinIcon";
+import { Button, Space } from "antd";
 
 interface ChoosePlanProps {}
 
 const ChoosePlan: React.FC<ChoosePlanProps> = () => {
   const [activeSection, setActiveSection] = useState("Premium Plus Yearly");
-  const router = useRouter();
+  const [loading, setLoading] = useState<Boolean[]>([]);
+
+  const enterLoading = (index: number) => {
+    setLoading((prevLoading) => {
+      const newLoadings = [...prevLoading];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+
+    setTimeout(() => {
+      setLoading((prevLoading) => {
+        const newLoadings = [...prevLoading];
+        newLoadings[index] = false;
+        return newLoadings;
+      });
+    }, 6000);
+  };
 
   const redirectToCheckout = async (price: string) => {
     try {
@@ -139,16 +156,19 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
           </div>
           {activeSection === "Premium Plus Yearly" ? (
             <div className={styles.planCard__cta}>
-              <span className={styles.btnWrapper}>
-                <button
-                  onClick={() => redirectToCheckout("premium_plus")}
-                  style={{
-                    width: "300px",
-                  }}
-                >
-                  Start your 7- day free trial
-                </button>
-              </span>
+              <div className={styles.btnWrapper}>
+                <div onClick={() => redirectToCheckout("premium_plus")}>
+                  <Space wrap>
+                    <Button
+                      type="primary"
+                      loading={loading[0]}
+                      onClick={() => enterLoading(0)}
+                    >
+                      Start your free 7-day trial
+                    </Button>
+                  </Space>
+                </div>
+              </div>
               <div>
                 Cancel your trial at any time before it ends, and you won't be
                 charged.{" "}
@@ -156,16 +176,19 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
             </div>
           ) : (
             <div className={styles.planCard__cta}>
-              <span className={styles.btnWrapper}>
-                <button
-                  onClick={() => redirectToCheckout("premium")}
-                  style={{
-                    width: "300px",
-                  }}
-                >
-                  Start your first month
-                </button>
-              </span>
+              <div className={styles.btnWrapper}>
+                <div onClick={() => redirectToCheckout("premium_plus")}>
+                  <Space wrap>
+                    <Button
+                      type="primary"
+                      loading={loading[0]}
+                      onClick={() => enterLoading(0)}
+                    >
+                      Start your first month
+                    </Button>
+                  </Space>
+                </div>
+              </div>
               <div>30-day money back guarantee, no questions asked.</div>
             </div>
           )}

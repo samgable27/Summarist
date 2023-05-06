@@ -176,12 +176,16 @@
   color: #032b41;
   height: 40px;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 180px;
-  font-weight: 500;
+  /* font-weight: 500; */
+}
+
+.btnWrapper button:hover {
+  background-color: #6792a5 !important;
 }
 
 .circle {

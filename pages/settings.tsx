@@ -8,6 +8,8 @@ import Nav from "../components/for-you/Nav";
 import Sidebar from "../components/for-you/Sidebar";
 import { useStore } from "../src/store/userStore";
 import { useRouter } from "next/router";
+import { Button, Space } from "antd";
+import priceStyle from "../styles/pricing.module.css";
 
 interface SettingsProps {
   children?: React.ReactNode;
@@ -48,9 +50,14 @@ const Settings: React.FC<SettingsProps> = () => {
             <div className={styles.settingContentTop}>
               <h2>Your Subscription Plan</h2>
               <p>Basic</p>
-              <button onClick={() => router.push("/choose-plan")}>
-                Upgrade to Premium
-              </button>
+              <div
+                onClick={() => router.push("/choose-plan")}
+                className={styles.premBtnWrapper}
+              >
+                <Space wrap>
+                  <Button type="primary">Upgrade to Premium</Button>
+                </Space>
+              </div>
             </div>
             <div className={styles.settingContentBtm}>
               <h2>Email</h2>

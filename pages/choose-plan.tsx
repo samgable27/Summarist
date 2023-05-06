@@ -6,6 +6,7 @@ import {
   SnippetsOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
+import Accordian from "../components/UI/Accordian";
 
 interface ChoosePlanProps {}
 const ChoosePlan: React.FC<ChoosePlanProps> = () => {
@@ -62,7 +63,6 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
           <div className={styles.sectionTitle}>
             Choose the plan that fits for you
           </div>
-
           <div
             className={
               activeSection === "Premium Plus Yearly"
@@ -84,9 +84,7 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
               <div className={styles.planText}>7-day free trial included</div>
             </div>
           </div>
-
           <div className={styles.planCardSeparator}>or</div>
-
           <div
             className={
               activeSection === "Premium Plus Monthly"
@@ -138,9 +136,90 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
               <div>30-day money back guarantee, no questions asked.</div>
             </div>
           )}
+          <div className={styles.faqWrapper}>
+            <Accordian />
+          </div>
         </div>
       </div>
-      <section id="footer"></section>
+      <section id="footer">
+        <div className="container">
+          <div className="row">
+            <div className={styles.ftTopWrapper}>
+              <div className={styles.ftBlock}>
+                <div className={styles.ftTitle}>Actions</div>
+                <div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Summarist Magazine</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Cancel Subscription</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Help</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Contact Us</a>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.ftBlock}>
+                <div className={styles.ftTitle}>Useful Links</div>
+                <div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Pricing</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Summarist Business</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Gift Cards</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Authors & Publishers</a>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.ftBlock}>
+                <div className={styles.ftTitle}>Company</div>
+                <div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>About</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Careers</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Sponsorships & Partners</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Code of Conduct</a>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.ftBlock}>
+                <div className={styles.ftTitle}>Other</div>
+                <div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Sitemap</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Legal Notice</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Terms of Service</a>
+                  </div>
+                  <div className={styles.ftLinkWrapper}>
+                    <a className={styles.ftLink}>Privacy Policy</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.ftCopyrightWrapper}>
+              <span>Copyright &copy; 2023 Summarist.</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

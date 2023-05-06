@@ -42,9 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       currency: "usd",
       product_data: {
         name:
-          price === "premium"
-            ? "Premium - $9.99/month"
-            : "Premium Plus - $99.99/year",
+          price === "premium" ? "Summarist Premium" : "Summarist Premium Plus",
       },
       unit_amount: price === "premium" ? 999 : 9999,
       recurring: {

@@ -46,17 +46,15 @@ export default async function handler(
       line_items: [lineItem],
       mode: "subscription",
       success_url: `${req.headers.origin}/success`,
-      cancel_url: `${req.headers.origin}/cancel`,
+      cancel_url: `${req.headers.origin}/for-you`,
     });
 
     res.status(200).json({ sessionId: session.id });
   } catch (error) {
     console.error("[error]", error);
-    res
-      .status(500)
-      .json({
-        error: "Failed to create checkout session",
-        details: error.message,
-      });
+    res.status(500).json({
+      error: "Failed to create checkout session",
+      details: error.message,
+    });
   }
 }

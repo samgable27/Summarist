@@ -7,11 +7,6 @@ interface UseStore {
   setLoading: (loading: boolean) => void;
 }
 
-export const useStore = create<UseStore>((set) => ({
-  loading: false,
-  setLoading: (loading: boolean) => set({ loading }),
-}));
-
 const getPersistedAuthState = () => {
   if (typeof window !== "undefined") {
     const persistedAuthState = localStorage.getItem("auth-storage");
@@ -21,6 +16,11 @@ const getPersistedAuthState = () => {
   }
   return false;
 };
+
+export const useStore = create<UseStore>((set) => ({
+  loading: false,
+  setLoading: (loading: boolean) => set({ loading }),
+}));
 
 export const useModalStore = create<ModalState>((set, get) => ({
   visible: false,

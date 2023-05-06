@@ -7,11 +7,20 @@ import {
   TeamOutlined,
 } from "@ant-design/icons";
 import Accordian from "../components/UI/Accordian";
+import { useRouter } from "next/router";
 
 interface ChoosePlanProps {}
+
 const ChoosePlan: React.FC<ChoosePlanProps> = () => {
   const [activeSection, setActiveSection] = useState("Premium Plus Yearly");
+  const router = useRouter();
 
+  const redirectToCheckout = (price) => {
+    router.push({
+      pathname: "/checkout",
+      query: { price },
+    });
+  };
   return (
     <div className={styles.planWrap}>
       <div className={styles.planHeaderWrap}>
@@ -110,6 +119,7 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
             <div className={styles.planCard__cta}>
               <span className={styles.btnWrapper}>
                 <button
+                  onClick={() => redirectToCheckout("price1")}
                   style={{
                     width: "300px",
                   }}
@@ -126,6 +136,7 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
             <div className={styles.planCard__cta}>
               <span className={styles.btnWrapper}>
                 <button
+                  onClick={() => redirectToCheckout("price2")}
                   style={{
                     width: "300px",
                   }}

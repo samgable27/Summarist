@@ -11,6 +11,8 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@next/font": "13.2.4",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.52.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",
@@ -23,6 +25,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "react-loading-skeleton": "^3.2.0",
+    "stripe": "^12.4.0",
     "yarn": "^1.22.19",
     "zustand": "^4.3.7",
     "zustand-persist": "^0.4.0"

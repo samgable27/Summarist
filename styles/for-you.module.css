@@ -92,8 +92,7 @@
   justify-content: space-between;
   overflow-x: scroll;
   width: 100%;
-  scroll-snap-type: none;
-  scrollbar-width: none;
+  scroll-snap-type: x;
   margin: 28px 0;
 }
 

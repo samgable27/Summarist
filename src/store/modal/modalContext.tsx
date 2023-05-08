@@ -7,6 +7,7 @@ const ModalContext = React.createContext<ModalState>({
   closeModal: () => {},
   logout: () => {},
   login: () => {},
+  isAuthenticated: false,
 });
 
 export const ModalContextProvider: React.FC<ModalContextProps> = ({

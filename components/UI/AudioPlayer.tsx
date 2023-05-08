@@ -11,6 +11,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SpinIcon from "./SpinIcon";
 import { Book } from "../../types/Book";
+import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
 
 interface AudioPlayerProps {
   title: string;
@@ -28,11 +29,16 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const audioRef = useRef<HTMLAudioElement>(new Audio(book?.audioLink));
+  const audioRef = useRef<HTMLAudioElement>({} as any);
+
+  const duration = useAudioPlayerStore((state) => state.duration);
+  const setDuration = useAudioPlayerStore((state) => state.setDuration);
+  const setLoading = useAudioPlayerStore((state) => state.setLoading);
 
   // runs when audioLink changes
   useLayoutEffect(() => {
+    setDuration(duration);
+    setLoading(false);
     if (typeof window !== "undefined") {
       const audio = new Audio(book?.audioLink);
       audioRef.current = audio;
@@ -81,6 +87,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
+
+  const bookDuration = formatTime(duration);
 
   return (
     <div className={bookStyles.audioWrapper}>
@@ -132,7 +140,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
           onChange={handleSliderChange}
           step="any"
         />
-        <div>{loading ? <SpinIcon /> : formatTime(duration)}</div>
+        <div>{loading ? <SpinIcon /> : bookDuration}</div>
       </div>
     </div>
   );

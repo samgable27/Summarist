@@ -172,14 +172,22 @@ const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
               {isBookInLibrary(book.id) ? (
                 <div onClick={removeFromLibrary}>
                   <figure>
-                    <BookFilled />
+                    <BookFilled
+                      style={{
+                        fontSize: "20px",
+                      }}
+                    />
                   </figure>
                   <a>Book added to My Library</a>
                 </div>
               ) : (
                 <div onClick={handleAddToLibrary}>
                   <figure>
-                    <BookOutlined />
+                    <BookOutlined
+                      style={{
+                        fontSize: "20px",
+                      }}
+                    />
                   </figure>
                   <a>Add Book to My Library</a>
                 </div>

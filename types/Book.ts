@@ -16,4 +16,5 @@ export interface Book {
   bookDescription: string;
   authorDescription: string;
   handleBookClick?: (id: string) => void;
+  duration: number;
 }

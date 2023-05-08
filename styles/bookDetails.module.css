@@ -85,26 +85,21 @@
   transition: opacity 0.2 ease-in-out;
 }
 
-.addToLibrary {
+.addToLibrary div {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-top: 4px;
   color: #0365f2;
 }
 
-.addToLibrary h2 {
+.addToLib a {
   color: #0365f2;
   font-weight: 500;
   cursor: pointer;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   font-size: 18px;
   transition: color 0.2s;
-}
-
-.addToLibrary figure {
-  display: flex;
-  width: 20px;
-  height: 20px;
 }
 
 .tagsWrapper {

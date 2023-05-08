@@ -1,11 +1,9 @@
-import React from "react";
-import RecommendedBooks from "../for-you/RecommendedBooks";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "..//../styles/for-you.module.css";
 import ClockCircleOutlined from "@ant-design/icons/lib/icons/ClockCircleOutlined";
 import StarOutlined from "@ant-design/icons/lib/icons/StarOutlined";
 import SubscriptionPill from "./SubscriptionPill";
-import SuggestedBooks from "../for-you/SuggestedBooks";
 import { Book } from "../../types/Book";
 
 interface BookCardProps {
@@ -19,6 +17,32 @@ interface BookCardProps {
   book: Book;
 }
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
+  const [duration, setDuration] = useState<number | null>(null);
+
+  const fetchAudioDuration = async (audioLink: string) => {
+    const audio = new Audio(audioLink);
+
+    audio.onloadedmetadata = () => {
+      setDuration(audio.duration);
+    };
+  };
+
+  useEffect(() => {
+    fetchAudioDuration(book?.audioLink);
+  }, [book?.audioLink]);
+
+  const formatTime = (time: number | null): string => {
+    if (!time || isNaN(time)) {
+      return "N/A";
+    }
+
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const bookDuration = formatTime(duration);
+
   return (
     <div className={styles.bookCardContainer}>
       {book.subscriptionRequired && <SubscriptionPill />}
@@ -38,7 +62,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         <div className={styles.bookCardMisc}>
           <div className={styles.bookDetails}>
             <ClockCircleOutlined />
-            <div>03:24</div>
+            <div>{bookDuration}</div>
           </div>
           <div className={styles.bookDetails}>
             <StarOutlined />

@@ -64,20 +64,39 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       </div>
       {searchTerm && (
         <div className={styles.searchBookWrapper}>
-          {searchResults.map((book: Book, idx) => (
-            <div key={idx} className={styles.bookResult}>
-              <Link className={styles.searchBookLink} href={`/book/${book.id}`}>
-                <figure>
-                  <Image src={book.imageLink} height={80} width={80} alt={""} />
-                </figure>
-                <div>
-                  <div className={styles.title}>{book.title}</div>
-                  <div className={styles.author}>{book.author}</div>
-                  <div className={styles.duration}></div>
-                </div>
-              </Link>
-            </div>
-          ))}
+          {loading ? (
+            <Skeleton
+              count={6}
+              width={300}
+              height={120}
+              style={{
+                margin: "5px 0",
+              }}
+            />
+          ) : (
+            searchResults.map((book: Book, idx) => (
+              <div key={idx} className={styles.bookResult}>
+                <Link
+                  className={styles.searchBookLink}
+                  href={`/book/${book.id}`}
+                >
+                  <figure>
+                    <Image
+                      src={book.imageLink}
+                      height={80}
+                      width={80}
+                      alt={""}
+                    />
+                  </figure>
+                  <div>
+                    <div className={styles.title}>{book.title}</div>
+                    <div className={styles.author}>{book.author}</div>
+                    <div className={styles.duration}></div>
+                  </div>
+                </Link>
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>

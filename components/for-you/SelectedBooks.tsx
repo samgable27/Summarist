@@ -6,6 +6,7 @@ import { PlayCircleOutlined } from "@ant-design/icons";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/router";
+import { Book } from "../../types/Book";
 
 interface SelectedBook {
   id?: string;
@@ -32,6 +33,7 @@ interface SelectedBook {
 const SelectedBooks: React.FC<SelectedBook> = ({ handleBookClick }) => {
   const [selectedBooks, setSelectedBooks] = useState<SelectedBook[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [duration, setDuration] = useState<number | null>(null);
 
   useEffect(() => {
     selectedBookQuery();
@@ -45,6 +47,32 @@ const SelectedBooks: React.FC<SelectedBook> = ({ handleBookClick }) => {
     setSelectedBooks(data);
     setLoading(false);
   };
+
+  const fetchAudioDuration = async (audioLink: string) => {
+    const audio = new Audio(audioLink);
+
+    audio.onloadedmetadata = () => {
+      setDuration(audio.duration);
+    };
+  };
+
+  useEffect(() => {
+    if (selectedBooks.length > 0) {
+      fetchAudioDuration(selectedBooks[0].audioLink);
+    }
+  }, [selectedBooks]);
+
+  const formatTime = (time: number | null): string => {
+    if (!time || isNaN(time)) {
+      return "N/A";
+    }
+
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const bookDuration = formatTime(duration);
 
   return (
     <div className={styles.sbContainer}>
@@ -75,13 +103,13 @@ const SelectedBooks: React.FC<SelectedBook> = ({ handleBookClick }) => {
               <div className={styles.sbAudio}>
                 <PlayCircleOutlined
                   style={{
-                    fontSize: "40px",
+                    fontSize: "25px",
                     color: "#000",
-                    opacity: "0.8",
+                    opacity: "0.9",
                   }}
                   className={styles.playCircle}
                 />
-                <div>3 mins 23 secs</div>
+                <div>{bookDuration}</div>
               </div>
             </div>
           </div>

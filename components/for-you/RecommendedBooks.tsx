@@ -6,26 +6,27 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Link from "next/link";
 interface RecommendedBooks {
-  id?: string;
-  author?: string;
-  title?: string;
-  subTitle?: string;
-  imageLink?: string;
-  audioLink?: string;
-  totalRating?: number;
-  averageRating?: number;
-  keyIdeas?: number;
-  type?: string;
-  status?: string;
-  subscriptionRequired?: boolean;
-  summary?: string;
-  tags?: string[];
-  bookDescription?: string;
-  authorDescription?: string;
-  selectedBookQuery?: () => void;
+  id: string;
+  author: string;
+  title: string;
+  subTitle: string;
+  imageLink: string;
+  audioLink: string;
+  totalRating: number;
+  averageRating: number;
+  keyIdeas: number;
+  type: string;
+  status: string;
+  subscriptionRequired: boolean;
+  summary: string;
+  tags: string[];
+  bookDescription: string;
+  authorDescription: string;
+  selectedBookQuery: () => void;
   onClick?: () => void;
   handleBookClick: (id: string) => void;
-  recommendedBookQuery?: () => void;
+  recommendedBookQuery: () => void;
+  duration: number;
 }
 
 const RecommendedBooks: React.FC<RecommendedBooks> = ({ handleBookClick }) => {

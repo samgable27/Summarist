@@ -19,6 +19,7 @@
   justify-content: space-between;
   height: calc(100vh - 60px);
   overflow-y: auto;
+  margin: 0 6px;
 }
 
 .sb__topContainer {

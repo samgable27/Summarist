@@ -27,6 +27,7 @@ interface PlayerDetailProps {
   authorDescription: string;
   loading: boolean;
   book: Book;
+  duration: number;
 }
 
 const PlayerDetails: React.FC<PlayerDetailProps> = ({ loading, book }) => {
@@ -69,14 +70,23 @@ const PlayerDetails: React.FC<PlayerDetailProps> = ({ loading, book }) => {
         </div>
         <div className={bookStyles.playerTitle}>
           {loading ? (
-            <Skeleton width={250} height={30} />
+            <Skeleton containerClassName={bookStyles.playerTitle} />
           ) : book?.subscriptionRequired ? (
             `${book?.title} (Premium)`
           ) : (
             book?.title
           )}
         </div>
-        <div className={bookStyles.summaryWrapper}>{book?.summary}</div>
+        <div className={bookStyles.summaryWrapper}>
+          {loading ? (
+            <Skeleton
+              containerClassName={bookStyles.summaryWrapper}
+              height={800}
+            />
+          ) : (
+            book?.summary
+          )}
+        </div>
       </div>
       <div>
         <AudioPlayer

@@ -30,6 +30,7 @@ interface BookPlayerProps {
   id: string;
   book: Book;
   close: () => void;
+  duration: number;
 }
 
 const BookPlayer: React.FC<{ book: BookPlayerProps }> = ({ book }) => {
@@ -126,6 +127,7 @@ const BookPlayer: React.FC<{ book: BookPlayerProps }> = ({ book }) => {
               authorDescription={""}
               book={book}
               loading={loading}
+              duration={0}
             />
           )}
         </div>

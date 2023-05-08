@@ -15,7 +15,7 @@ interface ChoosePlanProps {}
 
 const ChoosePlan: React.FC<ChoosePlanProps> = () => {
   const [activeSection, setActiveSection] = useState("Premium Plus Yearly");
-  const [loading, setLoading] = useState<Boolean[]>([]);
+  const [loading, setLoading] = useState<boolean[]>([]);
 
   const enterLoading = (index: number) => {
     setLoading((prevLoading) => {

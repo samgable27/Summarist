@@ -104,7 +104,7 @@ const SelectedBooks: React.FC<SelectedBook> = ({ handleBookClick }) => {
                 <PlayCircleOutlined
                   style={{
                     fontSize: "25px",
-                    color: "#000",
+                    color: "#032b41",
                     opacity: "0.9",
                   }}
                   className={styles.playCircle}

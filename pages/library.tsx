@@ -111,17 +111,17 @@ const Library: React.FC<LibraryProps> = () => {
               ) : (
                 <div className={libStyles.bookSaved}>
                   {books?.map((book, index) => (
-                    <Link href={`/book/${book.id}`} key={index}>
-                      <>
-                        {isBookInLibrary && (
-                          <DeleteOutlined
-                            onMouseDown={(event) => {
-                              event.preventDefault();
-                              event.stopPropagation();
-                              removeBook(book.id);
-                            }}
-                          />
-                        )}
+                    <div key={index}>
+                      {isBookInLibrary && (
+                        <DeleteOutlined
+                          style={{}}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            removeBook(book.id);
+                          }}
+                        />
+                      )}
+                      <div onClick={() => router.push(`/book/${book.id}`)}>
                         <BookCard
                           id={book.id}
                           subscriptionRequired={false}
@@ -132,8 +132,8 @@ const Library: React.FC<LibraryProps> = () => {
                           averageRating={0}
                           book={book}
                         />
-                      </>
-                    </Link>
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}

@@ -47,6 +47,20 @@
   max-width: 50%;
 }
 
+.bookSaved {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.bookHover {
+  background-color: #f1f6f4;
+  border-radius: 4px 4px 4px 4px;
+  height: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
 @media (max-width: 1500px) {
   .libWrapper {
     margin-left: 200px;

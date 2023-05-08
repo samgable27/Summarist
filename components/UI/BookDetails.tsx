@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import bookStyles from "..//..//styles/bookDetails.module.css";
 import Image from "next/image";
 import {
@@ -42,6 +42,32 @@ const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
   const handleToggleAudioPlayer = () => {
     setIsAudioPlayerPresent(!isAudioPlayerPresent);
   };
+
+  const [duration, setDuration] = useState<number | null>(null);
+
+  const fetchAudioDuration = async (audioLink: string) => {
+    const audio = new Audio(audioLink);
+
+    audio.onloadedmetadata = () => {
+      setDuration(audio.duration);
+    };
+  };
+
+  useEffect(() => {
+    fetchAudioDuration(book?.audioLink);
+  }, [book?.audioLink]);
+
+  const formatTime = (time: number | null): string => {
+    if (!time || isNaN(time)) {
+      return "N/A";
+    }
+
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const bookDuration = formatTime(duration);
 
   const handleBackClick = () => {
     if (isAudioPlayerPresent) {
@@ -111,7 +137,7 @@ const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
                 <figure>
                   <ClockCircleOutlined />
                 </figure>
-                <span> 03:23</span>
+                <span>{bookDuration}</span>
               </div>
               <div>
                 <figure>

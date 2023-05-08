@@ -30,6 +30,7 @@ interface BookProps {
   id: string;
   book: Book;
   close: () => void;
+  duration: number;
 }
 
 const BookDetailsWrapper: React.FC<{ book: BookProps }> = ({ book }) => {

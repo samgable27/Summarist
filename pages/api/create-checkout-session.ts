@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2022-11-15",
@@ -15,7 +16,7 @@ export default async function handler(
     return;
   }
 
-  const { price } = req.body;
+  const { price, userId } = req.body;
 
   if (price !== "premium" && price !== "premium_plus") {
     res.status(400).json({ error: "Invalid price value" });
@@ -42,9 +43,14 @@ export default async function handler(
       payment_method_types: ["card"],
       line_items: [lineItem],
       mode: "subscription",
-      success_url: `${req.headers.origin}/success`,
+      success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.origin}/for-you`,
     });
+
+    // Update the user's data in the database with the session ID
+    const db = getFirestore();
+    const userRef = doc(db, "users", userId);
+    await updateDoc(userRef, { checkoutSessionId: session.id });
 
     res.status(200).json({ sessionId: session.id });
   } catch (error) {

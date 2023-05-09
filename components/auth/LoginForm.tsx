@@ -41,6 +41,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const { login } = useModalStore();
 
+  const { setUser } = useStore();
+
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
       setFormLoading(true);
@@ -50,6 +52,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
         values.password
       );
       const user = userCredential.user;
+
+      setUser({ id: user.uid, isPremiumUser: false }); // update the user store with user id
 
       onSuccess();
       onFinish();
@@ -72,6 +76,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
       setGoogleLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
+      setUser({ id: user.uid, isPremiumUser: false }); // Update the user store
 
       onSuccess();
       onFinish();

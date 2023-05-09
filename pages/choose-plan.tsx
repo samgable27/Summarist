@@ -10,6 +10,7 @@ import Accordian from "../components/UI/Accordian";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Button, Space } from "antd";
+import { useStore } from "../src/store/userStore";
 
 interface ChoosePlanProps {}
 

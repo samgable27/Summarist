@@ -5,6 +5,15 @@ interface UserStore {
   userEmail: string | null;
   setUserEmail: (email: string | null) => void;
   setIsAuthenticated: (auth: boolean) => void;
+  isPremiumUser: boolean;
+  setIsPremiumUser: (isPremium: boolean) => void;
+  user: {
+    id: string;
+    isPremiumUser: boolean;
+  } | null;
+  setUser: (user: { id: string; isPremiumUser: boolean } | null) => void;
+  subscriptionTier: "basic" | "premium" | "premium_plus";
+  setSubscriptionTier: (tier: "basic" | "premium" | "premium_plus") => void;
 }
 
 const persistedEmailState = () => {
@@ -18,8 +27,11 @@ const persistedEmailState = () => {
 };
 
 export const useStore = create<UserStore>((set) => ({
+  user: null,
   isAuthenticated: false,
+  subscriptionTier: "basic",
   userEmail: persistedEmailState(),
+  isPremiumUser: false,
   setUserEmail: (email) => {
     if (typeof window !== "undefined") {
       localStorage.setItem(
@@ -30,4 +42,7 @@ export const useStore = create<UserStore>((set) => ({
     set({ userEmail: email });
   },
   setIsAuthenticated: (auth) => set({ isAuthenticated: auth }),
+  setIsPremiumUser: (isPremium) => set({ isPremiumUser: isPremium }),
+  setSubscriptionTier: (tier) => set({ subscriptionTier: tier }),
+  setUser: (user) => set({ user: user }),
 }));

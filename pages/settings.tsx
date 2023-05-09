@@ -9,7 +9,6 @@ import Sidebar from "../components/for-you/Sidebar";
 import { useStore } from "../src/store/userStore";
 import { useRouter } from "next/router";
 import { Button, Space } from "antd";
-import priceStyle from "../styles/pricing.module.css";
 
 interface SettingsProps {
   children?: React.ReactNode;

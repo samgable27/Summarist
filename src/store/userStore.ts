@@ -26,8 +26,16 @@ const persistedEmailState = () => {
   return false;
 };
 
+const persistedUserState = () => {
+  if (typeof window !== "undefined") {
+    const persistedUserState = localStorage.getItem("user");
+    return persistedUserState ? JSON.parse(persistedUserState).user : false;
+  }
+  return false;
+};
+
 export const useStore = create<UserStore>((set) => ({
-  user: null,
+  user: persistedUserState(),
   isAuthenticated: false,
   subscriptionTier: "basic",
   userEmail: persistedEmailState(),
@@ -44,5 +52,10 @@ export const useStore = create<UserStore>((set) => ({
   setIsAuthenticated: (auth) => set({ isAuthenticated: auth }),
   setIsPremiumUser: (isPremium) => set({ isPremiumUser: isPremium }),
   setSubscriptionTier: (tier) => set({ subscriptionTier: tier }),
-  setUser: (user) => set({ user: user }),
+  setUser: (user) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user", JSON.stringify({ user: user }));
+    }
+    set({ user: user });
+  },
 }));

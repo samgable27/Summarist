@@ -17,6 +17,7 @@ interface ChoosePlanProps {}
 const ChoosePlan: React.FC<ChoosePlanProps> = () => {
   const [activeSection, setActiveSection] = useState("Premium Plus Yearly");
   const [loading, setLoading] = useState<boolean[]>([]);
+  const { user } = useStore();
 
   const enterLoading = (index: number) => {
     setLoading((prevLoading) => {
@@ -41,7 +42,7 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ price }),
+        body: JSON.stringify({ price, userId: user.id }),
       });
 
       if (!response.ok) {

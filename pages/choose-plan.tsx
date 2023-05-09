@@ -35,31 +35,7 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
     }, 6000);
   };
 
-  const redirectToCheckout = async (price: string) => {
-    try {
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ price, userId: user.id }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create checkout session");
-      }
-
-      const { sessionId } = await response.json();
-      const stripe = await loadStripe(
-        process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!
-      );
-      if (stripe) {
-        await stripe.redirectToCheckout({ sessionId });
-      }
-    } catch (error) {
-      console.error("[error]", error);
-    }
-  };
+  const redirectToCheckout = async (price: string) => {};
 
   return (
     <div className={styles.planWrap}>

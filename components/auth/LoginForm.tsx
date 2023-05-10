@@ -13,7 +13,6 @@ import {
 import { auth } from "../../firebase";
 import { useModalStore } from "../../src/store/store-client";
 import SpinIcon from "../UI/SpinIcon";
-import { useStore } from "../../src/store/userStore";
 
 interface LoginFormProps {
   children?: React.ReactNode;
@@ -33,15 +32,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const [error, setError] = useState<string | null>(null);
 
-  const closeModal = useModalStore((state) => state.closeModal);
-
   const [formLoading, setFormLoading] = useState(false);
 
   const [googleLoading, setGoogleLoading] = useState(false);
 
   const { login } = useModalStore();
-
-  const { setUser } = useStore();
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
@@ -52,8 +47,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
         values.password
       );
       const user = userCredential.user;
-
-      setUser({ id: user.uid, isPremiumUser: false }); // update the user store with user id
 
       onSuccess();
       onFinish();
@@ -76,8 +69,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
       setGoogleLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
-      setUser({ id: user.uid, isPremiumUser: false }); // Update the user store
 
       onSuccess();
       onFinish();

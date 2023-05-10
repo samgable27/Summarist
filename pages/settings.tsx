@@ -17,7 +17,6 @@ interface SettingsProps {
 
 const Settings: React.FC<SettingsProps> = () => {
   const isAuthenticated = useStore((state) => state.isAuthenticated);
-  const isPremiumUser = useStore((state) => state.isPremiumUser);
   const userEmail = useStore((state) => state.userEmail);
   const showModal = useModalStore((state) => state.showModal);
   const [activeSection, setActiveSection] = useState("settings");
@@ -49,7 +48,7 @@ const Settings: React.FC<SettingsProps> = () => {
             <div className={styles.sectionTitle}>Settings</div>
             <div className={styles.settingContentTop}>
               <h2>Your Subscription Plan</h2>
-              <p>{isPremiumUser ? "Premium" : "Basic"}</p>
+              <p>Basic</p>
               <div
                 onClick={() => router.push("/choose-plan")}
                 className={styles.premBtnWrapper}

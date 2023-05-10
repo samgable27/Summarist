@@ -20,9 +20,4 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// function that obtains the user ref
-const getUserRef = (userId: string) => {
-  return doc(db, "users", userId);
-};
-
-export { db, auth, getUserRef };
+export { db, auth };

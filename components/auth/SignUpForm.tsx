@@ -12,6 +12,10 @@ import {
 import { auth } from "../../firebase";
 import { useModalStore } from "../../src/store/store-client";
 import SpinIcon from "../UI/SpinIcon";
+import { doc, setDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { db } from "../../firebase";
+import { createUserProfileDocument } from "../../src/utils/createUserProfileDocument";
 
 interface SignUpFormProps {
   children?: React.ReactNode;
@@ -54,6 +58,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       );
 
       const user = userCredential.user;
+      // Create user document in Firestore
+      await createUserProfileDocument(user);
+
       onSuccess();
       onFinish();
       setError(null);
@@ -67,7 +74,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       onFailure(error);
     }
   };
-
   const handleGoogleSignIn = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -78,6 +84,13 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       const user = result.user;
       console.log("Google sign-in successful:", user);
 
+      // add new doc with user's information to Firestore
+      if (user) {
+        await setDoc(doc(db, "users", user.uid), {
+          email: user.email,
+        });
+      }
+
       onSuccess();
       closeModal();
       setGoogleLoading(false);
@@ -85,7 +98,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       console.log("Error during Google sign-in:", error);
     }
   };
-
   return (
     <>
       <Form

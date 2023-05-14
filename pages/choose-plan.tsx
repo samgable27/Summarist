@@ -10,14 +10,16 @@ import Accordian from "../components/UI/Accordian";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Button, Space } from "antd";
-import { useStore } from "../src/store/userStore";
+import { handleCheckout } from "../src/utils/handleCheckout";
+import { auth } from "../firebase";
 
 interface ChoosePlanProps {}
 
 const ChoosePlan: React.FC<ChoosePlanProps> = () => {
   const [activeSection, setActiveSection] = useState("Premium Plus Yearly");
   const [loading, setLoading] = useState<boolean[]>([]);
-  const { user } = useStore();
+  const [error, setError] = useState(null);
+  const userCur = auth.currentUser;
 
   const enterLoading = (index: number) => {
     setLoading((prevLoading) => {
@@ -34,8 +36,6 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
       });
     }, 6000);
   };
-
-  const redirectToCheckout = async (price: string) => {};
 
   return (
     <div className={styles.planWrap}>
@@ -134,12 +134,20 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
           {activeSection === "Premium Plus Yearly" ? (
             <div className={styles.planCard__cta}>
               <div className={styles.btnWrapper}>
-                <div onClick={() => redirectToCheckout("premium_plus")}>
+                <div>
                   <Space wrap>
                     <Button
                       type="primary"
                       loading={loading[0]}
-                      onClick={() => enterLoading(0)}
+                      onClick={async (event) => {
+                        event.preventDefault();
+                        if (userCur) {
+                          await handleCheckout(userCur);
+                        } else {
+                          setError("Please login to continue");
+                          console.log(error);
+                        }
+                      }}
                     >
                       Start your free 7-day trial
                     </Button>
@@ -154,12 +162,20 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
           ) : (
             <div className={styles.planCard__cta}>
               <div className={styles.btnWrapper}>
-                <div onClick={() => redirectToCheckout("premium")}>
+                <div>
                   <Space wrap>
                     <Button
                       type="primary"
                       loading={loading[0]}
-                      onClick={() => enterLoading(0)}
+                      onClick={async (event) => {
+                        event.preventDefault();
+                        if (userCur) {
+                          await handleCheckout(userCur);
+                        } else {
+                          setError("Please login to continue");
+                          console.log(error);
+                        }
+                      }}
                     >
                       Start your first month
                     </Button>

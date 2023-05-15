@@ -10,16 +10,73 @@ import Accordian from "../components/UI/Accordian";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Button, Space } from "antd";
-import { handleCheckout } from "../src/utils/handleCheckout";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
 
 interface ChoosePlanProps {}
+
+interface User {
+  uid: string;
+  email: string;
+}
 
 const ChoosePlan: React.FC<ChoosePlanProps> = () => {
   const [activeSection, setActiveSection] = useState("Premium Plus Yearly");
   const [loading, setLoading] = useState<boolean[]>([]);
   const [error, setError] = useState(null);
+
   const userCur = auth.currentUser;
+  let priceId: string;
+
+  if (activeSection === "Premium Plus Yearly") {
+    priceId = process.env.NEXT_PUBLIC_PRICE_ID_YEARLY;
+  } else if (activeSection === "Premium Plus Monthly") {
+    priceId = process.env.NEXT_PUBLIC_PRICE_ID_MONTHLY;
+  } else {
+    return;
+  }
+
+  const handleCheckout = async (user: User) => {
+    const checkoutSessionRef = await addDoc(
+      collection(db, "users", user.uid, "checkout_sessions"),
+      {
+        price: priceId,
+        success_url: window.location.origin,
+        cancel_url: window.location.origin,
+      }
+    );
+
+    onSnapshot(checkoutSessionRef, async (docSnapshot): Promise<any> => {
+      if (!docSnapshot.exists()) {
+        return;
+      }
+      const data = docSnapshot.data();
+      const { sessionId } = docSnapshot.data();
+
+      console.log("Stripe Session ID:", sessionId);
+
+      if (sessionId) {
+        const stripe = await loadStripe(
+          process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string
+        );
+
+        if (!stripe) {
+          return;
+        }
+        const { error } = await stripe.redirectToCheckout({
+          sessionId,
+        });
+
+        if (error) {
+          console.log("Stripe redirectToCheckout error:", error);
+        }
+      }
+      if (!sessionId) {
+        console.log("Session ID not found in document data:", data);
+        return;
+      }
+    });
+  };
 
   const enterLoading = (index: number) => {
     setLoading((prevLoading) => {
@@ -138,11 +195,11 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
                   <Space wrap>
                     <Button
                       type="primary"
-                      loading={loading[0]}
-                      onClick={async (event) => {
+                      loading={enterLoading[0]}
+                      onClick={(event: any) => {
                         event.preventDefault();
                         if (userCur) {
-                          await handleCheckout(userCur);
+                          handleCheckout(userCur);
                         } else {
                           setError("Please login to continue");
                           console.log(error);
@@ -167,10 +224,10 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
                     <Button
                       type="primary"
                       loading={loading[0]}
-                      onClick={async (event) => {
+                      onClick={(event: any) => {
                         event.preventDefault();
                         if (userCur) {
-                          await handleCheckout(userCur);
+                          handleCheckout(userCur);
                         } else {
                           setError("Please login to continue");
                           console.log(error);

@@ -15,7 +15,7 @@ import { addDoc, collection, onSnapshot } from "firebase/firestore";
 
 interface ChoosePlanProps {}
 
-interface User {
+export interface User {
   uid: string;
   email: string;
 }
@@ -37,6 +37,7 @@ const ChoosePlan: React.FC<ChoosePlanProps> = () => {
   }
 
   const handleCheckout = async (user: User) => {
+    // referencing checkoutsession doc
     const checkoutSessionRef = await addDoc(
       collection(db, "users", user.uid, "checkout_sessions"),
       {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/settings.module.css";
 import { useModalStore } from "../src/store/store-client";
 import Image from "next/image";
@@ -9,6 +9,8 @@ import Sidebar from "../components/for-you/Sidebar";
 import { useStore } from "../src/store/userStore";
 import { useRouter } from "next/router";
 import { Button, Space } from "antd";
+import { auth, db } from "../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 interface SettingsProps {
   children?: React.ReactNode;
@@ -21,6 +23,24 @@ const Settings: React.FC<SettingsProps> = () => {
   const showModal = useModalStore((state) => state.showModal);
   const [activeSection, setActiveSection] = useState("settings");
   const router = useRouter();
+
+  const [stripeRole, setStripeRole] = useState("");
+  const userId = auth.currentUser?.uid;
+
+  useEffect(() => {
+    const fetchUserSubscription = async () => {
+      const subSnap = await getDocs(
+        collection(db, "users", userId, "subscriptions")
+      );
+      const subscriptionData = subSnap?.docs[0]?.data();
+      const stripeRole =
+        subscriptionData?.items[0]?.price?.product?.metadata?.stripeRole;
+
+      setStripeRole(stripeRole);
+    };
+
+    fetchUserSubscription();
+  }, []);
 
   return (
     <>
@@ -48,7 +68,7 @@ const Settings: React.FC<SettingsProps> = () => {
             <div className={styles.sectionTitle}>Settings</div>
             <div className={styles.settingContentTop}>
               <h2>Your Subscription Plan</h2>
-              <p>Basic</p>
+              {stripeRole && <p>{stripeRole}</p>}
               <div
                 onClick={() => router.push("/choose-plan")}
                 className={styles.premBtnWrapper}

@@ -9,7 +9,8 @@ import Sidebar from "../components/for-you/Sidebar";
 import { useStore } from "../src/store/userStore";
 import { useRouter } from "next/router";
 import { Button, Space } from "antd";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
+import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 interface SettingsProps {
@@ -21,14 +22,17 @@ const Settings: React.FC<SettingsProps> = () => {
   const isAuthenticated = useStore((state) => state.isAuthenticated);
   const userEmail = useStore((state) => state.userEmail);
   const showModal = useModalStore((state) => state.showModal);
-  const [activeSection, setActiveSection] = useState("settings");
+
   const router = useRouter();
 
-  const [stripeRole, setStripeRole] = useState("");
+  const [activeSection, setActiveSection] = useState("settings");
+  const [stripeRole, setStripeRole] = useState("Basic");
   const userId = auth.currentUser?.uid;
 
   useEffect(() => {
     const fetchUserSubscription = async () => {
+      if (!userId) return;
+
       const subSnap = await getDocs(
         collection(db, "users", userId, "subscriptions")
       );

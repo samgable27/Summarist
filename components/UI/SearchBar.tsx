@@ -54,7 +54,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className={styles.searchBar}
             placeholder="Search for books"
-            // enterButton={<CustomSearchIcon />}
             style={{
               margin: "40px",
             }}

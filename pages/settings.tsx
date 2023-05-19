@@ -9,8 +9,7 @@ import Sidebar from "../components/for-you/Sidebar";
 import { useStore } from "../src/store/userStore";
 import { useRouter } from "next/router";
 import { Button, Space } from "antd";
-import { auth } from "../firebase";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 interface SettingsProps {
@@ -26,7 +25,7 @@ const Settings: React.FC<SettingsProps> = () => {
   const router = useRouter();
 
   const [activeSection, setActiveSection] = useState("settings");
-  const [stripeRole, setStripeRole] = useState("Basic");
+  const [stripeRole, setStripeRole] = useState("");
   const userId = auth.currentUser?.uid;
 
   useEffect(() => {
@@ -40,11 +39,21 @@ const Settings: React.FC<SettingsProps> = () => {
       const stripeRole =
         subscriptionData?.items[0]?.price?.product?.metadata?.stripeRole;
 
-      setStripeRole(stripeRole);
+      if (stripeRole) {
+        localStorage.setItem("stripeRole", stripeRole);
+        setStripeRole(stripeRole);
+      }
     };
-
     fetchUserSubscription();
-  }, []);
+  }, [userId]);
+
+  useEffect(() => {
+    const savedStripeRole = localStorage.getItem("stripeRole");
+
+    if (savedStripeRole) {
+      setStripeRole(savedStripeRole);
+    }
+  }, [userId]);
 
   return (
     <>

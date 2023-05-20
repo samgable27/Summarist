@@ -25,11 +25,12 @@ const Settings: React.FC<SettingsProps> = () => {
   const router = useRouter();
 
   const [activeSection, setActiveSection] = useState("settings");
-  const [stripeRole, setStripeRole] = useState("");
+  const [stripeRole, setStripeRole] = useState("basic");
   const userId = auth.currentUser?.uid;
 
   useEffect(() => {
     const fetchUserSubscription = async () => {
+      // undefined check
       if (!userId) return;
 
       const subSnap = await getDocs(
@@ -39,6 +40,7 @@ const Settings: React.FC<SettingsProps> = () => {
       const stripeRole =
         subscriptionData?.items[0]?.price?.product?.metadata?.stripeRole;
 
+      // writing to local storage on mount
       if (stripeRole) {
         localStorage.setItem("stripeRole", stripeRole);
         setStripeRole(stripeRole);
@@ -47,9 +49,9 @@ const Settings: React.FC<SettingsProps> = () => {
     fetchUserSubscription();
   }, [userId]);
 
+  // reading from local storage on mount
   useEffect(() => {
     const savedStripeRole = localStorage.getItem("stripeRole");
-
     if (savedStripeRole) {
       setStripeRole(savedStripeRole);
     }

@@ -16,8 +16,6 @@ interface SearchBarProps {
 
 const { Search } = Input;
 
-const CustomSearchIcon = () => <SearchOutlined style={{ color: "black" }} />;
-
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);

@@ -1,14 +1,3 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- *
- *
- */
-
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
@@ -24,7 +13,6 @@ exports.updateRoleOnSubscriptionChange = functions.firestore
       const newSubscriptionData = change?.after?.data();
       const userId = context?.params?.userId;
 
-      // You may need to adjust this line based on your subscription data structure
       const newStripeRole =
         newSubscriptionData?.items[0]?.price?.product?.metadata?.stripeRole;
 

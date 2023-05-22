@@ -192,7 +192,7 @@ const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
               <div onClick={handleToggleAudioPlayer}>
                 <button
                   onClick={() =>
-                    book?.subscriptionRequired
+                    stripeRole !== "premium" && stripeRole !== "premium_plus"
                       ? router.push("/choose-plan")
                       : router.push(`/player/${book.id}`)
                   }

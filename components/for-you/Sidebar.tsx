@@ -16,6 +16,7 @@ import LoginModal from "../auth/LoginModal";
 import { useRouter } from "next/router";
 import { useAudioPlayerStore } from "../../src/store/audioPlayerStore";
 import { useStore } from "../../src/store/userStore";
+import { auth } from "../../firebase";
 
 interface SidebarProps {
   activeSection: string;
@@ -63,6 +64,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const handleLogout = () => {
+    auth?.signOut().then(() => {
+      localStorage.removeItem("stripeRole");
+    });
+
     setTimeout(() => {
       setIsAuthenticated(false);
       logout();

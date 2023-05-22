@@ -90,7 +90,9 @@ const Settings: React.FC<SettingsProps> = () => {
             <div className={styles.sectionTitle}>Settings</div>
             <div className={styles.settingContentTop}>
               <h2>Your Subscription Plan</h2>
-              {stripeRole && <p>{stripeRole}</p>}
+              {stripeRole && (
+                <p>{stripeRole === "null" ? <div>Basic</div> : stripeRole}</p>
+              )}
               <div
                 onClick={() => router.push("/choose-plan")}
                 className={styles.premBtnWrapper}

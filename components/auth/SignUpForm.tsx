@@ -16,6 +16,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { db } from "../../firebase";
 import { createUserProfileDocument } from "../../src/utils/createUserProfileDocument";
+import jwtDecode from "jwt-decode";
 
 interface SignUpFormProps {
   children?: React.ReactNode;
@@ -98,6 +99,13 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       console.log("Error during Google sign-in:", error);
     }
   };
+
+  auth?.currentUser?.getIdTokenResult(true).then((idToken) => {
+    const decodedToken = jwtDecode(idToken.token);
+
+    console.log("decodedToken", decodedToken);
+  });
+
   return (
     <>
       <Form

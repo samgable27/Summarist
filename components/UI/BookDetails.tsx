@@ -16,6 +16,9 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Book } from "../../types/Book";
 import { useLibraryStore } from "../../src/store/libraryStore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
+import jwtDecode from "jwt-decode";
 
 interface BookDetailProps {
   id: string;
@@ -26,10 +29,37 @@ interface BookDetailProps {
 
 const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
   const router = useRouter();
+  const [user] = useAuthState(auth);
+  const [stripeRole, setStripeRole] = useState<string | null>(null);
 
   const addBook = useLibraryStore((state) => state.addBook);
 
   const { isBookInLibrary, removeBook } = useLibraryStore();
+
+  // fetching token on mount, decoding it and setting the stripeRole
+  useEffect(() => {
+    const fetchToken = async () => {
+      if (user) {
+        const token = await user.getIdToken(true);
+        const decodedToken: any = jwtDecode(token);
+
+        // saving to local storage
+        localStorage.setItem("stripeRole", stripeRole);
+
+        setStripeRole(decodedToken.stripeRole);
+      }
+    };
+
+    fetchToken();
+  }, [user]);
+
+  // on mount read value from local storage
+  useEffect(() => {
+    const savedStripeRole = localStorage.getItem("stripeRole");
+    if (savedStripeRole) {
+      setStripeRole(savedStripeRole);
+    }
+  }, []);
 
   const isAudioPlayerPresent = useAudioPlayerStore(
     (state) => state.isAudioPlayerPresent
@@ -176,7 +206,7 @@ const BookDetails: React.FC<BookDetailProps> = ({ book, loading }) => {
               <div onClick={handleToggleAudioPlayer}>
                 <button
                   onClick={() =>
-                    book?.subscriptionRequired
+                    stripeRole !== "premium" && stripeRole !== "premium_plus"
                       ? router.push("/choose-plan")
                       : router.push(`/player/${book.id}`)
                   }

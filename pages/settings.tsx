@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { Button, Space } from "antd";
 import { auth, db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import jwtDecode from "jwt-decode";
 
 interface SettingsProps {
   children?: React.ReactNode;
@@ -25,29 +26,35 @@ const Settings: React.FC<SettingsProps> = () => {
   const router = useRouter();
 
   const [activeSection, setActiveSection] = useState("settings");
-  const [stripeRole, setStripeRole] = useState("basic");
+  const [stripeRole, setStripeRole] = useState("Basic");
   const userId = auth.currentUser?.uid;
 
   useEffect(() => {
     const fetchUserSubscription = async () => {
-      // undefined check
-      if (!userId) return;
+      if (!userId || !auth?.currentUser) return;
 
       const subSnap = await getDocs(
         collection(db, "users", userId, "subscriptions")
       );
       const subscriptionData = subSnap?.docs[0]?.data();
-      const stripeRole =
+      const subscriptionStripeRole =
         subscriptionData?.items[0]?.price?.product?.metadata?.stripeRole;
 
-      // writing to local storage on mount
+      const idToken = await auth?.currentUser?.getIdToken(true);
+      const decodedToken = jwtDecode(idToken);
+      const idTokenStripeRole = (decodedToken as any)?.stripeRole;
+
+      const stripeRole = idTokenStripeRole || subscriptionStripeRole;
+      console.log(decodedToken, stripeRole);
+
       if (stripeRole) {
         localStorage.setItem("stripeRole", stripeRole);
         setStripeRole(stripeRole);
       }
     };
+
     fetchUserSubscription();
-  }, [userId]);
+  }, [userId, auth?.currentUser]);
 
   // reading from local storage on mount
   useEffect(() => {

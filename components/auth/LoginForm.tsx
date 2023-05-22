@@ -13,6 +13,7 @@ import {
 import { auth } from "../../firebase";
 import { useModalStore } from "../../src/store/store-client";
 import SpinIcon from "../UI/SpinIcon";
+import jwtDecode from "jwt-decode";
 
 interface LoginFormProps {
   children?: React.ReactNode;
@@ -82,6 +83,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
       onFailure(error);
     }
   };
+
+  auth?.currentUser?.getIdTokenResult(true).then((idToken) => {
+    const decodedToken = jwtDecode(idToken.token);
+
+    console.log("decodedToken", decodedToken);
+  });
 
   return (
     <>

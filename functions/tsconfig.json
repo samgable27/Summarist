@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
+    "lib": ["es6", "es2015.promise"],
     "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
+    "noImplicitAny": false,
     "outDir": "lib",
     "sourceMap": true,
+    "target": "es6",
+    "esModuleInterop": true,
     "strict": true,
-    "target": "ES6",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "compileOnSave": true,
   "include": ["src"],
-  "exclude": ["node_modules", "functions"]
+  "compileOnSave": true,
+  "typeRoots": ["node_modules/@types"]
 }

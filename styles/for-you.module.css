@@ -191,15 +191,15 @@
 @media (max-width: 1600px) {
   .sbContainer,
   .recommendedContainer {
-    width: 100%;
+    width: 80%;
     margin-left: 200px;
   }
 }
 
 @media (max-width: 768px) {
-  .sbContianer,
-  .sbContainer h1 {
-    max-width: 100%;
+  .sbContainer,
+  .recommendedContainer {
+    width: 100%;
     margin-left: 0;
   }
 }

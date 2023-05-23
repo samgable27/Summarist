@@ -37,6 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const isAuthenticated = useStore((state) => state.isAuthenticated);
   const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
 
+  // storing auth state in local storage
   useEffect(() => {
     const authStorage = localStorage.getItem("auth-storage");
     if (authStorage) {
@@ -57,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const handleToggleAudioPlayer = () => {
     if (isAudioPlayerPresent) {
-      return setIsAudioPlayerPresent(!isAudioPlayerPresent);
+      setIsAudioPlayerPresent(!isAudioPlayerPresent);
     } else {
       setIsAudioPlayerPresent(false);
     }
